@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Betta - Bootstrap Editor</title>
+  <link rel="stylesheet" href="static/lib/bootstrap/dist/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="static/css/index.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+  <main class="app">
+    <div class="iframe-container">
+      <iframe class="iframe" id="frame" src=""></iframe>
+    </div>
+    <div class="sidebar-container">
+      <div class="sidebar-menu">
+        <select id="size-control" class="form-control size-control"></select>
+      </div>
+      <div class="sidebar">
+        <form id="variables-form"></form>
+      </div>
+    </div>
+  </main>
+
+  <script charset="utf-8" type="text/javascript" src="../static/lib/jquery/dist/jquery.min.js"></script>
+  <script charset="utf-8" type="text/javascript" src="../static/lib/less/less.min.js"></script>
+  <script charset="utf-8" type="text/javascript" src="../static/js/index.js"></script>
+
+</body>
+</html>
