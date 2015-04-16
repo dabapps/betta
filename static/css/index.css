@@ -109,6 +109,24 @@ a {
   max-height: 4000px;
 }
 
+.form-collection.active h4::before {
+  position: absolute;
+  font-size: 14px;
+  top: 1px;
+  left: 0;
+  content: '▲';
+}
+
+.form-collection h4::before {
+  position: absolute;
+  font-size: 14px;
+  top: 2px;
+  left: 0;
+  content: '▼';
+}
+
 .form-collection h4 {
+  position: relative;
+  padding-left: 16px;
   margin-top: 0;
 }
