@@ -87,7 +87,7 @@
   };
 
   var addLabel = function (line) {
-    $('<span>')
+    $('<sub>')
       .text(line.replace(/\/\/\*\*\s*/, ''))
       .appendTo($('.form-collection').last());
   };
