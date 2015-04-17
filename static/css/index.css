@@ -129,4 +129,7 @@ a {
   position: relative;
   padding-left: 16px;
   margin-top: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
