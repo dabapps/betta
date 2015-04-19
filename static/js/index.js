@@ -9,12 +9,16 @@
   var previewButton = $('#preview-button');
   var resetButton = $('#reset-button');
 
-  var renderCSS = function (less) {
+  var renderCSS = function (less, callback) {
     less = less || '';
     window.less.render(less, function (error, tree) {
       if (error) {
         window.alert(error);
         return;
+      }
+
+      if (typeof callback === 'function') {
+        callback();
       }
 
       var styles = $('<style>')
@@ -196,9 +200,11 @@
     $.ajax('static/lib/bootstrap/less/bootstrap.less', {
       success: function (result) {
         var less = buildLess(result, myVariables);
-        removePreviousStyles();
-        disableBootstrapStyles();
-        renderCSS(less);
+
+        renderCSS(less, function () {
+          removePreviousStyles();
+          disableBootstrapStyles();
+        });
       }, error: function () {
 
       }
