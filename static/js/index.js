@@ -205,4 +205,10 @@
     });
   });
 
+  resetButton.click(function () {
+    variablesForm
+      .find('input')
+      .val('');
+  });
+
 })();
