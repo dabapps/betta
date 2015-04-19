@@ -82,6 +82,11 @@ a {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.sidebar-menu .form-group select,
+.sidebar-menu .form-group button {
+  float: left;
+}
+
 .size-control {
   width: 64px;
 }
