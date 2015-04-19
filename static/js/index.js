@@ -5,10 +5,18 @@
 (function () {
 
   var iframe = $('#frame');
-  var iframeDoc = $(iframe[0].contentDocument || iframe[0].contentWindow.document);
+  var iframeDoc = iframe.contents();
+  var previewButton = $('#preview-button');
+  var resetButton = $('#reset-button');
 
-  var renderCSS = function () {
-    window.less.render('p{ background-color: red; }', function (err, tree) {
+  var renderCSS = function (less) {
+    less = less || '';
+    window.less.render(less, function (error, tree) {
+      if (error) {
+        window.alert(error);
+        return;
+      }
+
       var styles = $('<style>')
         .html(tree.css);
 
@@ -17,8 +25,7 @@
   };
 
   var getIframeDocument = function () {
-    iframeDoc = $(iframe[0].contentDocument || iframe[0].contentWindow.document);
-    renderCSS();
+    iframeDoc = iframe.contents();
   };
 
   iframe.bind('load', getIframeDocument);
@@ -141,5 +148,61 @@
     }
   });
 
+  var buildVariables = function () {
+    var myVariables = '';
+
+    variablesForm
+      .find('.form-group')
+      .each(function () {
+        var element = $(this);
+        var variableName = element.find('label').text();
+        var variableValue = element.find('input').val();
+        var variableDefault = element.find('input').attr('placeholder');
+
+        if (typeof variableValue !== 'undefined' && variableValue !== null && variableValue !== '') {
+          myVariables = myVariables.concat(
+            [variableName, variableValue].join(': ').concat(';\n')
+          );
+        } else {
+          myVariables = myVariables.concat(
+            [variableName, variableDefault].join(': ').concat(';\n')
+          );
+        }
+      });
+
+    return myVariables;
+  };
+
+  var buildLess = function (less, myVariables) {
+    if (less) {
+      less = less.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
+      less = less.replace(/@.+?variables.+?;/i, myVariables);
+    }
+
+    return less;
+  };
+
+  var removePreviousStyles = function () {
+    iframeDoc.find('style').remove();
+  };
+
+  var disableBootstrapStyles = function () {
+    iframeDoc[0].styleSheets[0].disabled = true;
+  };
+
+  previewButton.click(function () {
+    var myVariables = buildVariables();
+
+    $.ajax('static/lib/bootstrap/less/bootstrap.less', {
+      success: function (result) {
+        var less = buildLess(result, myVariables);
+        removePreviousStyles();
+        disableBootstrapStyles();
+        renderCSS(less);
+      }, error: function () {
+
+      }
+    });
+  });
 
 })();
