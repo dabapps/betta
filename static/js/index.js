@@ -190,7 +190,7 @@
     iframeDoc[0].styleSheets[0].disabled = true;
   };
 
-  previewButton.click(function () {
+  var preview = function () {
     var myVariables = buildVariables();
 
     $.ajax('static/lib/bootstrap/less/bootstrap.less', {
@@ -203,12 +203,16 @@
 
       }
     });
-  });
+  };
+
+  previewButton.click(preview);
 
   resetButton.click(function () {
     variablesForm
       .find('input')
       .val('');
+
+    preview();
   });
 
 })();
