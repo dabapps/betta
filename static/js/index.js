@@ -9,6 +9,13 @@
   var previewButton = $('#preview-button');
   var resetButton = $('#reset-button');
 
+  var loadingIcon = $('<div>')
+    .addClass('loading-container')
+    .append(
+      $('<div>')
+        .addClass('loading-icon')
+    );
+
   var renderCSS = function (less, callback) {
     less = less || '';
     window.less.render(less, function (error, tree) {
@@ -194,7 +201,22 @@
     iframeDoc[0].styleSheets[0].disabled = true;
   };
 
+  var addLoadingIcon = function () {
+    loadingIcon.appendTo(
+      iframe.parent('.iframe-container')
+    );
+    previewButton.attr('disabled', 'disabled');
+    resetButton.attr('disabled', 'disabled');
+  };
+
+  var removeLoadingIcon = function () {
+    loadingIcon.remove();
+    previewButton.removeAttr('disabled');
+    resetButton.removeAttr('disabled');
+  };
+
   var preview = function () {
+    addLoadingIcon();
     var myVariables = buildVariables();
 
     $.ajax('static/lib/bootstrap/less/bootstrap.less', {
@@ -204,6 +226,7 @@
         renderCSS(less, function () {
           removePreviousStyles();
           disableBootstrapStyles();
+          removeLoadingIcon();
         });
       }, error: function () {
 
