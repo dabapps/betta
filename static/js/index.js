@@ -16,16 +16,19 @@
         .addClass('loading-icon')
     );
 
-  var renderCSS = function (less, callback) {
+  var renderCSS = function (less, success, failure) {
     less = less || '';
     window.less.render(less, function (error, tree) {
       if (error) {
+        if (typeof failure === 'function') {
+          failure();
+        }
         window.alert(error);
         return;
       }
 
-      if (typeof callback === 'function') {
-        callback();
+      if (typeof success === 'function') {
+        success();
       }
 
       var styles = $('<style>')
@@ -223,11 +226,15 @@
       success: function (result) {
         var less = buildLess(result, myVariables);
 
-        renderCSS(less, function () {
-          removePreviousStyles();
-          disableBootstrapStyles();
-          removeLoadingIcon();
-        });
+        renderCSS(
+          less,
+          function () {
+            removePreviousStyles();
+            disableBootstrapStyles();
+            removeLoadingIcon();
+          },
+          removeLoadingIcon
+        );
       }, error: function () {
 
       }
