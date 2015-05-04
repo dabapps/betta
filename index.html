@@ -7,37 +7,7 @@
 </head>
 <body>
 
-  <main class="app">
-    <div class="iframe-container">
-      <iframe class="iframe" id="frame" src=""></iframe>
-    </div>
-    <div class="sidebar-container">
-      <div class="sidebar-menu">
-        <div class="form-group">
-          <select id="size-control" class="form-control size-control"></select>
-          <button id="preview-button" class="btn btn-small btn-default">Preview</button>
-          <button id="reset-button" class="btn btn-small btn-default">Reset</button>
-        </div>
-      </div>
-      <div class="sidebar">
-        <form id="variables-form"></form>
-      </div>
-    </div>
-  </main>
-
-  <script charset="utf-8" type="text/javascript">
-    window.less = {
-      env: "development",
-      logLevel: 2,
-      async: true,
-      fileAsync: true,
-      dumpLineNumbers: "comments",
-      useFileCache: true
-    };
-  </script>
-  <script charset="utf-8" type="text/javascript" src="static/lib/jquery/dist/jquery.min.js"></script>
-  <script charset="utf-8" type="text/javascript" src="static/lib/less/less.min.js"></script>
-  <script charset="utf-8" type="text/javascript" src="static/js/index.js"></script>
+  <script data-main="static/js/app" src="static/lib/requirejs/require.js"></script>
 
 </body>
 </html>
