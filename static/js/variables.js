@@ -62,6 +62,7 @@ window.define(['jquery'], function ($) {
         type: type
       });
     },
+
     unpack: function (result) {
       var self = this;
       self.colorVariables = [];
@@ -92,7 +93,29 @@ window.define(['jquery'], function ($) {
       });
 
       return unpackedVariables;
-    }
+    },
+
+    pack: function (unpackedVariables) {
+      var variables = '';
+
+      $.each(unpackedVariables, function (collectionIndex, collection) {
+        $.each(collection.children, function (childIndex, child) {
+          if (child.element === 'variable') {
+            if (typeof child.value !== 'undefined' && child.value !== null && child.value !== '') {
+              variables = variables.concat(
+                [child.name, child.value].join(': ').concat(';\n')
+              );
+            } else {
+              variables = variables.concat(
+                [child.name, child.defaultValue].join(': ').concat(';\n')
+              );
+            }
+          }
+        });
+      });
+
+      return variables;
+    },
   };
 
   return variables;

@@ -3,29 +3,6 @@
 window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], function (React, less, $, Iframe, Sidebar, variables) {
 
   var App = React.createClass({
-    createVariables: function () {
-      var self = this;
-      var variables = '';
-
-      $.each(self.state.unpackedVariables, function (collectionIndex, collection) {
-        $.each(collection.children, function (childIndex, child) {
-          if (child.element === 'variable') {
-            if (typeof child.value !== 'undefined' && child.value !== null && child.value !== '') {
-              variables = variables.concat(
-                [child.name, child.value].join(': ').concat(';\n')
-              );
-            } else {
-              variables = variables.concat(
-                [child.name, child.defaultValue].join(': ').concat(';\n')
-              );
-            }
-          }
-        });
-      });
-
-      return variables;
-    },
-
     resetVariables: function () {
       var unpackedVariables = this.state.unpackedVariables;
 
@@ -61,7 +38,7 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
         result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
 
         if (!reset) {
-          result = result.replace(/@.+?variables.+?;/i, self.createVariables());
+          result = result.replace(/@.+?variables.+?;/i, variables.pack(self.state.unpackedVariables));
         } else {
           self.resetVariables();
         }
