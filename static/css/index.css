@@ -197,6 +197,27 @@ a {
   text-overflow: ellipsis;
 }
 
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  position: relative;
+  z-index: 0;
+}
+
+.input-wrapper .color-picker {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  margin: 5px;
+  border: 1px solid #ccc;
+}
+
 @-webkit-keyframes loading-outer {
   from {
     -webkit-transform: rotate(0deg);

@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['react'], function (React) {
+window.define(['react', 'color-picker'], function (React, ColorPicker) {
 
   var FormCollection = React.createClass({
     create: {
@@ -27,6 +27,18 @@ window.define(['react'], function (React) {
       },
       variable: function (child, index) {
         var self = this;
+        var colorPicker;
+
+        if (child.type === 'color') {
+          colorPicker = React.createElement(
+            ColorPicker,
+            {
+              onChange: self.props.updateVariable.bind(null, self.props.index, index),
+              value: child.value,
+              defaultValue: child.defaultValue
+            }
+          );
+        }
 
         return React.createElement(
           'div',
@@ -52,7 +64,8 @@ window.define(['react'], function (React) {
                 onChange: self.props.updateVariable.bind(null, self.props.index, index)
               },
               child.value
-            )
+            ),
+            colorPicker
           )
         );
       }
