@@ -255,6 +255,17 @@ a {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 }
 
+.color-picker .gradient.hue {
+  background-color: #aaa;
+  background: rgb(255,0,0); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(255,0,0,1) 0%, rgba(255,153,0,1) 10%, rgba(204,255,0,1) 20%, rgba(50,255,0,1) 30%, rgba(0,255,106,1) 40%, rgba(0,255,255,1) 50%, rgba(0,101,255,1) 60%, rgba(51,0,255,1) 70%, rgba(208,0,255,1) 80%, rgba(255,0,148,1) 90%, rgba(255,0,4,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,0,0,1)), color-stop(10%,rgba(255,153,0,1)), color-stop(20%,rgba(204,255,0,1)), color-stop(30%,rgba(50,255,0,1)), color-stop(40%,rgba(0,255,106,1)), color-stop(50%,rgba(0,255,255,1)), color-stop(60%,rgba(0,101,255,1)), color-stop(70%,rgba(51,0,255,1)), color-stop(80%,rgba(208,0,255,1)), color-stop(90%,rgba(255,0,148,1)), color-stop(100%,rgba(255,0,4,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(255,0,0,1) 0%,rgba(255,153,0,1) 10%,rgba(204,255,0,1) 20%,rgba(50,255,0,1) 30%,rgba(0,255,106,1) 40%,rgba(0,255,255,1) 50%,rgba(0,101,255,1) 60%,rgba(51,0,255,1) 70%,rgba(208,0,255,1) 80%,rgba(255,0,148,1) 90%,rgba(255,0,4,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(255,0,0,1) 0%,rgba(255,153,0,1) 10%,rgba(204,255,0,1) 20%,rgba(50,255,0,1) 30%,rgba(0,255,106,1) 40%,rgba(0,255,255,1) 50%,rgba(0,101,255,1) 60%,rgba(51,0,255,1) 70%,rgba(208,0,255,1) 80%,rgba(255,0,148,1) 90%,rgba(255,0,4,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(255,0,0,1) 0%,rgba(255,153,0,1) 10%,rgba(204,255,0,1) 20%,rgba(50,255,0,1) 30%,rgba(0,255,106,1) 40%,rgba(0,255,255,1) 50%,rgba(0,101,255,1) 60%,rgba(51,0,255,1) 70%,rgba(208,0,255,1) 80%,rgba(255,0,148,1) 90%,rgba(255,0,4,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(255,0,0,1) 0%,rgba(255,153,0,1) 10%,rgba(204,255,0,1) 20%,rgba(50,255,0,1) 30%,rgba(0,255,106,1) 40%,rgba(0,255,255,1) 50%,rgba(0,101,255,1) 60%,rgba(51,0,255,1) 70%,rgba(208,0,255,1) 80%,rgba(255,0,148,1) 90%,rgba(255,0,4,1) 100%); /* W3C */
+}
+
 .color-picker .gradient.grey {
   position: absolute;
   width: 100%;
