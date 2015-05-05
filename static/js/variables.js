@@ -106,9 +106,15 @@ window.define(['jquery'], function ($) {
                 [child.name, child.value].join(': ').concat(';\n')
               );
             } else {
-              variables = variables.concat(
-                [child.name, child.defaultValue].join(': ').concat(';\n')
-              );
+              if (child.name === '@icon-font-path') {
+                variables = variables.concat(
+                  '@icon-font-path: "../static/lib/bootstrap/fonts/";\n'
+                );
+              } else {
+                variables = variables.concat(
+                  [child.name, child.defaultValue].join(': ').concat(';\n')
+                );
+              }
             }
           }
         });
