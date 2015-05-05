@@ -46,6 +46,9 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
         less.render(result, function (error, tree) {
           if (error) {
             window.alert(error);
+            self.setState({
+              loading: false
+            });
             return;
           }
 
@@ -121,6 +124,10 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
 
     errorLoadingLess: function (error) {
       window.alert(error.responseText);
+
+      this.setState({
+        loading: false
+      });
     },
 
     getVariables: function () {
