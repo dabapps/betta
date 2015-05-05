@@ -130,7 +130,8 @@ window.define(['react', 'color'], function (React, color) {
             style: {
               top: self.props.point.y * 100 + '%',
               left: self.props.point.x * 100 + '%',
-              border: '1px solid ' + (self.props.point.y >= 50 ? '#ccc' : '#333')
+              border: '1px solid ' + (self.props.point.y >= 50 ? '#ccc' : '#333'),
+              backgroundColor: self.props.hex
             }
           }
         )
@@ -201,7 +202,8 @@ window.define(['react', 'color'], function (React, color) {
               Palette,
               {
                 point: self.state.point,
-                setPoint: self.setPoint
+                setPoint: self.setPoint,
+                hex: self.state.hex
               }
             )
           ),
