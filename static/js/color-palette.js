@@ -31,7 +31,7 @@ window.define(['react', 'color'], function (React, color) {
       event.preventDefault();
       var point = this.getPoint(event);
 
-      this.props.setPoint(point);
+      this.props.onChange(point);
 
       this.addListeners();
     },
@@ -39,7 +39,7 @@ window.define(['react', 'color'], function (React, color) {
     mouseMove: function (event) {
       var point = this.getPoint(event);
 
-      this.props.setPoint(point);
+      this.props.onChange(point);
     },
 
     mouseUp: function () {

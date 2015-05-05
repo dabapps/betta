@@ -65,7 +65,7 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette'], functi
               ColorPalette,
               {
                 point: self.state.point,
-                setPoint: self.setPoint,
+                onChange: self.setPoint,
                 hsl: self.state.hsl,
                 rgb: self.state.rgb,
                 hex: self.state.hex
