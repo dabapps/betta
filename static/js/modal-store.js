@@ -3,7 +3,7 @@
 window.define(['store'], function (Store) {
 
   var modalOpen = false;
-  var modalTitle, modalBody, modalFooter;
+  var modalView;
 
   var ModalStore = new Store();
 
@@ -11,22 +11,12 @@ window.define(['store'], function (Store) {
     return modalOpen;
   };
 
-  ModalStore.getTitle = function () {
-    return modalTitle;
+  ModalStore.getView = function () {
+    return modalView;
   };
 
-  ModalStore.getBody = function () {
-    return modalBody;
-  };
-
-  ModalStore.getFooter = function () {
-    return modalFooter;
-  };
-
-  ModalStore.createAction('open', function (title, body, footer) {
-    modalTitle = title;
-    modalBody = body;
-    modalFooter = footer;
+  ModalStore.createAction('open', function (view) {
+    modalView = view;
     modalOpen = true;
     ModalStore.emitEvent('open');
   });

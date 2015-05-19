@@ -17,11 +17,11 @@
 
 */
 
-window.define(['react', 'modal-store'], function (React, ModalStore) {
+window.define(['react', 'modal-store', 'export-modal'], function (React, ModalStore, ExportModal) {
 
   var SidebarMenu = React.createClass({
     export: function () {
-      ModalStore.action('open', 'Hello, world!', 'Content');
+      ModalStore.action('open', React.createElement(ExportModal));
     },
 
     toggleDropdown: function () {

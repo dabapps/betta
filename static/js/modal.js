@@ -6,9 +6,7 @@ window.define(['react', 'modal-store'], function (React, ModalStore) {
     modalChanged: function () {
       this.setState({
         open: ModalStore.isOpen(),
-        title: ModalStore.getTitle(),
-        body: ModalStore.getBody(),
-        footer: ModalStore.getFooter()
+        view: ModalStore.getView()
       });
     },
 
@@ -18,8 +16,7 @@ window.define(['react', 'modal-store'], function (React, ModalStore) {
 
     componentDidMount: function () {
       this.setState({
-        fadeClass: 'in',
-        display: 'block'
+        fadeClass: 'in'
       });
     },
 
@@ -36,9 +33,7 @@ window.define(['react', 'modal-store'], function (React, ModalStore) {
     getInitialState: function () {
       return {
         open: ModalStore.isOpen(),
-        title: ModalStore.getTitle(),
-        body: ModalStore.getBody(),
-        footer: ModalStore.getFooter()
+        view: ModalStore.getView()
       };
     },
 
@@ -49,7 +44,7 @@ window.define(['react', 'modal-store'], function (React, ModalStore) {
           {
             className: 'modal fade ' + (this.state.fadeClass ? this.state.fadeClass : ''),
             style: {
-              display: this.state.display
+              display: 'block'
             }
           },
           React.createElement(
@@ -69,31 +64,7 @@ window.define(['react', 'modal-store'], function (React, ModalStore) {
               {
                 className: 'modal-content'
               },
-              React.createElement(
-                'div',
-                {
-                  className: 'modal-header'
-                },
-                React.createElement(
-                  'h4',
-                  null,
-                  this.state.title
-                )
-              ),
-              React.createElement(
-                'div',
-                {
-                  className: 'modal-body'
-                },
-                this.state.body
-              ),
-              React.createElement(
-                'div',
-                {
-                  className: 'modal-footer'
-                },
-                this.state.footer
-              )
+              this.state.view
             )
           )
         );
