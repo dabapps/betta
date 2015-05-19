@@ -47,7 +47,7 @@ window.define(['react', 'modal-store'], function (React, ModalStore) {
         return React.createElement(
           'div',
           {
-            className: 'modal fade ' + this.state.fadeClass,
+            className: 'modal fade ' + (this.state.fadeClass ? this.state.fadeClass : ''),
             style: {
               display: this.state.display
             }
