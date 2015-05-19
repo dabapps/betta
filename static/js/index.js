@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], function (React, less, $, Iframe, Sidebar, variables) {
+window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables', 'modal'], function (React, less, $, Iframe, Sidebar, variables, Modal) {
 
   var App = React.createClass({
     resetVariables: function () {
@@ -215,6 +215,9 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
             preview: self.preview,
             reset: self.reset
           }
+        ),
+        React.createElement(
+          Modal
         )
       );
     }

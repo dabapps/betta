@@ -17,9 +17,13 @@
 
 */
 
-window.define(['react'], function (React) {
+window.define(['react', 'modal-store'], function (React, ModalStore) {
 
   var SidebarMenu = React.createClass({
+    export: function () {
+      ModalStore.action('open', 'Hello, world!', 'Content');
+    },
+
     toggleDropdown: function () {
       this.setState({
         dropdownActive: !this.state.dropdownActive
@@ -57,7 +61,9 @@ window.define(['react'], function (React) {
             null,
             React.createElement(
               'a',
-              null,
+              {
+                onClick: self.open
+              },
               'Open'
             )
           ),
@@ -72,7 +78,9 @@ window.define(['react'], function (React) {
             null,
             React.createElement(
               'a',
-              null,
+              {
+                onClick: self.save
+              },
               'Save'
             )
           ),
@@ -81,8 +89,27 @@ window.define(['react'], function (React) {
             null,
             React.createElement(
               'a',
-              null,
+              {
+                onClick: self.saveAs
+              },
               'Save as'
+            )
+          ),
+          React.createElement(
+            'li',
+            {
+              className: 'divider'
+            }
+          ),
+          React.createElement(
+            'li',
+            null,
+            React.createElement(
+              'a',
+              {
+                onClick: self.export
+              },
+              'Export'
             )
           ),
           React.createElement(
