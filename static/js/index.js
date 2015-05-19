@@ -27,11 +27,11 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables', 'mod
       if (result) {
         result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
 
-        if (!reset) {
-          result = result.replace(/@.+?variables.+?;/i, variables.pack(self.state.unpackedVariables));
-        } else {
+        if (reset) {
           self.resetVariables();
         }
+
+        result = result.replace(/@.+?variables.+?;/i, variables.pack(self.state.unpackedVariables)); 
 
         less.render(result, function (error, tree) {
           if (error) {
