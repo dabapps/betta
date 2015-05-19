@@ -4,18 +4,8 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables', 'mod
 
   var App = React.createClass({
     resetVariables: function () {
-      var unpackedVariables = this.state.unpackedVariables;
-
-      $.each(unpackedVariables, function (collectionIndex, collection) {
-        $.each(collection.children, function (childIndex, child) {
-          if (child.element === 'variable') {
-            child.value = '';
-          }
-        });
-      });
-
       this.setState({
-        unpackedVariables: unpackedVariables
+        unpackedVariables: variables.reset(this.state.unpackedVariables)
       });
     },
 

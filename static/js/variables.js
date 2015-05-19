@@ -122,6 +122,18 @@ window.define(['jquery'], function ($) {
 
       return variables;
     },
+
+    reset: function (unpackedVariables) {
+      $.each(unpackedVariables, function (collectionIndex, collection) {
+        $.each(collection.children, function (childIndex, child) {
+          if (child.element === 'variable') {
+            child.value = '';
+          }
+        });
+      });
+
+      return unpackedVariables;
+    }
   };
 
   return variables;
