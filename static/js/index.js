@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variable-store', 'modal'], function (React, less, $, Iframe, Sidebar, VariableStore, Modal) {
+window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variable-store', 'modal-renderer'], function (React, less, $, Iframe, Sidebar, VariableStore, ModalRenderer) {
 
   var App = React.createClass({
     applyCSS: function (css) {
@@ -191,7 +191,7 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variable-store',
           }
         ),
         React.createElement(
-          Modal
+          ModalRenderer
         )
       );
     }
