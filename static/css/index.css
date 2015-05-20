@@ -351,10 +351,14 @@ a {
 }
 
 .file-name {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   margin-bottom: 0;
   border-bottom: 0;
+  padding: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 @-webkit-keyframes loading-outer {
