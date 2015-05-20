@@ -1,10 +1,20 @@
 'use strict';
 
-window.define(['react', 'modal-template', 'modal-store'], function (React, ModalTemplate, ModalStore) {
+window.define(['react', 'modal-template', 'modal-store', 'variable-store'], function (React, ModalTemplate, ModalStore, VariableStore) {
 
   var ExportModal = React.createClass({
     close: function () {
       ModalStore.action('close');
+    },
+
+    componentWillMount: function () {
+      this.setState({
+        packedVariables: VariableStore.getPackedVariables()
+      });
+    },
+
+    getInitialState: function () {
+      return {};
     },
 
     render: function () {
@@ -13,11 +23,22 @@ window.define(['react', 'modal-template', 'modal-store'], function (React, Modal
         {
           title: 'Export',
           body: React.createElement(
-            'a',
-            {
-              onClick: this.export
-            },
-            'Export variables'
+            'div',
+            null,
+            React.createElement(
+              'pre',
+              {
+                className: 'file-name'
+              },
+              'variables.less'
+            ),
+            React.createElement(
+              'textarea',
+              {
+                className: 'variable-textarea'
+              },
+              this.state.packedVariables
+            )
           ),
           footer: React.createElement(
             'button',
