@@ -9,7 +9,7 @@ window.define(['react', 'modal-template', 'modal-store', 'variable-store'], func
 
     componentWillMount: function () {
       this.setState({
-        packedVariables: VariableStore.getPackedVariables()
+        packedVariables: VariableStore.getPackedVariables(true, true, false, true)
       });
     },
 

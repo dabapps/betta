@@ -109,10 +109,18 @@ window.define(['store', 'jquery'], function (Store, $) {
     return variables;
   };
 
-  VariableStore.getPackedVariables = function () {
+  VariableStore.getPackedVariables = function (includeHeaders, includeLabels, excludeUnedited, commentUnedited) {
     var packedVariables = '';
 
+    if (includeHeaders) {
+      packedVariables = '//\n// Variables\n// --------------------------------------------------\n';
+    }
+
     $.each(variables, function (collectionIndex, collection) {
+      if (includeHeaders) {
+        packedVariables = packedVariables.concat('\n//== '.concat(collection.value).concat('\n//\n'));
+      }
+
       $.each(collection.children, function (childIndex, child) {
         if (child.element === 'variable') {
           if (typeof child.value !== 'undefined' && child.value !== null && child.value !== '') {
@@ -120,10 +128,18 @@ window.define(['store', 'jquery'], function (Store, $) {
               [child.name, child.value].join(': ').concat(';\n')
             );
           } else {
-            packedVariables = packedVariables.concat(
-              [child.name, child.defaultValue].join(': ').concat(';\n')
-            );
+            if (!excludeUnedited) {
+              packedVariables = packedVariables.concat(
+                (commentUnedited ? '//' : '').concat(
+                  [child.name, child.defaultValue].join(': ').concat(';\n')
+                )
+              );
+            }
           }
+        } else if (child.element === 'subText' && includeHeaders) {
+          packedVariables = packedVariables.concat('//## '.concat(child.value).concat('\n\n'));
+        } else if (child.element === 'label' && includeLabels) {
+          packedVariables = packedVariables.concat('//** '.concat(child.value).concat('\n'));
         }
       });
     });
