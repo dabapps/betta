@@ -51,12 +51,16 @@ window.define(['react', 'modal-template', 'modal-store', 'variable-store', 'chec
       var self = this;
 
       var settings = this.state.settings.map(function (setting, settingsIndex) {
+        if (settingsIndex === 3 && self.state.settings[2] && self.state.settings[2].value) {
+          return undefined;
+        }
+
         return React.createElement(
           Checkbox,
           {
             checked: setting.value,
             label: setting.name,
-            onClick: self.updateSetting.bind(this, settingsIndex)
+            onClick: self.updateSetting.bind(self, settingsIndex)
           }
         );
       });
