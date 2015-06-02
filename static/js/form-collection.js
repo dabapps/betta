@@ -18,16 +18,9 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
           child.value
         );
       },
-      label: function (child) {
-        return React.createElement(
-          'sub',
-          null,
-          child.value
-        );
-      },
       variable: function (child, index) {
         var self = this;
-        var colorPicker;
+        var colorPicker, label;
 
         if (child.type === 'color') {
           colorPicker = React.createElement(
@@ -40,11 +33,24 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
           );
         }
 
+        if (child.label) {
+          label = React.createElement(
+            'p',
+            null,
+            React.createElement(
+              'sub',
+              null,
+              child.label
+            )
+          );
+        }
+
         return React.createElement(
           'div',
           {
             className: 'form-group'
           },
+          label,
           React.createElement(
             'label',
             null,
