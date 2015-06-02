@@ -4,6 +4,7 @@ window.define(['store', 'jquery'], function (Store, $) {
 
   var variables = [];
   var colorVariables = [];
+  var lastLabel = undefined;
 
   var VariableStore = new Store();
 
@@ -30,10 +31,7 @@ window.define(['store', 'jquery'], function (Store, $) {
   };
 
   var addLabel = function (unpackedVariables, line) {
-    unpackedVariables[unpackedVariables.length - 1].children.push({
-      element: 'label',
-      value: line.replace(/\/\/\*\*\s*/, '')
-    });
+    lastLabel = line.replace(/\/\/\*\*\s*/, '');
   };
 
   var addVariable = function (unpackedVariables, line) {
@@ -60,8 +58,11 @@ window.define(['store', 'jquery'], function (Store, $) {
       name: name,
       defaultValue: defaultValue,
       value: '',
-      type: type
+      type: type,
+      label: lastLabel
     });
+
+    lastLabel = undefined;
   };
 
   var unpackVariables = function (result) {
