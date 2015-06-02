@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['store', 'jquery'], function (Store, $) {
+window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
 
   var variables = [];
   var colorVariables = [];
@@ -70,7 +70,7 @@ window.define(['store', 'jquery'], function (Store, $) {
     var lines = result.split('\n');
     var unpackedVariables = [];
 
-    $.each(lines, function (index, line) {
+    _.each(lines, function (line) {
       // Sub-header
       if (line.indexOf('//===') === 0) {
         addSubHeader(unpackedVariables, line);
@@ -121,12 +121,12 @@ window.define(['store', 'jquery'], function (Store, $) {
       packedVariables = '//\n// Variables\n// --------------------------------------------------\n';
     }
 
-    $.each(variables, function (collectionIndex, collection) {
+    _.each(variables, function (collection) {
       if (includeHeaders) {
         packedVariables = packedVariables.concat('\n//== '.concat(collection.value).concat('\n//\n'));
       }
 
-      $.each(collection.children, function (childIndex, child) {
+      _.each(collection.children, function (child) {
         if (child.element === 'variable') {
           var label = '';
           if (includeLabels && child.label) {
@@ -156,8 +156,8 @@ window.define(['store', 'jquery'], function (Store, $) {
   };
 
   VariableStore.createAction('reset', function () {
-    $.each(variables, function (collectionIndex, collection) {
-      $.each(collection.children, function (childIndex, child) {
+    _.each(variables, function (collection) {
+      _.each(collection.children, function (child) {
         if (child.element === 'variable') {
           child.value = '';
         }

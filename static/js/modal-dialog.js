@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['react', 'modal-store', 'jquery'], function (React, ModalStore, $) {
+window.define(['react', 'modal-store', 'underscore'], function (React, ModalStore, _) {
 
   var Modal = React.createClass({
     close: function () {
@@ -21,7 +21,7 @@ window.define(['react', 'modal-store', 'jquery'], function (React, ModalStore, $
     clearTimeouts: function () {
       var timeouts = this.state.timeouts;
 
-      $.each(timeouts, function (timeout) {
+      _.each(timeouts, function (timeout) {
         clearTimeout(timeout);
       });
 
