@@ -23,11 +23,8 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     });
   };
 
-  var addSubText = function (unpackedVariables, line) {
-    unpackedVariables[unpackedVariables.length - 1].children.push({
-      element: 'subText',
-      value: line.replace(/\/\/##\s*/, '')
-    });
+  var addDescription = function (unpackedVariables, line) {
+    unpackedVariables[unpackedVariables.length - 1].description = line.replace(/\/\/##\s*/, '');
   };
 
   var addLabel = function (unpackedVariables, line) {
@@ -81,7 +78,7 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
       } else
       // Sub-text
       if (line.indexOf('//##') === 0) {
-        addSubText(unpackedVariables, line);
+        addDescription(unpackedVariables, line);
       } else
       // Label
       if (line.indexOf('//**') === 0) {
@@ -114,6 +111,10 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     return typeof value !== 'undefined' && value !== null && value !== '';
   };
 
+  var variablesHaveValues = function (item) {
+    return item.element === 'variable' && isDefined(item.value);
+  };
+
   VariableStore.getPackedVariables = function (includeHeaders, includeLabels, excludeUnedited, commentUnedited) {
     var packedVariables = '';
 
@@ -122,8 +123,14 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     }
 
     _.each(variables, function (collection) {
-      if (includeHeaders) {
-        packedVariables = packedVariables.concat('\n//== '.concat(collection.value).concat('\n//\n'));
+      var collectionHasChildren = !(excludeUnedited && !_.any(collection.children, variablesHaveValues));
+      if (includeHeaders && collectionHasChildren) {
+        packedVariables = packedVariables
+          .concat('\n//== ')
+          .concat(collection.value)
+          .concat('\n//\n')
+          .concat(collection.description ? '//## '.concat(collection.description) : '//##')
+          .concat('\n\n');
       }
 
       _.each(collection.children, function (child) {
@@ -146,8 +153,8 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
               );
             }
           }
-        } else if (child.element === 'subText' && includeHeaders) {
-          packedVariables = packedVariables.concat('//## '.concat(child.value).concat('\n\n'));
+        } else if (child.element === 'subHeader' && collectionHasChildren) {
+          packedVariables = packedVariables.concat('//=== ').concat(child.value).concat('\n');
         }
       });
     });

@@ -11,13 +11,6 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
           child.value
         );
       },
-      subText: function (child) {
-        return React.createElement(
-          'p',
-          null,
-          child.value
-        );
-      },
       variable: function (child, index) {
         var self = this;
         var colorPicker, label;
@@ -79,10 +72,19 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
 
     render: function () {
       var self = this;
+      var description;
 
       var children = this.props.group.children.map(function (child, index) {
         return self.create[child.element].call(self, child, index);
       });
+
+      if (this.props.group.description) {
+        description = React.createElement(
+          'p',
+          null,
+          this.props.group.description
+        );
+      }
 
       return React.createElement(
         'div',
@@ -100,6 +102,7 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
             this.props.group.value
           )
         ),
+        {description},
         children
       );
     }
