@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['utils'], function (utils) {
+window.define(['underscore'], function (_) {
 
   var Store = function () {
     var eventInProgress = false;
@@ -33,7 +33,7 @@ window.define(['utils'], function (utils) {
           } else {
             eventInProgress = true;
               if (listeners[type]) {
-                utils.each(listeners[type], function (value) {
+                _.each(listeners[type], function (value) {
                   value();
                 });
               }
