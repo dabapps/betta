@@ -4,7 +4,7 @@ window.define(['store', 'jquery'], function (Store, $) {
 
   var variables = [];
   var colorVariables = [];
-  var lastLabel = undefined;
+  var lastLabel;
 
   var VariableStore = new Store();
 
