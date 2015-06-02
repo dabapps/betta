@@ -110,6 +110,10 @@ window.define(['store', 'jquery'], function (Store, $) {
     return variables;
   };
 
+  var isDefined = function (value) {
+    return typeof value !== 'undefined' && value !== null && value !== '';
+  };
+
   VariableStore.getPackedVariables = function (includeHeaders, includeLabels, excludeUnedited, commentUnedited) {
     var packedVariables = '';
 
@@ -124,13 +128,18 @@ window.define(['store', 'jquery'], function (Store, $) {
 
       $.each(collection.children, function (childIndex, child) {
         if (child.element === 'variable') {
-          if (typeof child.value !== 'undefined' && child.value !== null && child.value !== '') {
-            packedVariables = packedVariables.concat(
+          var label = '';
+          if (includeLabels && child.label) {
+            label = '//** '.concat(child.label).concat('\n');
+          }
+
+          if (isDefined(child.value)) {
+            packedVariables = packedVariables.concat(label).concat(
               [child.name, child.value].join(': ').concat(';\n')
             );
           } else {
             if (!excludeUnedited) {
-              packedVariables = packedVariables.concat(
+              packedVariables = packedVariables.concat(label).concat(
                 (commentUnedited ? '//' : '').concat(
                   [child.name, child.defaultValue].join(': ').concat(';\n')
                 )
@@ -139,8 +148,6 @@ window.define(['store', 'jquery'], function (Store, $) {
           }
         } else if (child.element === 'subText' && includeHeaders) {
           packedVariables = packedVariables.concat('//## '.concat(child.value).concat('\n\n'));
-        } else if (child.element === 'label' && includeLabels) {
-          packedVariables = packedVariables.concat('//** '.concat(child.value).concat('\n'));
         }
       });
     });
