@@ -1,18 +1,42 @@
 'use strict';
 
-window.define(['react', 'color', 'color-picker-values', 'color-palette'], function (React, color, ColorPickerValues, ColorPalette) {
+window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider'], function (React, color, ColorPickerValues, ColorPalette, Slider) {
 
   var ColorPicker = React.createClass({
-    setPoint: function (point) {
+    getHSL: function (h, s, l) {
       var hsl = this.state.hsl;
-      hsl.s = Math.round(point.x * 100) / 100;
-      hsl.l = Math.round((1 - point.y) * 100) / 100;
+      if (typeof h !== 'undefined') {
+        hsl.h = h;
+      }
+      if (typeof s !== 'undefined') {
+        hsl.s = Math.round(s * 100) / 100;
+      }
+      if (typeof l !== 'undefined') {
+        hsl.l = Math.round((1 - l) * 100) / 100;
+      }
 
+      return hsl;
+    },
+
+    setPoint: function (point) {
+      var hsl = this.getHSL(undefined, point.x, point.y);
       var rgb = color.HSLToRGB(hsl.h, hsl.s, hsl.l);
       var hex = color.RGBToHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({
         point: point,
+        hsl: hsl,
+        rgb: rgb,
+        hex: hex
+      });
+    },
+
+    setHue: function (h) {
+      var hsl = this.getHSL(h);
+      var rgb = color.HSLToRGB(hsl.h, hsl.s, hsl.l);
+      var hex = color.RGBToHex(rgb.r, rgb.g, rgb.b);
+
+      this.setState({
         hsl: hsl,
         rgb: rgb,
         hex: hex
@@ -69,6 +93,15 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette'], functi
                 hsl: self.state.hsl,
                 rgb: self.state.rgb,
                 hex: self.state.hex
+              }
+            ),
+            React.createElement(
+              Slider,
+              {
+                className: 'hue-slider',
+                value: this.state.hsl.h,
+                orientation: 'vertical',
+                onChange: this.setHue
               }
             )
           ),
