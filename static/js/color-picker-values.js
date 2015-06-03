@@ -9,7 +9,7 @@ window.define(['react'], function (React) {
       return React.createElement(
         'div',
         {
-          className: 'row'
+          className: 'row values'
         },
         React.createElement(
           'div',

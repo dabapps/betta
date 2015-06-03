@@ -212,6 +212,10 @@ a {
   z-index: 1;
 }
 
+.input-wrapper .color-picker .values {
+  margin-top: 8px;
+}
+
 .color-picker .swatch {
   position: absolute;
   top: 0;
