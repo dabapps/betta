@@ -1,31 +1,8 @@
 'use strict';
 
-window.define(['react', 'less', 'jquery', 'iframe', 'sidebar'], function (React, less, $, Iframe, Sidebar) {
+window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], function (React, less, $, Iframe, Sidebar, variables) {
 
   var App = React.createClass({
-    createVariables: function () {
-      var self = this;
-      var variables = '';
-
-      $.each(self.state.unpackedVariables, function (collectionIndex, collection) {
-        $.each(collection.children, function (childIndex, child) {
-          if (child.element === 'variable') {
-            if (typeof child.value !== 'undefined' && child.value !== null && child.value !== '') {
-              variables = variables.concat(
-                [child.name, child.value].join(': ').concat(';\n')
-              );
-            } else {
-              variables = variables.concat(
-                [child.name, child.defaultValue].join(': ').concat(';\n')
-              );
-            }
-          }
-        });
-      });
-
-      return variables;
-    },
-
     resetVariables: function () {
       var unpackedVariables = this.state.unpackedVariables;
 
@@ -61,7 +38,7 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar'], function (React,
         result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
 
         if (!reset) {
-          result = result.replace(/@.+?variables.+?;/i, self.createVariables());
+          result = result.replace(/@.+?variables.+?;/i, variables.pack(self.state.unpackedVariables));
         } else {
           self.resetVariables();
         }
@@ -69,6 +46,9 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar'], function (React,
         less.render(result, function (error, tree) {
           if (error) {
             window.alert(error);
+            self.setState({
+              loading: false
+            });
             return;
           }
 
@@ -136,105 +116,18 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar'], function (React,
       });
     },
 
-    addCollection: function (unpackedVariables, line) {
-      unpackedVariables.push({
-        element: 'collection',
-        value: line.replace(/\/\/==\s*/, ''),
-        children: []
-      });
-    },
-
-    addSubHeader: function (unpackedVariables, line) {
-      unpackedVariables[unpackedVariables.length - 1].children.push({
-        element: 'subHeader',
-        value: line.replace(/\/\/===\s*/, '')
-      });
-    },
-
-    addSubText: function (unpackedVariables, line) {
-      unpackedVariables[unpackedVariables.length - 1].children.push({
-        element: 'subText',
-        value: line.replace(/\/\/##\s*/, '')
-      });
-    },
-
-    addLabel: function (unpackedVariables, line) {
-      unpackedVariables[unpackedVariables.length - 1].children.push({
-        element: 'label',
-        value: line.replace(/\/\/\*\*\s*/, '')
-      });
-    },
-
-    addVariable: function (unpackedVariables, line) {
-      var colorVariables = this.state.colorVariables;
-      var name = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '@$1');
-      var defaultValue = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2');
-      var type;
-
-      if (defaultValue.indexOf('#') === 0 || defaultValue.indexOf('lighten') === 0 || defaultValue.indexOf('darken') === 0) {
-        type = 'color';
-        colorVariables.push(name);
-        this.setState({
-          colorVariables: colorVariables
-        });
-      } else if (defaultValue.indexOf('@') === 0) {
-        if (colorVariables.indexOf(defaultValue) >= 0) {
-          type = 'color';
-          colorVariables.push(name);
-          this.setState({
-            colorVariables: colorVariables
-          });
-        } else {
-          type = 'other';
-        }
-      } else {
-        type = 'other';
-      }
-
-      unpackedVariables[unpackedVariables.length - 1].children.push({
-        element: 'variable',
-        name: name,
-        defaultValue: defaultValue,
-        value: '',
-        type: type
-      });
-    },
-
     unpackVariables: function (result) {
-      var self = this;
-      var lines = result.split('\n');
-      var unpackedVariables = [];
-
-      $.each(lines, function (index, line) {
-        // Sub-header
-        if (line.indexOf('//===') === 0) {
-          self.addSubHeader(unpackedVariables, line);
-        } else
-        // Header (collection)
-        if (line.indexOf('//==') === 0) {
-          self.addCollection(unpackedVariables, line);
-        } else
-        // Sub-text
-        if (line.indexOf('//##') === 0) {
-          self.addSubText(unpackedVariables, line);
-        } else
-        // Label
-        if (line.indexOf('//**') === 0) {
-          self.addLabel(unpackedVariables, line);
-        } else
-        // Variable
-        if (line.indexOf('@') === 0) {
-          self.addVariable(unpackedVariables, line);
-        }
-      });
-
       this.setState({
-        unpackedVariables: unpackedVariables
+        unpackedVariables: variables.unpack(result)
       });
     },
 
     errorLoadingLess: function (error) {
       window.alert(error.responseText);
+
+      this.setState({
+        loading: false
+      });
     },
 
     getVariables: function () {
@@ -263,7 +156,6 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar'], function (React,
       return {
         projects: [],
         unpackedVariables: [],
-        colorVariables: [],
         iframeDoc: undefined,
         iframeLoaded: false,
         loading: true,
