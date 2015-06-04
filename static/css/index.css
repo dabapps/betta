@@ -218,6 +218,14 @@ a {
   z-index: 0;
 }
 
+.input-wrapper .color-picker .values .col-xs-12 {
+  margin-bottom: 4px;
+}
+
+.input-wrapper .color-picker .values .col-xs-12:last-child {
+  margin-bottom: 0;
+}
+
 .color-picker .swatch {
   position: absolute;
   top: 0;
