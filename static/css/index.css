@@ -213,7 +213,9 @@ a {
 }
 
 .input-wrapper .color-picker .values {
+  position: relative;
   margin-top: 8px;
+  z-index: 0;
 }
 
 .color-picker .swatch {
@@ -312,6 +314,7 @@ a {
   width: 100%;
   height: auto;
   padding-right: 32px;
+  z-index: 1;
 }
 
 .color-picker .picker .hue-slider {
@@ -325,6 +328,7 @@ a {
   background-position: 0 0;
   background-size: 100% 100%;
   overflow: hidden;
+  z-index: 0;
 }
 
 .color-picker .picker .hue-slider .handle {
@@ -357,6 +361,7 @@ a {
   padding-bottom: 100%;
   background-color: red;
   border: 1px solid #ccc;
+  z-index: 1;
 }
 
 .color-picker .picker .point {
