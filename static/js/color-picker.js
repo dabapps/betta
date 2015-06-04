@@ -112,6 +112,25 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
       };
     },
 
+    HexInput: function (value) {
+      var content = value.replace(/^#/i, '').replace(/\s+?$/i, '');
+      if (content.length !== 3 && content.length !== 6) {
+        return false;
+      }
+      var rgb = color.HexToRGB(content);
+      var hsl = color.RGBToHSL(rgb.r, rgb.g, rgb.b);
+
+      return {
+        hsl: {
+          h: hsl.h / 360,
+          s: hsl.s / 100,
+          l: hsl.l / 100
+        },
+        rgb: rgb,
+        hex: '#'.concat(content)
+      };
+    },
+
     getColors: function (value) {
       if (!value) {
         return false;
@@ -136,6 +155,7 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
 
       // Hex matches #af1 or #acb123
       if (value.match(/^#([a-f0-9][a-f0-9][a-f0-9])([a-f0-9][a-f0-9][a-f0-9])?\s*$/i)) {
+        return this.HexInput(value);
       }
 
       return false;
