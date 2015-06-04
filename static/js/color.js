@@ -74,7 +74,7 @@ window.define([], function () {
       }
 
       return {
-        h: Math.round(h * 255),
+        h: Math.round(h * 360),
         s: Math.round(s * 100),
         l: Math.round(l * 100)
       };
