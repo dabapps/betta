@@ -1,19 +1,54 @@
 'use strict';
 
-window.define(['react', 'color-picker'], function (React, ColorPicker) {
+window.define(['react', 'color-picker', 'underscore'], function (React, ColorPicker, _) {
+
+  var searchableTypes = [
+    'name',
+    'defaultValue',
+    'value',
+    'label'
+  ];
 
   var FormCollection = React.createClass({
+    areDefined: function (value) {
+      return typeof value !== 'undefined';
+    },
+
+    containsSearchTerm: function (value, key) {
+      var searchTerm = this.props.searchTerm.toLowerCase().replace(/\s+?/gi, ' ');
+      var searchTerms = searchTerm.split(' ');
+
+      var areInValue = function (term) {
+        return value.toLowerCase().indexOf(term) >= 0;
+      };
+
+      return searchableTypes.indexOf(key) >= 0 &&
+        value &&
+        (
+          value.toLowerCase().indexOf(searchTerm) >= 0 ||
+          _.every(searchTerms, areInValue)
+        );
+    },
+
     create: {
       subHeader: function (child) {
+        if (this.props.searchTerm) {
+          return undefined;
+        }
         return React.createElement(
           'h5',
           null,
           child.value
         );
       },
+
       variable: function (child, index) {
         var self = this;
         var colorPicker, label;
+
+        if (this.props.searchTerm && !_.any(child, this.containsSearchTerm)) {
+          return undefined;
+        }
 
         if (child.type === 'color') {
           colorPicker = React.createElement(
@@ -72,7 +107,7 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
 
     render: function () {
       var self = this;
-      var description;
+      var description, hasSearchResults;
 
       var children = this.props.group.children.map(function (child, index) {
         return self.create[child.element].call(self, child, index);
@@ -86,10 +121,18 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
         );
       }
 
+      if (this.props.searchTerm) {
+        hasSearchResults = _.any(children, this.areDefined);
+
+        if (!hasSearchResults) {
+          return false;
+        }
+      }
+
       return React.createElement(
         'div',
         {
-          className: 'form-collection' + (this.props.index === this.props.activeIndex ? ' active' : '')
+          className: 'form-collection' + (hasSearchResults || this.props.index === this.props.activeIndex ? ' active' : '')
         },
         React.createElement(
           'a',

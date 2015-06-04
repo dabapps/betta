@@ -29,7 +29,8 @@ window.define(['react', 'form-collection', 'sidebar-menu'], function (React, For
               index: index,
               activeIndex: self.state.activeIndex,
               setActiveCollection: self.setActiveCollection,
-              updateVariable: self.props.updateVariable
+              updateVariable: self.props.updateVariable,
+              searchTerm: undefined //FIXME
             }
           );
         }
@@ -47,7 +48,8 @@ window.define(['react', 'form-collection', 'sidebar-menu'], function (React, For
             frameSizes: self.props.frameSizes,
             currentFrameSize: self.props.currentFrameSize,
             preview: self.props.preview,
-            reset: self.props.reset
+            reset: self.props.reset,
+            searchTerm: self.state.searchTerm
           }
         ),
         React.createElement(
