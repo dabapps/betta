@@ -49,24 +49,105 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
       });
     },
 
+    HSLInput: function (value) {
+      var content = /hsla?\((.+?)\)/i.exec(value)[1];
+      var hslValues = content.split(',');
+      if (hslValues.length < 3) {
+        return false;
+      }
+      if (hslValues[1].indexOf('%') < 0 || hslValues[2].indexOf('%') < 0) {
+        return false;
+      }
+      var hsl = {
+        h: parseInt(hslValues[0]) / 360,
+        s: parseInt(hslValues[1]) / 100,
+        l: parseInt(hslValues[2]) / 100
+      };
+
+      if (isNaN(hsl.h) || isNaN(hsl.s) || isNaN(hsl.l) ||
+        hsl.h < 0 || hsl.h > 1 ||
+        hsl.s < 0 || hsl.s > 1 ||
+        hsl.l < 0 || hsl.l > 1) {
+        return false;
+      }
+
+      var rgb = color.HSLToRGB(hsl.h, hsl.s, hsl.l);
+
+      return {
+        hsl: hsl,
+        rgb: rgb,
+        hex: color.RGBToHex(rgb.r, rgb.g, rgb.b)
+      };
+    },
+
+    getColors: function (value) {
+      if (!value) {
+        return false;
+      }
+
+      if (typeof value !== 'string') {
+        value = value.toString();
+      }
+
+      // Remove leading white space
+      value = value.replace(/^\s+/i, '');
+
+      // HSL matches hsl(anything) or hsla(anything)
+      if (value.match(/^hsla?\(.+?\)/i)) {
+        return this.HSLInput(value);
+      }
+
+      // RGB matches rgb(anything) or rgba(anything)
+      if (value.match(/^rgba?\(.+?\)/i)) {
+      }
+
+      // Hex matches #af1 or #acb123
+      if (value.match(/^#([a-f0-9][a-f0-9][a-f0-9])([a-f0-9][a-f0-9][a-f0-9])?\s*$/i)) {
+      }
+
+      return false;
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+      if (this.props.value !== nextProps.value) {
+        var value = nextProps.value || nextProps.defaultValue;
+        var colors = this.getColors(value);
+
+        if (colors) {
+          this.setState({
+            point: {
+              x: colors.hsl.s,
+              y: 1 - colors.hsl.l
+            },
+            hsl: colors.hsl,
+            rgb: colors.rgb,
+            hex: colors.hex
+          });
+        }
+      }
+    },
+
     getInitialState: function () {
+      var value = this.props.value || this.props.defaultValue;
+      var colors = this.getColors(value);
+
       return {
         active: false,
         point: {
-          x: 0,
-          y: 0
+          x: colors ? colors.hsl.s : 0,
+          y: colors ? 1 - colors.hsl.l : 0
         },
         hsl: {
-          h: 0,
-          s: 0,
-          l: 1
+          h: colors ? colors.hsl.h : 0,
+          s: colors ? colors.hsl.s : 0,
+          l: colors ? colors.hsl.l : 1
         },
         rgb: {
-          r: 255,
-          g: 255,
-          b: 255
+          r: colors ? colors.rgb.r : 255,
+          g: colors ? colors.rgb.g : 255,
+          b: colors ? colors.rgb.b : 255
         },
-        hex: '#ffffff'
+        hex: colors ? colors.hex : '#ffffff'
       };
     },
 
