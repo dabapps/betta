@@ -62,51 +62,6 @@ window.define(['react', 'modal-store', 'export-modal'], function (React, ModalSt
             React.createElement(
               'a',
               {
-                onClick: self.open
-              },
-              'Open'
-            )
-          ),
-          React.createElement(
-            'li',
-            {
-              className: 'divider'
-            }
-          ),
-          React.createElement(
-            'li',
-            null,
-            React.createElement(
-              'a',
-              {
-                onClick: self.save
-              },
-              'Save'
-            )
-          ),
-          React.createElement(
-            'li',
-            null,
-            React.createElement(
-              'a',
-              {
-                onClick: self.saveAs
-              },
-              'Save as'
-            )
-          ),
-          React.createElement(
-            'li',
-            {
-              className: 'divider'
-            }
-          ),
-          React.createElement(
-            'li',
-            null,
-            React.createElement(
-              'a',
-              {
                 onClick: self.export
               },
               'Export'
