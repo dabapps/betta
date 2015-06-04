@@ -80,6 +80,38 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
       };
     },
 
+    RGBInput: function (value) {
+      var content = /rgba?\((.+?)\)/i.exec(value)[1];
+      var rgbValues = content.split(',');
+      if (rgbValues.length < 3) {
+        return false;
+      }
+      var rgb = {
+        r: parseInt(rgbValues[0]),
+        g: parseInt(rgbValues[1]),
+        b: parseInt(rgbValues[2])
+      };
+
+      if (isNaN(rgb.r) || isNaN(rgb.g) || isNaN(rgb.b) ||
+        rgb.r < 0 || rgb.r > 255 ||
+        rgb.g < 0 || rgb.g > 255 ||
+        rgb.b < 0 || rgb.b > 255) {
+        return false;
+      }
+
+      var hsl = color.RGBToHSL(rgb.r, rgb.g, rgb.b);
+
+      return {
+        hsl: {
+          h: hsl.h / 360,
+          s: hsl.s / 100,
+          l: hsl.l / 100
+        },
+        rgb: rgb,
+        hex: color.RGBToHex(rgb.r, rgb.g, rgb.b)
+      };
+    },
+
     getColors: function (value) {
       if (!value) {
         return false;
@@ -99,6 +131,7 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
 
       // RGB matches rgb(anything) or rgba(anything)
       if (value.match(/^rgba?\(.+?\)/i)) {
+        return this.RGBInput(value);
       }
 
       // Hex matches #af1 or #acb123
