@@ -244,6 +244,7 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
               hsl: this.state.hsl,
               rgb: this.state.rgb,
               hex: this.state.hex,
+              setValue: this.props.setValue
             }
           )
         );
