@@ -1,254 +1,333 @@
-/* global $ */
-
 'use strict';
 
-(function () {
+window.define(['react', 'less', 'jquery', 'iframe', 'sidebar'], function (React, less, $, Iframe, Sidebar) {
 
-  var iframe = $('#frame');
-  var iframeDoc = iframe.contents();
-  var previewButton = $('#preview-button');
-  var resetButton = $('#reset-button');
+  var App = React.createClass({
+    createVariables: function () {
+      var self = this;
+      var variables = '';
 
-  var loadingIcon = $('<div>')
-    .addClass('loading-container')
-    .append(
-      $('<div>')
-        .addClass('loading-icon')
-    );
-
-  var renderCSS = function (less, success, failure) {
-    less = less || '';
-    window.less.render(less, function (error, tree) {
-      if (error) {
-        if (typeof failure === 'function') {
-          failure();
-        }
-        window.alert(error);
-        return;
-      }
-
-      if (typeof success === 'function') {
-        success();
-      }
-
-      var styles = $('<style>')
-        .html(tree.css);
-
-      iframeDoc.find('head').append(styles);
-    });
-  };
-
-  var getIframeDocument = function () {
-    iframeDoc = iframe.contents();
-  };
-
-  iframe.bind('load', getIframeDocument);
-  iframe.attr('src', 'templates/template-1.html');
-
-  var sizeControl = $('#size-control');
-
-  var sizes = ['XS', 'SM', 'MD', 'LG', 'XL'];
-
-  $.each(sizes, function (index, size) {
-    sizeControl
-      .append(
-        $('<option>')
-          .text(size)
-          .attr('selected', (index === sizes.length - 1 ? 'selected' : false))
-      );
-  });
-
-  sizeControl
-    .bind('change', function () {
-      var value = $(this).val();
-
-      $.each(sizes, function (index, size) {
-        iframe.removeClass(size.toLowerCase());
+      $.each(self.state.unpackedVariables, function (collectionIndex, collection) {
+        $.each(collection.children, function (childIndex, child) {
+          if (child.element === 'variable') {
+            if (typeof child.value !== 'undefined' && child.value !== null && child.value !== '') {
+              variables = variables.concat(
+                [child.name, child.value].join(': ').concat(';\n')
+              );
+            } else {
+              variables = variables.concat(
+                [child.name, child.defaultValue].join(': ').concat(';\n')
+              );
+            }
+          }
+        });
       });
 
-      if (value !== sizes[sizes.length - 1]) {
-        iframe.addClass(value.toLowerCase());
+      return variables;
+    },
+
+    resetVariables: function () {
+      var unpackedVariables = this.state.unpackedVariables;
+
+      $.each(unpackedVariables, function (collectionIndex, collection) {
+        $.each(collection.children, function (childIndex, child) {
+          if (child.element === 'variable') {
+            child.value = '';
+          }
+        });
+      });
+
+      this.setState({
+        unpackedVariables: unpackedVariables
+      });
+    },
+
+    applyCSS: function (css) {
+      var iframeDoc = this.state.iframeDoc;
+
+      iframeDoc.find('style').remove();
+      iframeDoc[0].styleSheets[0].disabled = true;
+
+      var styles = $('<style>')
+        .html(css);
+
+      iframeDoc.find('head').append(styles);
+    },
+
+    renderLess: function (callback, reset, result) {
+      var self = this;
+
+      if (result) {
+        result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
+
+        if (!reset) {
+          result = result.replace(/@.+?variables.+?;/i, self.createVariables());
+        } else {
+          self.resetVariables();
+        }
+
+        less.render(result, function (error, tree) {
+          if (error) {
+            window.alert(error);
+            return;
+          }
+
+          self.applyCSS(tree.css);
+
+          if (typeof callback === 'function') {
+            callback();
+          }
+        });
       }
-    });
+    },
 
-  var variablesForm = $('#variables-form');
+    preview: function () {
+      var self = this;
 
-  var toggleCollection = function () {
-    var myParent = $(this).parent('.form-collection');
+      this.setState({
+        loading: true
+      });
 
-    $('.form-collection')
-      .not(myParent)
-      .removeClass('active');
+      $.ajax('static/lib/bootstrap/less/bootstrap.less', {
+        success: self.renderLess.bind(self, function () {
+          self.setState({
+            loading: false
+          });
+        }, false),
+        error: self.errorLoadingLess
+      });
+    },
 
-    myParent.toggleClass('active');
-  };
+    reset: function () {
+      var self = this;
 
-  var addCollection = function (line) {
-    $('<div>')
-      .addClass('form-collection')
-      .append(
-        $('<a>')
-          .append($('<h4>')
-            .text(line.replace(/\/\/==\s*/, ''))
-          )
-          .click(toggleCollection)
-      )
-      .appendTo(variablesForm);
-  };
+      this.setState({
+        loading: true
+      });
 
-  var addSubHeader = function (line) {
-    $('<h5>')
-      .text(line.replace(/\/\/===\s*/, '')).appendTo($('.form-collection').last());
-  };
+      $.ajax('static/lib/bootstrap/less/bootstrap.less', {
+        success: self.renderLess.bind(self, function () {
+          self.setState({
+            loading: false
+          });
+        }, true),
+        error: self.errorLoadingLess
+      });
+    },
 
-  var addSubText = function (line) {
-    $('<p>')
-      .text(line.replace(/\/\/##\s*/, ''))
-      .appendTo($('.form-collection').last());
-  };
+    setFrameSize: function (event) {
+      var value = event.target.value;
 
-  var addLabel = function (line) {
-    $('<sub>')
-      .text(line.replace(/\/\/\*\*\s*/, ''))
-      .appendTo($('.form-collection').last());
-  };
+      var index = this.state.frameSizes.map(function (size) {
+        return size.name;
+      }).indexOf(value);
 
-  var addInput = function (line) {
-    $('<div>')
-      .addClass('form-group')
-      .append(
-        $('<label>')
-          .text(line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '@$1'))
-      ).append(
-        $('<input>')
-          .addClass('form-control')
-          .attr('placeholder', line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2'))
-      )
-      .appendTo($('.form-collection').last());
-  };
+      this.setState({
+        currentFrameSize: this.state.frameSizes[index]
+      });
+    },
 
-  $.ajax('static/lib/bootstrap/less/variables.less', {
-    success: function (result) {
+    updateVariable: function (groupIndex, variablesIndex, event) {
+      var unpackedVariables = this.state.unpackedVariables;
+      unpackedVariables[groupIndex].children[variablesIndex].value = event.target.value;
+
+      this.setState({
+        unpackedVariables: unpackedVariables
+      });
+    },
+
+    addCollection: function (unpackedVariables, line) {
+      unpackedVariables.push({
+        element: 'collection',
+        value: line.replace(/\/\/==\s*/, ''),
+        children: []
+      });
+    },
+
+    addSubHeader: function (unpackedVariables, line) {
+      unpackedVariables[unpackedVariables.length - 1].children.push({
+        element: 'subHeader',
+        value: line.replace(/\/\/===\s*/, '')
+      });
+    },
+
+    addSubText: function (unpackedVariables, line) {
+      unpackedVariables[unpackedVariables.length - 1].children.push({
+        element: 'subText',
+        value: line.replace(/\/\/##\s*/, '')
+      });
+    },
+
+    addLabel: function (unpackedVariables, line) {
+      unpackedVariables[unpackedVariables.length - 1].children.push({
+        element: 'label',
+        value: line.replace(/\/\/\*\*\s*/, '')
+      });
+    },
+
+    addVariable: function (unpackedVariables, line) {
+      var colorVariables = this.state.colorVariables;
+      var name = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '@$1');
+      var defaultValue = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2');
+      var type;
+
+      if (defaultValue.indexOf('#') === 0 || defaultValue.indexOf('lighten') === 0 || defaultValue.indexOf('darken') === 0) {
+        type = 'color';
+        colorVariables.push(name);
+        this.setState({
+          colorVariables: colorVariables
+        });
+      } else if (defaultValue.indexOf('@') === 0) {
+        if (colorVariables.indexOf(defaultValue) >= 0) {
+          type = 'color';
+          colorVariables.push(name);
+          this.setState({
+            colorVariables: colorVariables
+          });
+        } else {
+          type = 'other';
+        }
+      } else {
+        type = 'other';
+      }
+
+      unpackedVariables[unpackedVariables.length - 1].children.push({
+        element: 'variable',
+        name: name,
+        defaultValue: defaultValue,
+        value: '',
+        type: type
+      });
+    },
+
+    unpackVariables: function (result) {
+      var self = this;
       var lines = result.split('\n');
+      var unpackedVariables = [];
 
       $.each(lines, function (index, line) {
         // Sub-header
         if (line.indexOf('//===') === 0) {
-          addSubHeader(line);
+          self.addSubHeader(unpackedVariables, line);
         } else
-        // Header
+        // Header (collection)
         if (line.indexOf('//==') === 0) {
-          addCollection(line);
+          self.addCollection(unpackedVariables, line);
         } else
         // Sub-text
         if (line.indexOf('//##') === 0) {
-          addSubText(line);
+          self.addSubText(unpackedVariables, line);
         } else
         // Label
         if (line.indexOf('//**') === 0) {
-          addLabel(line);
+          self.addLabel(unpackedVariables, line);
         } else
         // Variable
         if (line.indexOf('@') === 0) {
-          addInput(line);
+          self.addVariable(unpackedVariables, line);
         }
       });
 
-      $('.form-collection')
-        .first()
-        .addClass('active');
-    }, error: function () {
-
-    }
-  });
-
-  var buildVariables = function () {
-    var myVariables = '';
-
-    variablesForm
-      .find('.form-group')
-      .each(function () {
-        var element = $(this);
-        var variableName = element.find('label').text();
-        var variableValue = element.find('input').val();
-        var variableDefault = element.find('input').attr('placeholder');
-
-        if (typeof variableValue !== 'undefined' && variableValue !== null && variableValue !== '') {
-          myVariables = myVariables.concat(
-            [variableName, variableValue].join(': ').concat(';\n')
-          );
-        } else {
-          myVariables = myVariables.concat(
-            [variableName, variableDefault].join(': ').concat(';\n')
-          );
-        }
+      this.setState({
+        unpackedVariables: unpackedVariables
       });
+    },
 
-    return myVariables;
-  };
+    errorLoadingLess: function (error) {
+      window.alert(error.responseText);
+    },
 
-  var buildLess = function (less, myVariables) {
-    if (less) {
-      less = less.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
-      less = less.replace(/@.+?variables.+?;/i, myVariables);
-    }
+    getVariables: function () {
+      var self = this;
 
-    return less;
-  };
+      $.ajax('static/lib/bootstrap/less/variables.less', {
+        success: self.unpackVariables,
+        error: self.errorLoadingLess
+      });
+    },
 
-  var removePreviousStyles = function () {
-    iframeDoc.find('style').remove();
-  };
+    iframeLoaded: function (iframe) {
+      this.setState({
+        iframeLoaded: true,
+        loading: false,
+        iframe: iframe,
+        iframeDoc: $(iframe).contents()
+      });
+    },
 
-  var disableBootstrapStyles = function () {
-    iframeDoc[0].styleSheets[0].disabled = true;
-  };
+    componentWillMount: function () {
+      this.getVariables();
+    },
 
-  var addLoadingIcon = function () {
-    loadingIcon.appendTo(
-      iframe.parent('.iframe-container')
-    );
-    previewButton.attr('disabled', 'disabled');
-    resetButton.attr('disabled', 'disabled');
-  };
-
-  var removeLoadingIcon = function () {
-    loadingIcon.remove();
-    previewButton.removeAttr('disabled');
-    resetButton.removeAttr('disabled');
-  };
-
-  var preview = function () {
-    addLoadingIcon();
-    var myVariables = buildVariables();
-
-    $.ajax('static/lib/bootstrap/less/bootstrap.less', {
-      success: function (result) {
-        var less = buildLess(result, myVariables);
-
-        renderCSS(
-          less,
-          function () {
-            removePreviousStyles();
-            disableBootstrapStyles();
-            removeLoadingIcon();
+    getInitialState: function () {
+      return {
+        projects: [],
+        unpackedVariables: [],
+        colorVariables: [],
+        iframeDoc: undefined,
+        iframeLoaded: false,
+        loading: true,
+        currentFrameSize: {
+          name: 'XL',
+          value: '100%'
+        },
+        frameSizes: [
+          {
+            name: 'XS',
+            value: 480
           },
-          removeLoadingIcon
-        );
-      }, error: function () {
+          {
+            name: 'SM',
+            value: 768
+          },
+          {
+            name: 'MD',
+            value: 992
+          },
+          {
+            name: 'LG',
+            value: 1200
+          },
+          {
+            name: 'XL',
+            value: '100%'
+          }
+        ]
+      };
+    },
 
-      }
-    });
-  };
+    render: function () {
+      var self = this;
 
-  previewButton.click(preview);
-
-  resetButton.click(function () {
-    variablesForm
-      .find('input')
-      .val('');
-
-    preview();
+      return React.createElement(
+        'div',
+        {
+          className: 'app'
+        },
+        React.createElement(
+          Iframe,
+          {
+            iframeLoaded: self.iframeLoaded,
+            loading: self.state.loading,
+            currentFrameSize: self.state.currentFrameSize
+          }
+        ),
+        React.createElement(
+          Sidebar,
+          {
+            unpackedVariables: self.state.unpackedVariables,
+            updateVariable: self.updateVariable,
+            setFrameSize: self.setFrameSize,
+            frameSizes: self.state.frameSizes,
+            currentFrameSize: self.state.currentFrameSize,
+            preview: self.preview,
+            reset: self.reset
+          }
+        )
+      );
+    }
   });
 
-})();
+  React.render(React.createElement(App), document.body);
+
+});
