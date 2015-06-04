@@ -205,7 +205,6 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
     },
 
     render: function () {
-      var self = this;
       var picker;
 
       if (this.state.active) {
@@ -222,11 +221,11 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
             React.createElement(
               ColorPalette,
               {
-                point: self.state.point,
-                onChange: self.setPoint,
-                hsl: self.state.hsl,
-                rgb: self.state.rgb,
-                hex: self.state.hex
+                point: this.state.point,
+                onChange: this.setPoint,
+                hsl: this.state.hsl,
+                rgb: this.state.rgb,
+                hex: this.state.hex
               }
             ),
             React.createElement(
@@ -242,9 +241,9 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
           React.createElement(
             ColorPickerValues,
             {
-              hsl: self.state.hsl,
-              rgb: self.state.rgb,
-              hex: self.state.hex
+              hsl: this.state.hsl,
+              rgb: this.state.rgb,
+              hex: this.state.hex,
             }
           )
         );
@@ -260,9 +259,9 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
           {
             className: 'swatch',
             style: {
-              backgroundColor: self.props.value || self.props.defaultValue
+              backgroundColor: this.props.value || this.props.defaultValue
             },
-            onClick: self.togglePicker
+            onClick: this.togglePicker
           }
         ),
         picker
