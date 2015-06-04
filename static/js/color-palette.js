@@ -2,6 +2,9 @@
 
 window.define(['react', 'color'], function (React, color) {
 
+  var MAX_SIZE = 50;
+  var MIN_SIZE = 10;
+
   var ColorPalette = React.createClass({
     addListeners: function () {
       window.addEventListener('mousemove', this.mouseMove);
@@ -29,6 +32,9 @@ window.define(['react', 'color'], function (React, color) {
 
     mouseDown: function (event) {
       event.preventDefault();
+      this.setState({
+        dragging: true
+      });
       var point = this.getPoint(event);
 
       this.props.onChange(point);
@@ -43,6 +49,9 @@ window.define(['react', 'color'], function (React, color) {
     },
 
     mouseUp: function () {
+      this.setState({
+        dragging: false
+      });
       this.removeListeners();
     },
 
@@ -50,17 +59,21 @@ window.define(['react', 'color'], function (React, color) {
       this.removeListeners();
     },
 
-    render: function () {
-      var self = this;
+    getInitialState: function() {
+      return {
+        dragging: false
+      };
+    },
 
-      var backgroundColor = color.HSLToRGB(self.props.hsl.h, 1, 0.5);
+    render: function () {
+      var backgroundColor = color.HSLToRGB(this.props.hsl.h, 1, 0.5);
       backgroundColor = color.RGBToHex(backgroundColor.r, backgroundColor.g, backgroundColor.b);
 
       return React.createElement(
         'div',
         {
           className: 'background',
-          onMouseDown: self.mouseDown,
+          onMouseDown: this.mouseDown,
           style: {
             backgroundColor: backgroundColor
           }
@@ -88,10 +101,14 @@ window.define(['react', 'color'], function (React, color) {
           {
             className: 'point',
             style: {
-              top: self.props.point.y * 100 + '%',
-              left: self.props.point.x * 100 + '%',
-              border: '1px solid ' + (self.props.point.y >= 0.5 ? '#ccc' : '#333'),
-              backgroundColor: self.props.hex
+              top: this.props.point.y * 100 + '%',
+              left: this.props.point.x * 100 + '%',
+              backgroundColor: this.props.hex,
+              width: this.state.dragging ? MAX_SIZE : MIN_SIZE,
+              height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
+              marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
+              marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
+              boxShadow: this.state.dragging ? '0 3px 6px 0 rgba(0, 0, 0, 0.5)' : '0 0 0 0 rgba(0, 0, 0, 0)'
             }
           }
         )

@@ -212,6 +212,20 @@ a {
   z-index: 1;
 }
 
+.input-wrapper .color-picker .values {
+  position: relative;
+  margin-top: 8px;
+  z-index: 0;
+}
+
+.input-wrapper .color-picker .values .col-xs-12 {
+  margin-bottom: 4px;
+}
+
+.input-wrapper .color-picker .values .col-xs-12:last-child {
+  margin-bottom: 0;
+}
+
 .color-picker .swatch {
   position: absolute;
   top: 0;
@@ -307,7 +321,45 @@ a {
   position: relative;
   width: 100%;
   height: auto;
-  padding-right: 64px;
+  padding-right: 32px;
+  z-index: 1;
+}
+
+.color-picker .picker .hue-slider {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 100%;
+  border: 1px solid #ccc;
+  background-image: url('../../static/img/hue-background.png');
+  background-position: 0 0;
+  background-size: 100% 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.color-picker .picker .hue-slider .handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  margin-top: -4px;
+}
+
+.color-picker .picker .hue-slider .handle::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 }
 
 .color-picker .picker .background {
@@ -317,18 +369,34 @@ a {
   padding-bottom: 100%;
   background-color: red;
   border: 1px solid #ccc;
+  z-index: 1;
 }
 
 .color-picker .picker .point {
   position: absolute;
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border: 1px solid #fff;
   border-radius: 50%;
   margin-left: -4px;
   margin-top: -4px;
+  -webkit-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  -moz-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  -ms-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  -o-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+}
+
+.color-picker .picker .point::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  border-radius: 50%;
 }
 
 .modal-overlay {

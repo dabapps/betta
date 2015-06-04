@@ -56,7 +56,7 @@ window.define(['react', 'form-collection', 'sidebar-menu'], function (React, For
             className: 'sidebar'
           },
           React.createElement(
-            'form',
+            'div',
             null,
             formControls
           )

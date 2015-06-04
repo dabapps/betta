@@ -19,7 +19,7 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
           colorPicker = React.createElement(
             ColorPicker,
             {
-              onChange: self.props.updateVariable.bind(null, self.props.index, index),
+              setValue: self.props.updateVariable.bind(null, self.props.index, index),
               value: child.value,
               defaultValue: child.defaultValue
             }
