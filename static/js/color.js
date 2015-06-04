@@ -83,11 +83,17 @@ window.define([], function () {
     // Takes values from 0 to 255
     RGBToHex: function (r, g, b) {
       var colorToHex = function (c) {
-        var hex = c.toString(16);
-        return hex.length === 1 ? '0'.concat(hex) : hex;
+        var hexSegment = c.toString(16);
+        return hexSegment.length === 1 ? '0'.concat(hexSegment) : hexSegment;
       };
 
-      return ['#', colorToHex(r), colorToHex(g), colorToHex(b)].join('');
+      var hex = [colorToHex(r), colorToHex(g), colorToHex(b)].join('');
+
+      if (hex[0] === hex[1] && hex[2] === hex[3] && hex[4] === hex[5]) {
+        hex = [hex[0], hex[2], hex[4]].join('');
+      }
+
+      return '#'.concat(hex);
     },
 
     // Takes 3 or 6 digit hex
