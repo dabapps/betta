@@ -90,7 +90,6 @@ window.define(['react', 'color'], function (React, color) {
             style: {
               top: self.props.point.y * 100 + '%',
               left: self.props.point.x * 100 + '%',
-              border: '1px solid ' + (self.props.point.y >= 0.65 ? '#ccc' : '#333'),
               backgroundColor: self.props.hex
             }
           }
