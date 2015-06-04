@@ -369,6 +369,11 @@ a {
   border-radius: 50%;
   margin-left: -4px;
   margin-top: -4px;
+  -webkit-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  -moz-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  -ms-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  -o-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+  transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
 }
 
 .color-picker .picker .point::before {
