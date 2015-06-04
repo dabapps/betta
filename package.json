@@ -2,15 +2,27 @@
   "name": "betta-bootstrap-editor",
   "version": "0.0.0",
   "description": "Simple Bootstrap variable editor",
-  "main": "static/js/index.js",
+  "main": "static/js/app.js",
   "scripts": {},
   "keywords": [
     "css",
     "less",
     "betta",
-    "bootstrap"
+    "bootstrap",
+    "editor"
   ],
+  "homepage": "http://jakesidsmith.github.io/betta-bootstrap-editor/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JakeSidSmith/betta-bootstrap-editor"
+  },
+  "bugs": {
+    "url": "https://github.com/JakeSidSmith/betta-bootstrap-editor/issues"
+  },
   "author": "Jake 'Sid' Smith",
-  "license": "",
+  "contributors": [{
+    "name": "Jake 'Sid' Smith"
+  }],
+  "license": "MIT",
   "dependencies": {}
 }
