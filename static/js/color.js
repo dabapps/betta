@@ -3,6 +3,7 @@
 window.define([], function () {
 
   var color = {
+    // Takes values from 0 to 1
     HSLToRGB: function (h, s, l) {
       var r, g, b;
 
@@ -42,6 +43,7 @@ window.define([], function () {
       };
     },
 
+    // Takes values from 0 to 255
     RGBToHSL: function (r, g, b) {
       r = r / 255;
       g  = g / 255;
@@ -78,6 +80,7 @@ window.define([], function () {
       };
     },
 
+    // Takes values from 0 to 255
     RGBToHex: function (r, g, b) {
       var colorToHex = function (c) {
         var hex = c.toString(16);
@@ -87,6 +90,7 @@ window.define([], function () {
       return ['#', colorToHex(r), colorToHex(g), colorToHex(b)].join('');
     },
 
+    // Takes 3 or 6 digit hex
     HexToRGB: function (hex) {
       // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
       var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
