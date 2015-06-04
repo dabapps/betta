@@ -20,7 +20,7 @@ window.define(['react', 'form-collection', 'sidebar-menu'], function (React, For
     render: function () {
       var self = this;
 
-      var formControls = this.props.unpackedVariables.map(function (item, index) {
+      var formControls = this.props.variables.map(function (item, index) {
         if (item.element === 'collection') {
           return React.createElement(
             FormCollection,

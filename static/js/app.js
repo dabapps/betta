@@ -15,7 +15,8 @@ window.requirejs.config({
     lib: '../lib',
     react: '../lib/react/react.min',
     less: '../lib/less/less.min',
-    jquery: '../lib/jquery/dist/jquery.min'
+    jquery: '../lib/jquery/dist/jquery.min',
+    underscore: '../lib/underscore/underscore-min'
   }
 });
 

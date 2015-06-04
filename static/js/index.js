@@ -1,24 +1,8 @@
 'use strict';
 
-window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], function (React, less, $, Iframe, Sidebar, variables) {
+window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variable-store', 'modal-renderer'], function (React, less, $, Iframe, Sidebar, VariableStore, ModalRenderer) {
 
   var App = React.createClass({
-    resetVariables: function () {
-      var unpackedVariables = this.state.unpackedVariables;
-
-      $.each(unpackedVariables, function (collectionIndex, collection) {
-        $.each(collection.children, function (childIndex, child) {
-          if (child.element === 'variable') {
-            child.value = '';
-          }
-        });
-      });
-
-      this.setState({
-        unpackedVariables: unpackedVariables
-      });
-    },
-
     applyCSS: function (css) {
       var iframeDoc = this.state.iframeDoc;
 
@@ -31,34 +15,49 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
       iframeDoc.find('head').append(styles);
     },
 
-    renderLess: function (callback, reset, result) {
+    errorLoadingBootstrap: function (error) {
+      window.alert(error.responseText);
+
+      this.setState({
+        loading: false
+      });
+    },
+
+    renderLess: function (result, callback) {
       var self = this;
 
-      if (result) {
-        result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
-
-        if (!reset) {
-          result = result.replace(/@.+?variables.+?;/i, variables.pack(self.state.unpackedVariables));
-        } else {
-          self.resetVariables();
+      less.render(result, function (error, tree) {
+        if (error) {
+          window.alert(error);
+          self.setState({
+            loading: false
+          });
+          return;
         }
 
-        less.render(result, function (error, tree) {
-          if (error) {
-            window.alert(error);
-            self.setState({
-              loading: false
-            });
-            return;
-          }
+        self.applyCSS(tree.css);
 
-          self.applyCSS(tree.css);
+        if (typeof callback === 'function') {
+          callback();
+        }
+      });
+    },
 
-          if (typeof callback === 'function') {
-            callback();
-          }
-        });
-      }
+    getBootstrapAndRenderLess: function (callback) {
+      var self = this;
+
+      $.ajax('static/lib/bootstrap/less/bootstrap.less', {
+        success: function (result) {
+          var variables = VariableStore.getPackedVariables();
+          variables = variables.replace(/(@icon-font-path:).+?;/i, '$1 "../static/lib/bootstrap/fonts/";');
+
+          result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
+          result = result.replace(/@.+?variables.+?;/i, variables);
+
+          self.renderLess(result, callback);
+        },
+        error: self.errorLoadingBootstrap
+      });
     },
 
     preview: function () {
@@ -68,31 +67,15 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
         loading: true
       });
 
-      $.ajax('static/lib/bootstrap/less/bootstrap.less', {
-        success: self.renderLess.bind(self, function () {
-          self.setState({
-            loading: false
-          });
-        }, false),
-        error: self.errorLoadingLess
+      this.getBootstrapAndRenderLess(function () {
+        self.setState({
+          loading: false
+        });
       });
     },
 
     reset: function () {
-      var self = this;
-
-      this.setState({
-        loading: true
-      });
-
-      $.ajax('static/lib/bootstrap/less/bootstrap.less', {
-        success: self.renderLess.bind(self, function () {
-          self.setState({
-            loading: false
-          });
-        }, true),
-        error: self.errorLoadingLess
-      });
+      VariableStore.action('reset');
     },
 
     setFrameSize: function (event) {
@@ -108,35 +91,7 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
     },
 
     updateVariable: function (groupIndex, variablesIndex, event) {
-      var unpackedVariables = this.state.unpackedVariables;
-      unpackedVariables[groupIndex].children[variablesIndex].value = event.target.value;
-
-      this.setState({
-        unpackedVariables: unpackedVariables
-      });
-    },
-
-    unpackVariables: function (result) {
-      this.setState({
-        unpackedVariables: variables.unpack(result)
-      });
-    },
-
-    errorLoadingLess: function (error) {
-      window.alert(error.responseText);
-
-      this.setState({
-        loading: false
-      });
-    },
-
-    getVariables: function () {
-      var self = this;
-
-      $.ajax('static/lib/bootstrap/less/variables.less', {
-        success: self.unpackVariables,
-        error: self.errorLoadingLess
-      });
+      VariableStore.action('updateVariable', groupIndex, variablesIndex, event.target.value);
     },
 
     iframeLoaded: function (iframe) {
@@ -148,14 +103,33 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
       });
     },
 
-    componentWillMount: function () {
+    getVariables: function () {
+      this.setState({
+        variables: VariableStore.getVariables()
+      });
+    },
+
+    getVariablesAndPreview: function () {
       this.getVariables();
+      this.preview();
+    },
+
+    componentWillMount: function() {
+      VariableStore.bind('loaded', this.getVariables);
+      VariableStore.bind('updateVariable', this.getVariables);
+      VariableStore.bind('reset', this.getVariablesAndPreview);
+    },
+
+    componentWillUnmount: function() {
+      VariableStore.unbind('loaded', this.getVariables);
+      VariableStore.unbind('updateVariable', this.getVariables);
+      VariableStore.unbind('reset', this.getVariablesAndPreview);
     },
 
     getInitialState: function () {
       return {
         projects: [],
-        unpackedVariables: [],
+        variables: VariableStore.getVariables(),
         iframeDoc: undefined,
         iframeLoaded: false,
         loading: true,
@@ -207,7 +181,7 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
         React.createElement(
           Sidebar,
           {
-            unpackedVariables: self.state.unpackedVariables,
+            variables: self.state.variables,
             updateVariable: self.updateVariable,
             setFrameSize: self.setFrameSize,
             frameSizes: self.state.frameSizes,
@@ -215,6 +189,9 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variables'], fun
             preview: self.preview,
             reset: self.reset
           }
+        ),
+        React.createElement(
+          ModalRenderer
         )
       );
     }
