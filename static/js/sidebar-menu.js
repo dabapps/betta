@@ -150,6 +150,7 @@ window.define(['react', 'modal-store', 'export-modal', 'search-store'], function
             {
               type: 'text',
               className: 'form-control',
+              placeholder: 'Search variables',
               onChange: this.setSearchTerm
             }
           )
