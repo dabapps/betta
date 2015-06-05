@@ -1,8 +1,16 @@
 'use strict';
 
-window.define(['react', 'form-collection', 'sidebar-menu'], function (React, FormCollection, SidebarMenu) {
+window.define(['react', 'form-collection', 'sidebar-menu', 'search-store'], function (React, FormCollection, SidebarMenu, SearchStore) {
 
   var Sidebar = React.createClass({
+    componentWillUnmount: function () {
+      SearchStore.unbind('setSearchTerm', this.getSearchTerm);
+    },
+
+    componentWillMount: function () {
+      SearchStore.bind('setSearchTerm', this.getSearchTerm);
+    },
+
     setActiveCollection: function (index) {
       index = this.state.activeIndex === index ? undefined : index;
 
@@ -11,9 +19,16 @@ window.define(['react', 'form-collection', 'sidebar-menu'], function (React, For
       });
     },
 
+    getSearchTerm: function () {
+      this.setState({
+        searchTerm: SearchStore.getSearchTerm()
+      });
+    },
+
     getInitialState: function () {
       return {
-        activeIndex: 0
+        activeIndex: 0,
+        searchTerm: SearchStore.getSearchTerm()
       };
     },
 
@@ -30,7 +45,7 @@ window.define(['react', 'form-collection', 'sidebar-menu'], function (React, For
               activeIndex: self.state.activeIndex,
               setActiveCollection: self.setActiveCollection,
               updateVariable: self.props.updateVariable,
-              searchTerm: undefined //FIXME
+              searchTerm: self.state.searchTerm
             }
           );
         }

@@ -17,7 +17,7 @@
 
 */
 
-window.define(['react', 'modal-store', 'export-modal'], function (React, ModalStore, ExportModal) {
+window.define(['react', 'modal-store', 'export-modal', 'search-store'], function (React, ModalStore, ExportModal, SearchStore) {
 
   var SidebarMenu = React.createClass({
     export: function () {
@@ -28,6 +28,10 @@ window.define(['react', 'modal-store', 'export-modal'], function (React, ModalSt
       this.setState({
         dropdownActive: !this.state.dropdownActive
       });
+    },
+
+    setSearchTerm: function (event) {
+      SearchStore.action('setSearchTerm', event.target.value);
     },
 
     getInitialState: function () {
@@ -134,6 +138,20 @@ window.define(['react', 'modal-store', 'export-modal'], function (React, ModalSt
               )
             ),
             dropdown
+          )
+        ),
+        React.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          React.createElement(
+            'input',
+            {
+              type: 'text',
+              className: 'form-control',
+              onChange: this.setSearchTerm
+            }
           )
         )
       );
