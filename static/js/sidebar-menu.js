@@ -34,6 +34,10 @@ window.define(['react', 'modal-store', 'export-modal', 'search-store'], function
       SearchStore.action('setSearchTerm', event.target.value);
     },
 
+    clearSearchTerm: function () {
+      SearchStore.action('setSearchTerm', '');
+    },
+
     getInitialState: function () {
       return {
         dropdownActive: false
@@ -146,13 +150,27 @@ window.define(['react', 'modal-store', 'export-modal', 'search-store'], function
             className: 'form-group'
           },
           React.createElement(
-            'input',
+            'div',
             {
-              type: 'text',
-              className: 'form-control',
-              placeholder: 'Search variables',
-              onChange: this.setSearchTerm
-            }
+              className: 'input-wrapper search-wrapper'
+            },
+            React.createElement(
+              'input',
+              {
+                type: 'text',
+                className: 'form-control',
+                placeholder: 'Search variables',
+                onChange: this.setSearchTerm,
+                value: this.props.searchTerm
+              }
+            ),
+            React.createElement(
+              'span',
+              {
+                className: 'glyphicon glyphicon-remove',
+                onClick: this.clearSearchTerm
+              }
+            )
           )
         )
       );

@@ -147,6 +147,20 @@ a {
   float: left;
 }
 
+.sidebar-menu .search-wrapper input {
+  padding-right: 32px;
+}
+
+.sidebar-menu .search-wrapper .glyphicon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 9px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
 .size-control {
   width: 64px;
 }
