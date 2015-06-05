@@ -188,6 +188,14 @@ a {
   content: '▼';
 }
 
+.form-collection.filtered h4 {
+  padding-left: 0;
+}
+
+.form-collection.filtered h4::before {
+  content: '';
+}
+
 .form-collection h4 {
   position: relative;
   padding-left: 16px;

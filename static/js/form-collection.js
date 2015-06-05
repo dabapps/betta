@@ -132,7 +132,9 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
       return React.createElement(
         'div',
         {
-          className: 'form-collection' + (hasSearchResults || this.props.index === this.props.activeIndex ? ' active' : '')
+          className: 'form-collection' +
+            (hasSearchResults || this.props.index === this.props.activeIndex ? ' active' : '') +
+            (hasSearchResults ? ' filtered' : '')
         },
         React.createElement(
           'a',
