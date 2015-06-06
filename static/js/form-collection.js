@@ -147,7 +147,7 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
             this.props.group.value
           )
         ),
-        {description},
+        description,
         children
       );
     }
