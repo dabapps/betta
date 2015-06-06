@@ -107,13 +107,22 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
 
     render: function () {
       var self = this;
-      var description, hasSearchResults;
+      var description, hasSearchResults, children;
 
-      var children = this.props.group.children.map(function (child, index) {
-        return self.create[child.element].call(self, child, index);
-      });
+      var isNotActiveCollection = typeof this.props.activeIndex !== 'undefined' && this.props.index !== this.props.activeIndex;
+      var isActiveCollection = typeof this.props.activeIndex !== 'undefined' && this.props.index === this.props.activeIndex;
 
-      if (this.props.group.description) {
+      if (isNotActiveCollection && !this.props.searchTerm) {
+        return false;
+      }
+
+      if (isActiveCollection && this.props.searchTerm) {
+        children = this.props.group.children.map(function (child, index) {
+          return self.create[child.element].call(self, child, index);
+        });
+      }
+
+      if (isActiveCollection && this.props.group.description) {
         description = React.createElement(
           'p',
           null,
@@ -133,7 +142,7 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
         'div',
         {
           className: 'form-collection' +
-            (hasSearchResults || this.props.index === this.props.activeIndex ? ' active' : '') +
+            (isActiveCollection ? ' active' : '') +
             (hasSearchResults ? ' filtered' : '')
         },
         React.createElement(

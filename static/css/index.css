@@ -179,16 +179,14 @@ a {
   border-bottom: 1px solid #aaa;
   overflow: hidden;
   height: auto;
-  max-height: 36px;
-  -webkit-transition: ease-in-out 0.4s max-height;
-  -moz-transition: ease-in-out 0.4s max-height;
-  -ms-transition: ease-in-out 0.4s max-height;
-  -o-transition: ease-in-out 0.4s max-height;
-  transition: ease-in-out 0.4s max-height;
 }
 
-.form-collection.active {
-  max-height: 4000px;
+.form-collection h4 {
+  margin-bottom: 0;
+}
+
+.form-collection.active h4 {
+  margin-bottom: 10px;
 }
 
 .form-collection.active h4::before {
@@ -205,14 +203,6 @@ a {
   top: 2px;
   left: 0;
   content: '▼';
-}
-
-.form-collection.filtered h4 {
-  padding-left: 0;
-}
-
-.form-collection.filtered h4::before {
-  content: '';
 }
 
 .form-collection h4 {
