@@ -116,7 +116,7 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
         return false;
       }
 
-      if (isActiveCollection && this.props.searchTerm) {
+      if (isActiveCollection || this.props.searchTerm) {
         children = this.props.group.children.map(function (child, index) {
           return self.create[child.element].call(self, child, index);
         });
