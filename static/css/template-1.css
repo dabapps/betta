@@ -23,3 +23,19 @@
   position: fixed;
   top: 70px;
 }
+
+.github-badge {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  border: 0;
+  z-index: 9999;
+}
+
+@media all and (min-width: 768px) {
+
+  .github-badge {
+    top: 0;
+  }
+
+}
