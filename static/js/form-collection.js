@@ -1,19 +1,55 @@
 'use strict';
 
-window.define(['react', 'color-picker'], function (React, ColorPicker) {
+window.define(['react', 'color-picker', 'underscore'], function (React, ColorPicker, _) {
+
+  var searchableTypes = [
+    'name',
+    'defaultValue',
+    'value',
+    'label'
+  ];
 
   var FormCollection = React.createClass({
+    areDefined: function (value) {
+      return typeof value !== 'undefined';
+    },
+
+    areInValue: function (value, term) {
+      return value.toLowerCase().indexOf(term) >= 0;
+    },
+
+    containsSearchTerm: function (value, key) {
+      var self = this;
+      var searchTerm = this.props.searchTerm.toLowerCase().replace(/\s+?/gi, ' ');
+      var searchTerms = searchTerm.split(' ');
+
+      return searchableTypes.indexOf(key) >= 0 &&
+        value &&
+        (
+          value.toLowerCase().indexOf(searchTerm) >= 0 ||
+          _.every(searchTerms, self.areInValue.bind(self, value))
+        );
+    },
+
     create: {
       subHeader: function (child) {
+        if (this.props.searchTerm) {
+          return undefined;
+        }
         return React.createElement(
           'h5',
           null,
           child.value
         );
       },
+
       variable: function (child, index) {
         var self = this;
         var colorPicker, label;
+
+        if (this.props.searchTerm && !_.any(child, this.containsSearchTerm)) {
+          return undefined;
+        }
 
         if (child.type === 'color') {
           colorPicker = React.createElement(
@@ -72,13 +108,22 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
 
     render: function () {
       var self = this;
-      var description;
+      var description, hasSearchResults, children;
 
-      var children = this.props.group.children.map(function (child, index) {
-        return self.create[child.element].call(self, child, index);
-      });
+      var isNotActiveCollection = typeof this.props.activeIndex !== 'undefined' && this.props.index !== this.props.activeIndex;
+      var isActiveCollection = typeof this.props.activeIndex !== 'undefined' && this.props.index === this.props.activeIndex;
 
-      if (this.props.group.description) {
+      if (isNotActiveCollection && !this.props.searchTerm) {
+        return false;
+      }
+
+      if (isActiveCollection || this.props.searchTerm) {
+        children = this.props.group.children.map(function (child, index) {
+          return self.create[child.element].call(self, child, index);
+        });
+      }
+
+      if (isActiveCollection && this.props.group.description) {
         description = React.createElement(
           'p',
           null,
@@ -86,10 +131,20 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
         );
       }
 
+      if (this.props.searchTerm) {
+        hasSearchResults = _.any(children, this.areDefined);
+
+        if (!hasSearchResults) {
+          return false;
+        }
+      }
+
       return React.createElement(
         'div',
         {
-          className: 'form-collection' + (this.props.index === this.props.activeIndex ? ' active' : '')
+          className: 'form-collection' +
+            (isActiveCollection ? ' active' : '') +
+            (hasSearchResults ? ' filtered' : '')
         },
         React.createElement(
           'a',
