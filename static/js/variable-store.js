@@ -200,11 +200,30 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
       if (line.indexOf('@') === 0 || (includeCommented && line.indexOf('//@') === 0)) {
         line = line.replace(/^\/\//, '');
         var name = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '@$1');
-        var variable = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2');
+        var value = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2');
+        var variableIndex;
 
-        //FIXME
+        var groupIndex = _.findIndex(variables, function (collection) {
+          var childIndex = _.findIndex(collection.children, function (child) {
+            return child.name === name;
+          });
 
-        console.log(name, variable);
+          if (childIndex >= 0) {
+            variableIndex = childIndex;
+          }
+
+          return childIndex >= 0;
+        });
+
+        if (groupIndex >= 0) {
+          if (overrideExisting) {
+            variables[groupIndex].children[variableIndex].value = value;
+          } else {
+            if (!variables[groupIndex].children[variableIndex].value) {
+              variables[groupIndex].children[variableIndex].value = value;
+            }
+          }
+        }
       }
     });
 
