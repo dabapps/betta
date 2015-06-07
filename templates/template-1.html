@@ -40,7 +40,7 @@
     </div>
   </nav>
 
-  <div class="container theme-showcase" role="main">
+  <div class="container theme-showcase" role="main" id="mainCol">
 
     <div class="col-md-9">
       <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -602,18 +602,18 @@
 
     </div> <!-- /col-md-9 -->
 
-    <div class="col-md-3 hidden-xs hidden-sm">
-      <div class="list-group">
-          <a class="list-group-item" href="#buttons">Buttons</a>
-          <a class="list-group-item" href="#tables">Tables</a>
-          <a class="list-group-item" href="#thumbnails">Thumbnails</a>
-          <a class="list-group-item" href="#labels">Labels</a>
-          <a class="list-group-item" href="#badges">Badges</a>
-          <a class="list-group-item" href="#dropdown-menu">Dropdown Menu</a>
-          <a class="list-group-item" href="#navs">Navs</a>
-          <a class="list-group-item" href="#navbars">Navbars</a>
-          <a class="list-group-item" href="#alerts">Alerts</a>
-      </div>
+    <div class="col-md-3 hidden-xs hidden-sm" id="leftCol">
+      <ul class="nav nav-stacked" id="sidebar">
+        <li><a href="#buttons">Buttons</a></li>
+        <li><a href="#tables">Tables</a></li>
+        <li><a href="#thumbnails">Thumbnails</a></li>
+        <li><a href="#labels">Labels</a></li>
+        <li><a href="#badges">Badges</a></li>
+        <li><a href="#dropdown-menu">Dropdown Menu</a></li>
+        <li><a href="#navs">Navs</a></li>
+        <li><a href="#navbars">Navbars</a></li>
+        <li><a href="#alerts">Alerts</a></li>
+      </ul>
     </div> <!-- /col-md-9 -->
 
   </div> <!-- /container -->
@@ -621,6 +621,22 @@
   <script charset="utf-8" type="text/javascript" src="../static/lib/jquery/dist/jquery.min.js"></script>
   <script charset="utf-8" type="text/javascript" src="../static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
   <script charset="utf-8" type="text/javascript" src="../static/lib/holder/holder.min.js"></script>
+
+  <script type="text/javascript">
+    $('#sidebar').affix({
+        offset: {
+          top: 25
+        }
+    });
+
+    var $body   = $(document.body);
+    var navHeight = $('.navbar').outerHeight(true) + 10;
+
+    $body.scrollspy({
+    	target: '#leftCol',
+    	offset: navHeight
+    });
+  </script>
 
 </body>
 </html>
