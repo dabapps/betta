@@ -1,6 +1,24 @@
 'use strict';
 
-window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variable-store', 'modal-renderer'], function (React, less, $, Iframe, Sidebar, VariableStore, ModalRenderer) {
+window.define(
+  [
+  'react',
+  'less',
+  'jquery',
+  'iframe',
+  'sidebar',
+  'variable-store',
+  'modal-renderer'
+  ],
+  function (
+  React,
+  less,
+  $,
+  Iframe,
+  Sidebar,
+  VariableStore,
+  ModalRenderer
+  ) {
 
   var App = React.createClass({
     applyCSS: function (css) {
@@ -49,7 +67,10 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variable-store',
       $.ajax('static/lib/bootstrap/less/bootstrap.less', {
         success: function (result) {
           var variables = VariableStore.getPackedVariables();
-          variables = variables.replace(/(@icon-font-path:).+?;/i, '$1 "../static/lib/bootstrap/fonts/";');
+          variables = variables.replace(
+            /(@icon-font-path:).+?;/i,
+            '$1 "../static/lib/bootstrap/fonts/";'
+          );
 
           result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
           result = result.replace(/@.+?variables.+?;/i, variables);

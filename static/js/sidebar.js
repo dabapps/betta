@@ -1,6 +1,18 @@
 'use strict';
 
-window.define(['react', 'form-collection', 'sidebar-menu', 'search-store'], function (React, FormCollection, SidebarMenu, SearchStore) {
+window.define(
+  [
+  'react',
+  'form-collection',
+  'sidebar-menu',
+  'search-store'
+  ],
+  function (
+  React,
+  FormCollection,
+  SidebarMenu,
+  SearchStore
+  ) {
 
   var Sidebar = React.createClass({
     componentWillUnmount: function () {

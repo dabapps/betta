@@ -1,6 +1,18 @@
 'use strict';
 
-window.define(['react', 'modal-store', 'export-modal', 'search-store'], function (React, ModalStore, ExportModal, SearchStore) {
+window.define(
+  [
+  'react',
+  'modal-store',
+  'export-modal',
+  'search-store'
+  ],
+  function (
+  React,
+  ModalStore,
+  ExportModal,
+  SearchStore
+  ) {
 
   var SidebarMenu = React.createClass({
     export: function () {

@@ -1,6 +1,20 @@
 'use strict';
 
-window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider'], function (React, color, ColorPickerValues, ColorPalette, Slider) {
+window.define(
+  [
+  'react',
+  'color',
+  'color-picker-values',
+  'color-palette',
+  'slider'
+  ],
+  function (
+  React,
+  color,
+  ColorPickerValues,
+  ColorPalette,
+  Slider
+  ) {
 
   var ColorPicker = React.createClass({
     getHSL: function (h, s, l) {
@@ -120,7 +134,10 @@ window.define(['react', 'color', 'color-picker-values', 'color-palette', 'slider
       var rgb = color.HexToRGB(content);
       var hsl = color.RGBToHSL(rgb.r, rgb.g, rgb.b);
 
-      if (content.length === 6 && content[0] === content[1] && content[2] === content[3] && content[4] === content[5]) {
+      if (content.length === 6 &&
+        content[0] === content[1] &&
+        content[2] === content[3] &&
+        content[4] === content[5]) {
         content = [content[0], content[2], content[4]].join('');
       }
 

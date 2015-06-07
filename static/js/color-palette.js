@@ -69,6 +69,10 @@ window.define(['react', 'color'], function (React, color) {
       var backgroundColor = color.HSLToRGB(this.props.hsl.h, 1, 0.5);
       backgroundColor = color.RGBToHex(backgroundColor.r, backgroundColor.g, backgroundColor.b);
 
+      var dropShadow = this.state.dragging ?
+        '0 3px 6px 0 rgba(0, 0, 0, 0.5)' :
+        '0 0 0 0 rgba(0, 0, 0, 0)';
+
       return React.createElement(
         'div',
         {
@@ -108,7 +112,7 @@ window.define(['react', 'color'], function (React, color) {
               height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
               marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
               marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
-              boxShadow: this.state.dragging ? '0 3px 6px 0 rgba(0, 0, 0, 0.5)' : '0 0 0 0 rgba(0, 0, 0, 0)'
+              boxShadow: dropShadow
             }
           }
         )
