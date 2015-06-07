@@ -1,12 +1,8 @@
 'use strict';
 
-window.define(['react'], function (React) {
+window.define(['react', 'underscore'], function (React, _) {
 
   var Checkbox = React.createClass({
-    doNothing: function () {
-
-    },
-
     render: function () {
       return React.createElement(
         'div',
@@ -23,7 +19,7 @@ window.define(['react'], function (React) {
             {
               type: 'checkbox',
               checked: this.props.checked,
-              onChange: this.doNothing
+              onChange: _.noop
             }
           ),
           this.props.label
