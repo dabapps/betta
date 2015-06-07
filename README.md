@@ -1,7 +1,5 @@
-# Betta
-[![Build Status](https://magnum.travis-ci.com/JakeSidSmith/betta.svg?token=9QR4ewbqbkEmHps6q5sq&branch=master)](https://magnum.travis-ci.com/JakeSidSmith/betta)
-
-### Simple Bootstrap variable editor
+# Betta [![Build Status](https://magnum.travis-ci.com/JakeSidSmith/betta.svg?token=9QR4ewbqbkEmHps6q5sq&branch=master)](https://magnum.travis-ci.com/JakeSidSmith/betta)
+Simple Bootstrap variable editor
 
 
 ### Development
