@@ -3,9 +3,12 @@
   margin-top: -55px;
 }
 
+#sidebar li {
+  border-left: 4px #fff solid;
+}
+
 #sidebar li.active {
-  border: 0 #eee solid;
-  border-right-width: 4px;
+  border-left: 4px #eee solid;
 }
 
 #sidebar li a {
