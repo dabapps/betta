@@ -1,6 +1,22 @@
 'use strict';
 
-window.define(['react', 'modal-template', 'modal-store', 'variable-store', 'checkbox', 'export-settings-store'], function (React, ModalTemplate, ModalStore, VariableStore, Checkbox, ExportSettingsStore) {
+window.define(
+  [
+  'react',
+  'modal-template',
+  'modal-store',
+  'variable-store',
+  'checkbox',
+  'export-settings-store'
+  ],
+  function (
+  React,
+  ModalTemplate,
+  ModalStore,
+  VariableStore,
+  Checkbox,
+  ExportSettingsStore
+  ) {
 
   var ExportModal = React.createClass({
     updateSetting: function (settingsIndex, event) {
@@ -30,7 +46,7 @@ window.define(['react', 'modal-template', 'modal-store', 'variable-store', 'chec
       );
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function () {
       ExportSettingsStore.unbind('updateSetting', this.getSettings);
     },
 

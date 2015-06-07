@@ -56,10 +56,12 @@ window.define(['react', 'modal-store', 'underscore'], function (React, ModalStor
     },
 
     render: function () {
+      var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
+
       return React.createElement(
         'div',
         {
-          className: 'modal fade ' + (!this.props.closing && this.state.fadeClass ? this.state.fadeClass : ''),
+          className: 'modal fade ' + fadeClass,
           style: {
             display: 'block'
           }

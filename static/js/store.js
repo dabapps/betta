@@ -2,6 +2,9 @@
 
 window.define(['underscore'], function (_) {
 
+  var eventInProgressError = 'Event already in progress.' +
+    'You cannot trigger a new event from an event listener.';
+
   var Store = function () {
     var eventInProgress = false;
     var listeners = {};
@@ -29,14 +32,14 @@ window.define(['underscore'], function (_) {
       emitEvent: function (type) {
         if (type) {
           if (eventInProgress) {
-            console.error('Event already in progress. You cannot trigger a new event from an event listener.');
+            console.error(eventInProgressError);
           } else {
             eventInProgress = true;
-              if (listeners[type]) {
-                _.each(listeners[type], function (value) {
-                  value();
-                });
-              }
+            if (listeners[type]) {
+              _.each(listeners[type], function (value) {
+                value();
+              });
+            }
             eventInProgress = false;
           }
         }
