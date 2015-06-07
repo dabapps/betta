@@ -18,7 +18,6 @@
 @media (min-width: 979px) {
   #sidebar.affix-top {
     position: static;
-  	margin-top: 30px;
   	width: 228px;
   }
 
