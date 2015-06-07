@@ -7,15 +7,15 @@ window.define(
   'modal-store',
   'variable-store',
   'checkbox',
-  'export-settings-store'
+  'import-settings-store'
   ],
   function (
   React,
   ModalTemplate,
   ModalStore,
-  VariableStore,
+  variableStore,
   Checkbox,
-  ExportSettingsStore
+  ImportSettingsStore
   ) {
 
   var instructions = 'Please select an existing variables.less file, ' +
@@ -53,15 +53,14 @@ window.define(
 
     updateSetting: function (settingsIndex, event) {
       var value = event.target.parentNode.getElementsByTagName('input')[0].checked;
-      ExportSettingsStore.action('updateSetting', settingsIndex, value);
+      ImportSettingsStore.action('updateSetting', settingsIndex, value);
     },
 
     getSettings: function () {
-      var settings = ExportSettingsStore.getSettings();
+      var settings = ImportSettingsStore.getSettings();
 
       this.setState({
-        settings: settings,
-        packedVariables: this.getPackedVariables(settings)
+        settings: settings
       });
     },
 
@@ -69,25 +68,16 @@ window.define(
       ModalStore.action('close');
     },
 
-    getPackedVariables: function (settings) {
-      return VariableStore.getPackedVariables.apply(
-        null,
-        settings.map(function (setting) {
-          return setting.value;
-        })
-      );
-    },
-
     componentWillUnmount: function () {
-      ExportSettingsStore.unbind('updateSetting', this.getSettings);
+      ImportSettingsStore.unbind('updateSetting', this.getSettings);
     },
 
     componentWillMount: function () {
-      ExportSettingsStore.bind('updateSetting', this.getSettings);
+      ImportSettingsStore.bind('updateSetting', this.getSettings);
     },
 
     getInitialState: function () {
-      var settings = ExportSettingsStore.getSettings();
+      var settings = ImportSettingsStore.getSettings();
 
       return {
         settings: settings,
@@ -100,7 +90,7 @@ window.define(
       var uploadError, uploadSuccess;
 
       var settings = this.state.settings.map(function (setting, settingsIndex) {
-        if (settingsIndex === 3 && self.state.settings[2] && self.state.settings[2].value) {
+        if (settingsIndex === 1 && self.state.settings[0] && self.state.settings[0].value) {
           return undefined;
         }
 
