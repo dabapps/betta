@@ -93,6 +93,7 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
             React.createElement(
               'input',
               {
+                text: 'text',
                 className: 'form-control',
                 placeholder: child.defaultValue,
                 value: child.value,
