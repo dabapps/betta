@@ -102,7 +102,7 @@ window.define(['react', 'color-picker'], function (React, ColorPicker) {
             this.props.group.value
           )
         ),
-        {description},
+        description,
         children
       );
     }
