@@ -203,7 +203,8 @@ window.define(
               'button',
               {
                 className: 'btn btn-primary',
-                onClick: this.importVariables
+                onClick: this.importVariables,
+                disabled: !this.state.packedVariables
               },
               'Import'
             )
