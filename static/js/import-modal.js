@@ -19,6 +19,12 @@ window.define(
   ) {
 
   var ExportModal = React.createClass({
+    updateVariables: function (event) {
+      this.setState({
+        packedVariables: event.target.value
+      });
+    },
+
     updateSetting: function (settingsIndex, event) {
       var value = event.target.parentNode.getElementsByTagName('input')[0].checked;
       ExportSettingsStore.action('updateSetting', settingsIndex, value);
@@ -84,7 +90,7 @@ window.define(
       return React.createElement(
         ModalTemplate,
         {
-          title: 'Export',
+          title: 'Import',
           body: React.createElement(
             'div',
             null,
@@ -112,17 +118,32 @@ window.define(
               'textarea',
               {
                 className: 'variable-textarea',
-                value: this.state.packedVariables
+                value: this.state.packedVariables,
+                onChange: this.updateVariables
               }
             )
           ),
           footer: React.createElement(
-            'button',
+            'div',
             {
-              className: 'btn btn-default pull-right',
-              onClick: this.close
+              className: 'pull-right'
             },
-            'Close'
+            React.createElement(
+              'button',
+              {
+                className: 'btn btn-default',
+                onClick: this.close
+              },
+              'Close'
+            ),
+            React.createElement(
+              'button',
+              {
+                className: 'btn btn-primary',
+                onClick: this.importVariables
+              },
+              'Import'
+            )
           )
         }
       );
