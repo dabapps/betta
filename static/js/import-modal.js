@@ -21,7 +21,7 @@ window.define(
   var instructions = 'Please select an existing variables.less file, ' +
     'or paste it\'s contents into the text area.';
 
-  var ExportModal = React.createClass({
+  var ImportModal = React.createClass({
     fileChanged: function (event) {
       var self = this;
       var file = event.target.files[0];
@@ -218,6 +218,6 @@ window.define(
     }
   });
 
-  return ExportModal;
+  return ImportModal;
 
 });
