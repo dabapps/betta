@@ -35,7 +35,7 @@ window.define(['react', 'modal-store', 'export-modal', 'search-store'], function
     },
 
     clearSearchTerm: function () {
-      SearchStore.action('setSearchTerm', '');
+      SearchStore.action('setSearchTerm', undefined);
     },
 
     getInitialState: function () {
