@@ -27,7 +27,7 @@ window.define(['react', 'form-collection', 'sidebar-menu', 'search-store'], func
 
     getInitialState: function () {
       return {
-        activeIndex: 0,
+        activeIndex: undefined,
         searchTerm: SearchStore.getSearchTerm()
       };
     },
