@@ -49,7 +49,7 @@ window.define(['react'], function (React) {
       this.removeListeners();
     },
 
-    render: function() {
+    render: function () {
       return React.createElement(
         'div',
         {

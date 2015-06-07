@@ -114,13 +114,13 @@ window.define(['react', 'less', 'jquery', 'iframe', 'sidebar', 'variable-store',
       this.preview();
     },
 
-    componentWillMount: function() {
+    componentWillMount: function () {
       VariableStore.bind('loaded', this.getVariables);
       VariableStore.bind('updateVariable', this.getVariables);
       VariableStore.bind('reset', this.getVariablesAndPreview);
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function () {
       VariableStore.unbind('loaded', this.getVariables);
       VariableStore.unbind('updateVariable', this.getVariables);
       VariableStore.unbind('reset', this.getVariablesAndPreview);

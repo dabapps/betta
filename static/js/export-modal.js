@@ -30,7 +30,7 @@ window.define(['react', 'modal-template', 'modal-store', 'variable-store', 'chec
       );
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function () {
       ExportSettingsStore.unbind('updateSetting', this.getSettings);
     },
 

@@ -59,7 +59,7 @@ window.define(['react', 'color'], function (React, color) {
       this.removeListeners();
     },
 
-    getInitialState: function() {
+    getInitialState: function () {
       return {
         dragging: false
       };
