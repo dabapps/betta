@@ -25,7 +25,12 @@
   "author": "Jake 'Sid' Smith",
   "contributors": [
     {
-      "name": "Jake 'Sid' Smith"
+      "name": "Jake 'Sid' Smith",
+      "url": "https://githib.com/JakeSidSmith"
+    },
+    {
+      "name": "Emmanouil Konstantinidis",
+      "url": "https://githib.com/ekonstantinidis"
     }
   ],
   "license": "MIT",
