@@ -110,8 +110,10 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
       var self = this;
       var description, hasSearchResults, children;
 
-      var isNotActiveCollection = typeof this.props.activeIndex !== 'undefined' && this.props.index !== this.props.activeIndex;
-      var isActiveCollection = typeof this.props.activeIndex !== 'undefined' && this.props.index === this.props.activeIndex;
+      var isNotActiveCollection = typeof this.props.activeIndex !== 'undefined' &&
+        this.props.index !== this.props.activeIndex;
+      var isActiveCollection = typeof this.props.activeIndex !== 'undefined' &&
+        this.props.index === this.props.activeIndex;
 
       if (isNotActiveCollection && !this.props.searchTerm) {
         return false;

@@ -36,7 +36,9 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     var defaultValue = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2');
     var type;
 
-    if (defaultValue.indexOf('#') === 0 || defaultValue.indexOf('lighten') === 0 || defaultValue.indexOf('darken') === 0) {
+    if (defaultValue.indexOf('#') === 0 ||
+      defaultValue.indexOf('lighten') === 0 ||
+      defaultValue.indexOf('darken') === 0) {
       type = 'color';
       colorVariables.push(name);
     } else if (defaultValue.indexOf('@') === 0) {
@@ -115,7 +117,9 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     return item.element === 'variable' && isDefined(item.value);
   };
 
-  VariableStore.getPackedVariables = function (includeHeaders, includeLabels, excludeUnedited, commentUnedited) {
+  VariableStore.getPackedVariables = function (
+    includeHeaders, includeLabels, excludeUnedited, commentUnedited
+  ) {
     var packedVariables = '';
 
     if (includeHeaders) {
@@ -123,7 +127,9 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     }
 
     _.each(variables, function (collection) {
-      var collectionHasChildren = !(excludeUnedited && !_.any(collection.children, variablesHaveValues));
+      var collectionHasChildren = !(
+        excludeUnedited && !_.any(collection.children, variablesHaveValues)
+      );
       if (includeHeaders && collectionHasChildren) {
         packedVariables = packedVariables
           .concat('\n//== ')

@@ -1,6 +1,18 @@
 'use strict';
 
-window.define(['react', 'modal-store', 'modal-dialog', 'underscore'], function (React, ModalStore, ModalDialog, _) {
+window.define(
+  [
+  'react',
+  'modal-store',
+  'modal-dialog',
+  'underscore'
+  ],
+  function (
+  React,
+  ModalStore,
+  ModalDialog,
+  _
+  ) {
 
   var ModalRenderer = React.createClass({
     setTimeout: function (fn, time) {
