@@ -17,7 +17,7 @@
 
 */
 
-window.define(['react', 'modal-store', 'export-modal'], function (React, ModalStore, ExportModal) {
+window.define(['react', 'modal-store', 'export-modal', 'search-store'], function (React, ModalStore, ExportModal, SearchStore) {
 
   var SidebarMenu = React.createClass({
     export: function () {
@@ -28,6 +28,14 @@ window.define(['react', 'modal-store', 'export-modal'], function (React, ModalSt
       this.setState({
         dropdownActive: !this.state.dropdownActive
       });
+    },
+
+    setSearchTerm: function (event) {
+      SearchStore.action('setSearchTerm', event.target.value);
+    },
+
+    clearSearchTerm: function () {
+      SearchStore.action('setSearchTerm', '');
     },
 
     getInitialState: function () {
@@ -134,6 +142,35 @@ window.define(['react', 'modal-store', 'export-modal'], function (React, ModalSt
               )
             ),
             dropdown
+          )
+        ),
+        React.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          React.createElement(
+            'div',
+            {
+              className: 'input-wrapper search-wrapper'
+            },
+            React.createElement(
+              'input',
+              {
+                type: 'text',
+                className: 'form-control',
+                placeholder: 'Search variables',
+                onChange: this.setSearchTerm,
+                value: this.props.searchTerm
+              }
+            ),
+            React.createElement(
+              'span',
+              {
+                className: 'glyphicon glyphicon-remove',
+                onClick: this.clearSearchTerm
+              }
+            )
           )
         )
       );

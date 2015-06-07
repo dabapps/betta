@@ -120,7 +120,7 @@ a {
   max-width: 100%;
   width: 256px;
   height: 100%;
-  padding-top: 36px;
+  padding-top: 72px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   background-color: #fff;
   background-color: #eee;
@@ -132,14 +132,33 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  height: 36px;
+  height: 72px;
   border-bottom: 1px solid #aaa;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-menu .form-group {
+  height: 36px;
+  margin-bottom: 0;
 }
 
 .sidebar-menu .form-group select,
 .sidebar-menu .form-group button {
   float: left;
+}
+
+.sidebar-menu .search-wrapper input {
+  padding-right: 32px;
+}
+
+.sidebar-menu .search-wrapper .glyphicon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 9px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
 }
 
 .size-control {
@@ -186,6 +205,14 @@ a {
   top: 2px;
   left: 0;
   content: '▼';
+}
+
+.form-collection.filtered h4 {
+  padding-left: 0;
+}
+
+.form-collection.filtered h4::before {
+  content: '';
 }
 
 .form-collection h4 {
