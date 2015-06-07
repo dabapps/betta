@@ -2,3 +2,8 @@
   padding-top: 55px;
   margin-top: -55px;
 }
+
+#sidebar li.active {
+  border: 0 #eee solid;
+  border-right-width: 4px;
+}
