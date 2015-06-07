@@ -52,6 +52,7 @@ window.define(
           return React.createElement(
             FormCollection,
             {
+              key: item.value,
               group: item,
               index: index,
               activeIndex: self.state.activeIndex,

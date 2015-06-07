@@ -3,6 +3,10 @@
 window.define(['react'], function (React) {
 
   var Checkbox = React.createClass({
+    doNothing: function () {
+
+    },
+
     render: function () {
       return React.createElement(
         'div',
@@ -18,7 +22,8 @@ window.define(['react'], function (React) {
             'input',
             {
               type: 'checkbox',
-              checked: this.props.checked
+              checked: this.props.checked,
+              onChange: this.doNothing
             }
           ),
           this.props.label

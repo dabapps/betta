@@ -19,6 +19,10 @@ window.define(
   ) {
 
   var ExportModal = React.createClass({
+    doNothing: function () {
+
+    },
+
     updateSetting: function (settingsIndex, event) {
       var value = event.target.parentNode.getElementsByTagName('input')[0].checked;
       ExportSettingsStore.action('updateSetting', settingsIndex, value);
@@ -74,6 +78,7 @@ window.define(
         return React.createElement(
           Checkbox,
           {
+            key: setting.name,
             checked: setting.value,
             label: setting.name,
             onClick: self.updateSetting.bind(self, settingsIndex)
@@ -112,7 +117,8 @@ window.define(
               'textarea',
               {
                 className: 'variable-textarea',
-                value: this.state.packedVariables
+                value: this.state.packedVariables,
+                onChange: this.doNothing
               }
             )
           ),

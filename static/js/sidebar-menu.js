@@ -53,6 +53,7 @@ window.define(
         return React.createElement(
           'option',
           {
+            key: size.name,
             value: size.name
           },
           size.name
