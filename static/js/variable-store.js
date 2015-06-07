@@ -189,7 +189,9 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     VariableStore.emitEvent('updateVariable');
   });
 
-  VariableStore.createAction('importVariables', function (newVariables, clearExisting, overrideExisting, includeCommented) {
+  VariableStore.createAction(
+  'importVariables',
+  function (newVariables, clearExisting, overrideExisting, includeCommented) {
     var lines = newVariables.split('\n');
 
     if (clearExisting) {
