@@ -168,7 +168,7 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     return packedVariables;
   };
 
-  VariableStore.createAction('reset', function () {
+  var clearVariables = function () {
     _.each(variables, function (collection) {
       _.each(collection.children, function (child) {
         if (child.element === 'variable') {
@@ -176,12 +176,37 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
         }
       });
     });
+  };
 
+  VariableStore.createAction('reset', function () {
+    clearVariables();
     VariableStore.emitEvent('reset');
   });
 
   VariableStore.createAction('updateVariable', function (groupIndex, variablesIndex, value) {
     variables[groupIndex].children[variablesIndex].value = value;
+
+    VariableStore.emitEvent('updateVariable');
+  });
+
+  VariableStore.createAction('importVariables', function (newVariables, clearExisting, overrideExisting, includeCommented) {
+    var lines = newVariables.split('\n');
+
+    if (clearExisting) {
+      clearVariables();
+    }
+
+    _.each(lines, function (line) {
+      if (line.indexOf('@') === 0 || (includeCommented && line.indexOf('//@') === 0)) {
+        line = line.replace(/^\/\//, '');
+        var name = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '@$1');
+        var variable = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2');
+
+        //FIXME
+
+        console.log(name, variable);
+      }
+    });
 
     VariableStore.emitEvent('updateVariable');
   });

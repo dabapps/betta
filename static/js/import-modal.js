@@ -13,7 +13,7 @@ window.define(
   React,
   ModalTemplate,
   ModalStore,
-  variableStore,
+  VariableStore,
   Checkbox,
   ImportSettingsStore
   ) {
@@ -22,6 +22,14 @@ window.define(
     'or paste it\'s contents into the text area.';
 
   var ImportModal = React.createClass({
+    importVariables: function () {
+      var settings = this.state.settings.map(function (setting) {
+        return setting.value;
+      });
+      settings.unshift('importVariables', this.state.packedVariables);
+      VariableStore.action.apply(null, settings);
+    },
+
     fileChanged: function (event) {
       var self = this;
       var file = event.target.files[0];
