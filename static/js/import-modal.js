@@ -19,6 +19,29 @@ window.define(
   ) {
 
   var ExportModal = React.createClass({
+    fileChanged: function (event) {
+      var self = this;
+      var file = event.target.files[0];
+
+      if (file.name.match(/\.less$/)) {
+        var reader = new FileReader();
+
+        reader.onload = function () {
+          self.setState({
+            uploadError: undefined,
+            uploadSuccess: 'File successfully loaded',
+            packedVariables: this.result
+          });
+        };
+        reader.readAsText(file);
+      } else {
+        this.setState({
+          uploadSuccess: undefined,
+          uploadError: 'Please select a .less file'
+        });
+      }
+    },
+
     updateVariables: function (event) {
       this.setState({
         packedVariables: event.target.value
@@ -57,6 +80,10 @@ window.define(
     },
 
     componentWillMount: function () {
+      this.setState({
+        uploadError: undefined,
+        uploadSuccess: undefined
+      });
       ExportSettingsStore.bind('updateSetting', this.getSettings);
     },
 
@@ -71,6 +98,7 @@ window.define(
 
     render: function () {
       var self = this;
+      var uploadError, uploadSuccess;
 
       var settings = this.state.settings.map(function (setting, settingsIndex) {
         if (settingsIndex === 3 && self.state.settings[2] && self.state.settings[2].value) {
@@ -86,6 +114,26 @@ window.define(
           }
         );
       });
+
+      if (this.state.uploadError) {
+        uploadError = React.createElement(
+          'div',
+          {
+            className: 'alert alert-danger'
+          },
+          this.state.uploadError
+        );
+      }
+
+      if (this.state.uploadSuccess) {
+        uploadSuccess = React.createElement(
+          'div',
+          {
+            className: 'alert alert-success'
+          },
+          this.state.uploadSuccess
+        );
+      }
 
       return React.createElement(
         ModalTemplate,
@@ -104,6 +152,8 @@ window.define(
                 {
                   className: 'col-xs-12'
                 },
+                uploadError,
+                uploadSuccess,
                 React.createElement(
                   'div',
                   {
@@ -112,7 +162,8 @@ window.define(
                   React.createElement(
                     'input',
                     {
-                      type: 'file'
+                      type: 'file',
+                      onChange: this.fileChanged
                     }
                   )
                 ),
