@@ -18,6 +18,9 @@ window.define(
   ExportSettingsStore
   ) {
 
+  var instructions = 'Please select an existing variables.less file, ' +
+    'or paste it\'s contents into the text area.';
+
   var ExportModal = React.createClass({
     fileChanged: function (event) {
       var self = this;
@@ -148,6 +151,11 @@ window.define(
                 {
                   className: 'col-xs-12'
                 },
+                React.createElement(
+                  'p',
+                  null,
+                  instructions
+                ),
                 uploadError,
                 uploadSuccess,
                 React.createElement(
