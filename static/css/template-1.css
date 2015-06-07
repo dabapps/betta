@@ -15,13 +15,11 @@
   padding: 5px 15px;
 }
 
-#sidebar.affix-top {
-  position: static;
+#sidebar {
   width: 228px;
 }
 
 #sidebar.affix {
   position: fixed;
   top: 70px;
-  width: 228px;
 }
