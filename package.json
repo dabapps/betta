@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "Simple Bootstrap variable editor",
   "main": "static/js/app.js",
-  "scripts": {},
+  "scripts": {
+    "lint": "jshint 'static/js/' && jscs 'static/js/'",
+    "test": "npm run lint"
+  },
   "keywords": [
     "css",
     "less",
@@ -30,5 +33,50 @@
   "devDependencies": {
     "jshint": "2.8.0",
     "jscs": "1.13.1"
+  },
+  "jshintConfig": {
+    "browserify": true,
+    "unused": true,
+    "undef": true,
+    "globals": {
+      "console": false
+    }
+  },
+  "jscsConfig": {
+    "disallowMultipleVarDecl": "exceptUndefined",
+    "validateQuoteMarks": {
+      "mark": "'",
+      "escape": false
+    },
+    "validateParameterSeparator": ", ",
+    "validateIndentation": 2,
+    "requireSpacesInFunction": {
+      "beforeOpeningRoundBrace": true,
+      "beforeOpeningCurlyBrace": true
+    },
+    "requireSpacesInConditionalExpression": {
+      "afterTest": true,
+      "beforeConsequent": true,
+      "afterConsequent": true,
+      "beforeAlternate": true
+    },
+    "disallowTrailingWhitespace": true,
+    "maximumLineLength": 100,
+    "requireCurlyBraces": true,
+    "disallowMixedSpacesAndTabs": true,
+    "requireSpaceBeforeBinaryOperators": true,
+    "safeContextKeyword": [
+      "self"
+    ],
+    "disallowMultipleLineBreaks": true,
+    "disallowMultipleLineStrings": true,
+    "disallowSpaceAfterObjectKeys": true,
+    "disallowNewlineBeforeBlockStatements": true,
+    "disallowTrailingComma": true,
+    "requireCommaBeforeLineBreak": true,
+    "requireSpaceBetweenArguments": true,
+    "requireSpaceBeforeBlockStatements": true,
+    "requireSpaceBeforeObjectValues": true,
+    "requireSpacesInForStatement": true
   }
 }
