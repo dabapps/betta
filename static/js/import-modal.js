@@ -80,10 +80,6 @@ window.define(
     },
 
     componentWillMount: function () {
-      this.setState({
-        uploadError: undefined,
-        uploadSuccess: undefined
-      });
       ExportSettingsStore.bind('updateSetting', this.getSettings);
     },
 
@@ -92,7 +88,7 @@ window.define(
 
       return {
         settings: settings,
-        packedVariables: this.getPackedVariables(settings)
+        packedVariables: ''
       };
     },
 
