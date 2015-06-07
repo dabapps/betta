@@ -89,7 +89,7 @@ window.define([], function () {
 
       var hex = [colorToHex(r), colorToHex(g), colorToHex(b)].join('');
 
-      if (hex[0] === hex[1] && hex[2] === hex[3] && hex[4] === hex[5]) {
+      if (hex.length === 6 && hex[0] === hex[1] && hex[2] === hex[3] && hex[4] === hex[5]) {
         hex = [hex[0], hex[2], hex[4]].join('');
       }
 
