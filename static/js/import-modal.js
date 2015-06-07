@@ -104,6 +104,18 @@ window.define(
                 {
                   className: 'col-xs-12'
                 },
+                React.createElement(
+                  'div',
+                  {
+                    className: 'form-group'
+                  },
+                  React.createElement(
+                    'input',
+                    {
+                      type: 'file'
+                    }
+                  )
+                ),
                 settings
               )
             ),
