@@ -20,9 +20,15 @@
     "url": "https://github.com/JakeSidSmith/betta-bootstrap-editor/issues"
   },
   "author": "Jake 'Sid' Smith",
-  "contributors": [{
-    "name": "Jake 'Sid' Smith"
-  }],
+  "contributors": [
+    {
+      "name": "Jake 'Sid' Smith"
+    }
+  ],
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "jshint": "2.8.0",
+    "jscs": "1.13.1"
+  }
 }
