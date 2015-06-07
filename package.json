@@ -1,5 +1,5 @@
 {
-  "name": "betta-bootstrap-editor",
+  "name": "betta",
   "version": "0.0.0",
   "description": "Simple Bootstrap variable editor",
   "main": "static/js/app.js",
@@ -14,18 +14,23 @@
     "bootstrap",
     "editor"
   ],
-  "homepage": "http://jakesidsmith.github.io/betta-bootstrap-editor/",
+  "homepage": "http://betta.style/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JakeSidSmith/betta-bootstrap-editor"
+    "url": "https://github.com/JakeSidSmith/betta"
   },
   "bugs": {
-    "url": "https://github.com/JakeSidSmith/betta-bootstrap-editor/issues"
+    "url": "https://github.com/JakeSidSmith/betta/issues"
   },
   "author": "Jake 'Sid' Smith",
   "contributors": [
     {
-      "name": "Jake 'Sid' Smith"
+      "name": "Jake 'Sid' Smith",
+      "url": "https://githib.com/JakeSidSmith"
+    },
+    {
+      "name": "Emmanouil Konstantinidis",
+      "url": "https://githib.com/ekonstantinidis"
     }
   ],
   "license": "MIT",
