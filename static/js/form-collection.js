@@ -14,19 +14,20 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
       return typeof value !== 'undefined';
     },
 
+    areInValue: function (value, term) {
+      return value.toLowerCase().indexOf(term) >= 0;
+    },
+
     containsSearchTerm: function (value, key) {
+      var self = this;
       var searchTerm = this.props.searchTerm.toLowerCase().replace(/\s+?/gi, ' ');
       var searchTerms = searchTerm.split(' ');
-
-      var areInValue = function (term) {
-        return value.toLowerCase().indexOf(term) >= 0;
-      };
 
       return searchableTypes.indexOf(key) >= 0 &&
         value &&
         (
           value.toLowerCase().indexOf(searchTerm) >= 0 ||
-          _.every(searchTerms, areInValue)
+          _.every(searchTerms, self.areInValue.bind(self, value))
         );
     },
 
