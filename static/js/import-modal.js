@@ -97,7 +97,7 @@ window.define(
 
     render: function () {
       var self = this;
-      var uploadError, uploadSuccess;
+      var uploadError, uploadSuccess, filePicker;
 
       var settings = this.state.settings.map(function (setting, settingsIndex) {
         if (settingsIndex === 1 && self.state.settings[0] && self.state.settings[0].value) {
@@ -135,6 +135,23 @@ window.define(
         );
       }
 
+      if (window.FileReader) {
+        filePicker = React.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          React.createElement(
+            'input',
+            {
+              type: 'file',
+              accept: '.less',
+              onChange: this.fileChanged
+            }
+          )
+        );
+      }
+
       return React.createElement(
         ModalTemplate,
         {
@@ -159,19 +176,7 @@ window.define(
                 ),
                 uploadError,
                 uploadSuccess,
-                React.createElement(
-                  'div',
-                  {
-                    className: 'form-group'
-                  },
-                  React.createElement(
-                    'input',
-                    {
-                      type: 'file',
-                      onChange: this.fileChanged
-                    }
-                  )
-                ),
+                filePicker,
                 settings
               )
             ),
