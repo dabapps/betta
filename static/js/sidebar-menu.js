@@ -18,11 +18,11 @@ window.define(
 
   var SidebarMenu = React.createClass({
     export: function () {
-      ModalStore.action('open', React.createElement(ExportModal));
+      ModalStore.action('open', ExportModal);
     },
 
     import: function () {
-      ModalStore.action('open', React.createElement(ImportModal));
+      ModalStore.action('open', ImportModal);
     },
 
     toggleDropdown: function () {

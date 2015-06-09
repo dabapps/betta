@@ -57,7 +57,8 @@ window.define(
       this.setState({
         open: newState,
         closing: closing,
-        view: ModalStore.getView()
+        view: ModalStore.getView(),
+        props: ModalStore.getProps()
       });
     },
 
@@ -77,7 +78,8 @@ window.define(
         timeouts: [],
         closing: false,
         open: ModalStore.isOpen(),
-        view: ModalStore.getView()
+        view: ModalStore.getView(),
+        props: ModalStore.getProps()
       };
     },
 
@@ -87,6 +89,7 @@ window.define(
           ModalDialog,
           {
             view: this.state.view,
+            props: this.state.props,
             closing: this.state.closing
           }
         );

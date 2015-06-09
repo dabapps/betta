@@ -87,7 +87,10 @@ window.define(['react', 'modal-store', 'underscore'], function (React, ModalStor
               {
                 className: 'modal-content'
               },
-              this.props.view
+              React.createElement(
+                this.props.view,
+                this.props.props
+              )
             )
           )
         )
