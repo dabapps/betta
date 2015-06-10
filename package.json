@@ -17,10 +17,10 @@
   "homepage": "http://betta.style/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JakeSidSmith/betta"
+    "url": "https://github.com/dabapps/betta"
   },
   "bugs": {
-    "url": "https://github.com/JakeSidSmith/betta/issues"
+    "url": "https://github.com/dabapps/betta/issues"
   },
   "author": "Jake 'Sid' Smith",
   "contributors": [

@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 Jake 'Sid' Smith - https://github.com/JakeSidSmith/
+Copyright (c) 2015 Jake 'Sid' Smith, DabApps - http://www.dabapps.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
