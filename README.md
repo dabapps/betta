@@ -1,4 +1,4 @@
-# Betta [![Build Status](https://magnum.travis-ci.com/JakeSidSmith/betta.svg?token=9QR4ewbqbkEmHps6q5sq&branch=master)](https://magnum.travis-ci.com/JakeSidSmith/betta)
+# Betta [![Build Status](https://magnum.travis-ci.com/dabapps/betta.svg?token=9QR4ewbqbkEmHps6q5sq&branch=master)](https://magnum.travis-ci.com/dabapps/betta)
 Simple Bootstrap variable editor
 
 
@@ -15,4 +15,4 @@ You will need to install and run an http server. Example:
 
 
 ### License
-Betta is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository.
+Copyright (c) 2015 Jake 'Sid' Smith, [DabApps](http://www.dabapps.com). For more information, see the LICENSE file in this repository.
