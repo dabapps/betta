@@ -7,7 +7,8 @@ window.define(
   'modal-store',
   'variable-store',
   'checkbox',
-  'export-settings-store'
+  'export-settings-store',
+  'underscore'
   ],
   function (
   React,
@@ -15,7 +16,8 @@ window.define(
   ModalStore,
   VariableStore,
   Checkbox,
-  ExportSettingsStore
+  ExportSettingsStore,
+  _
   ) {
 
   var ExportModal = React.createClass({
@@ -74,6 +76,7 @@ window.define(
         return React.createElement(
           Checkbox,
           {
+            key: setting.name,
             checked: setting.value,
             label: setting.name,
             onClick: self.updateSetting.bind(self, settingsIndex)
@@ -112,14 +115,15 @@ window.define(
               'textarea',
               {
                 className: 'variable-textarea',
-                value: this.state.packedVariables
+                value: this.state.packedVariables,
+                onChange: _.noop
               }
             )
           ),
           footer: React.createElement(
             'button',
             {
-              className: 'btn btn-primary pull-right',
+              className: 'btn btn-default pull-right',
               onClick: this.close
             },
             'Close'

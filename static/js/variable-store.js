@@ -168,7 +168,7 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     return packedVariables;
   };
 
-  VariableStore.createAction('reset', function () {
+  var clearVariables = function () {
     _.each(variables, function (collection) {
       _.each(collection.children, function (child) {
         if (child.element === 'variable') {
@@ -176,12 +176,58 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
         }
       });
     });
+  };
 
+  VariableStore.createAction('reset', function () {
+    clearVariables();
     VariableStore.emitEvent('reset');
   });
 
   VariableStore.createAction('updateVariable', function (groupIndex, variablesIndex, value) {
     variables[groupIndex].children[variablesIndex].value = value;
+
+    VariableStore.emitEvent('updateVariable');
+  });
+
+  VariableStore.createAction(
+  'importVariables',
+  function (newVariables, clearExisting, overrideExisting, includeCommented) {
+    var lines = newVariables.split('\n');
+
+    if (clearExisting) {
+      clearVariables();
+    }
+
+    _.each(lines, function (line) {
+      if (line.indexOf('@') === 0 || (includeCommented && line.indexOf('//@') === 0)) {
+        line = line.replace(/^\/\//, '');
+        var name = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '@$1');
+        var value = line.replace(/@\s*(.*)\s*:\s*(.*)\s*;.*/, '$2');
+        var variableIndex;
+
+        var groupIndex = _.findIndex(variables, function (collection) {
+          var childIndex = _.findIndex(collection.children, function (child) {
+            return child.name === name;
+          });
+
+          if (childIndex >= 0) {
+            variableIndex = childIndex;
+          }
+
+          return childIndex >= 0;
+        });
+
+        if (groupIndex >= 0) {
+          if (overrideExisting) {
+            variables[groupIndex].children[variableIndex].value = value;
+          } else {
+            if (!variables[groupIndex].children[variableIndex].value) {
+              variables[groupIndex].children[variableIndex].value = value;
+            }
+          }
+        }
+      }
+    });
 
     VariableStore.emitEvent('updateVariable');
   });

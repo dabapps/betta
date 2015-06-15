@@ -38,7 +38,9 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
         }
         return React.createElement(
           'h5',
-          null,
+          {
+            key: child.value
+          },
           child.value
         );
       },
@@ -77,7 +79,8 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
         return React.createElement(
           'div',
           {
-            className: 'form-group'
+            className: 'form-group',
+            key: child.name
           },
           label,
           React.createElement(
@@ -93,12 +96,12 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
             React.createElement(
               'input',
               {
+                text: 'text',
                 className: 'form-control',
                 placeholder: child.defaultValue,
                 value: child.value,
                 onChange: self.props.updateVariable.bind(null, self.props.index, index)
-              },
-              child.value
+              }
             ),
             colorPicker
           )
@@ -144,6 +147,7 @@ window.define(['react', 'color-picker', 'underscore'], function (React, ColorPic
       return React.createElement(
         'div',
         {
+          key: this.props.key,
           className: 'form-collection' +
             (isActiveCollection ? ' active' : '') +
             (hasSearchResults ? ' filtered' : '')

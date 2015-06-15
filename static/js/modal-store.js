@@ -3,7 +3,7 @@
 window.define(['store'], function (Store) {
 
   var modalOpen = false;
-  var modalView;
+  var modalView, modalProps;
 
   var ModalStore = new Store();
 
@@ -15,8 +15,13 @@ window.define(['store'], function (Store) {
     return modalView;
   };
 
-  ModalStore.createAction('open', function (view) {
+  ModalStore.getProps = function () {
+    return modalProps;
+  };
+
+  ModalStore.createAction('open', function (view, props) {
     modalView = view;
+    modalProps = props;
     modalOpen = true;
     ModalStore.emitEvent('open');
   });

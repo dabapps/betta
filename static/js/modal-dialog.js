@@ -7,6 +7,10 @@ window.define(['react', 'modal-store', 'underscore'], function (React, ModalStor
       ModalStore.action('close');
     },
 
+    stopPropagation: function (event) {
+      event.stopPropagation();
+    },
+
     setTimeout: function (fn, time) {
       var timeout = setTimeout(fn, time);
 
@@ -71,19 +75,23 @@ window.define(['react', 'modal-store', 'underscore'], function (React, ModalStor
           {
             className: 'modal-overlay',
             onClick: this.close
-          }
-        ),
-        React.createElement(
-          'div',
-          {
-            className: 'modal-dialog'
           },
           React.createElement(
             'div',
             {
-              className: 'modal-content'
+              className: 'modal-dialog',
+              onClick: this.stopPropagation
             },
-            this.props.view
+            React.createElement(
+              'div',
+              {
+                className: 'modal-content'
+              },
+              React.createElement(
+                this.props.view,
+                this.props.props
+              )
+            )
           )
         )
       );

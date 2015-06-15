@@ -5,18 +5,24 @@ window.define(
   'react',
   'modal-store',
   'export-modal',
+  'import-modal',
   'search-store'
   ],
   function (
   React,
   ModalStore,
   ExportModal,
+  ImportModal,
   SearchStore
   ) {
 
   var SidebarMenu = React.createClass({
     export: function () {
-      ModalStore.action('open', React.createElement(ExportModal));
+      ModalStore.action('open', ExportModal);
+    },
+
+    import: function () {
+      ModalStore.action('open', ImportModal);
     },
 
     toggleDropdown: function () {
@@ -47,6 +53,7 @@ window.define(
         return React.createElement(
           'option',
           {
+            key: size.name,
             value: size.name
           },
           size.name
@@ -59,6 +66,17 @@ window.define(
           {
             className: 'dropdown-menu'
           },
+          React.createElement(
+            'li',
+            null,
+            React.createElement(
+              'a',
+              {
+                onClick: self.import
+              },
+              'Import'
+            )
+          ),
           React.createElement(
             'li',
             null,
