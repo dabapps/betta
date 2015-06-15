@@ -6,17 +6,23 @@ window.define(
   'modal-store',
   'export-modal',
   'import-modal',
-  'search-store'
+  'search-store',
+  'variable-store'
   ],
   function (
   React,
   ModalStore,
   ExportModal,
   ImportModal,
-  SearchStore
+  SearchStore,
+  VariableStore
   ) {
 
   var SidebarMenu = React.createClass({
+    preview: function () {
+      VariableStore.action('requestPreview');
+    },
+
     export: function () {
       ModalStore.action('open', ExportModal);
     },
@@ -131,7 +137,7 @@ window.define(
             'button',
             {
               className: 'btn btn-small btn-default',
-              onClick: self.props.preview
+              onClick: self.preview
             },
             'Preview'
           ),
