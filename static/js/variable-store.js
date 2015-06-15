@@ -232,6 +232,10 @@ window.define(['store', 'jquery', 'underscore'], function (Store, $, _) {
     VariableStore.emitEvent('updateVariable');
   });
 
+  VariableStore.createAction('requestPreview', function () {
+    VariableStore.emitEvent('requestPreview');
+  });
+
   return VariableStore;
 
 });

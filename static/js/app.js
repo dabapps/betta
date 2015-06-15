@@ -127,12 +127,14 @@ var App = React.createClass({
     VariableStore.bind('loaded', this.getVariables);
     VariableStore.bind('updateVariable', this.getVariables);
     VariableStore.bind('reset', this.getVariablesAndPreview);
+    VariableStore.bind('requestPreview', this.preview);
   },
 
   componentWillUnmount: function () {
     VariableStore.unbind('loaded', this.getVariables);
     VariableStore.unbind('updateVariable', this.getVariables);
     VariableStore.unbind('reset', this.getVariablesAndPreview);
+    VariableStore.unbind('requestPreview', this.preview);
   },
 
   getInitialState: function () {
@@ -195,7 +197,6 @@ var App = React.createClass({
           setFrameSize: self.setFrameSize,
           frameSizes: self.state.frameSizes,
           currentFrameSize: self.state.currentFrameSize,
-          preview: self.preview,
           reset: self.reset
         }
       ),
