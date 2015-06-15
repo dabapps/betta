@@ -34,11 +34,6 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "jshint": "2.8.0",
-    "jscs": "1.13.1"
-  },
   "jshintConfig": {
     "browserify": true,
     "unused": true,
@@ -91,5 +86,16 @@
     "requireSpaceBeforeBlockStatements": true,
     "requireSpaceBeforeObjectValues": true,
     "requireSpacesInForStatement": true
+  },
+  "dependencies": {
+    "bootstrap": "=3.3.4",
+    "react": "=0.13.3"
+  },
+  "devDependencies": {
+    "babelify": "=6.1.2",
+    "browserify": "=10.2.4",
+    "jscs": "=1.13.1",
+    "jshint": "=2.8.0",
+    "watchify": "=3.2.2"
   }
 }
