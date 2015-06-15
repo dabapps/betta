@@ -28,6 +28,7 @@ window.define(
       });
       settings.unshift('importVariables', this.state.packedVariables);
       VariableStore.action.apply(null, settings);
+      VariableStore.action('requestPreview');
 
       ModalStore.action('close');
     },
