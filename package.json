@@ -90,7 +90,8 @@
   "dependencies": {
     "bootstrap": "=3.3.4",
     "less": "=2.5.0",
-    "react": "=0.13.3"
+    "react": "=0.13.3",
+    "underscore": "=1.8.3"
   },
   "devDependencies": {
     "babelify": "=6.1.2",
