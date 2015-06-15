@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['react'], function (React) {
+window.define(['react', 'variable-store'], function (React, VariableStore) {
 
   var ColorPickerValues = React.createClass({
     readableHSL: function () {
@@ -39,6 +39,8 @@ window.define(['react'], function (React) {
           value: value
         }
       });
+      this.props.togglePicker();
+      VariableStore.action('requestPreview');
     },
 
     render: function () {

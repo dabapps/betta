@@ -75,7 +75,6 @@ window.define(
             setFrameSize: self.props.setFrameSize,
             frameSizes: self.props.frameSizes,
             currentFrameSize: self.props.currentFrameSize,
-            preview: self.props.preview,
             reset: self.props.reset,
             searchTerm: self.state.searchTerm
           }

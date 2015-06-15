@@ -265,7 +265,8 @@ window.define(
               hsl: this.state.hsl,
               rgb: this.state.rgb,
               hex: this.state.hex,
-              setValue: this.props.setValue
+              setValue: this.props.setValue,
+              togglePicker: this.togglePicker
             }
           )
         );
