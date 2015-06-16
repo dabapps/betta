@@ -1,36 +1,34 @@
 'use strict';
 
-window.define(['store'], function (Store) {
+var Store = require('./store');
 
-  var modalOpen = false;
-  var modalView, modalProps;
+var modalOpen = false;
+var modalView, modalProps;
 
-  var ModalStore = new Store();
+var ModalStore = new Store();
 
-  ModalStore.isOpen = function () {
-    return modalOpen;
-  };
+ModalStore.isOpen = function () {
+  return modalOpen;
+};
 
-  ModalStore.getView = function () {
-    return modalView;
-  };
+ModalStore.getView = function () {
+  return modalView;
+};
 
-  ModalStore.getProps = function () {
-    return modalProps;
-  };
+ModalStore.getProps = function () {
+  return modalProps;
+};
 
-  ModalStore.createAction('open', function (view, props) {
-    modalView = view;
-    modalProps = props;
-    modalOpen = true;
-    ModalStore.emitEvent('open');
-  });
-
-  ModalStore.createAction('close', function () {
-    modalOpen = false;
-    ModalStore.emitEvent('close');
-  });
-
-  return ModalStore;
-
+ModalStore.createAction('open', function (view, props) {
+  modalView = view;
+  modalProps = props;
+  modalOpen = true;
+  ModalStore.emitEvent('open');
 });
+
+ModalStore.createAction('close', function () {
+  modalOpen = false;
+  ModalStore.emitEvent('close');
+});
+
+module.exports = ModalStore;

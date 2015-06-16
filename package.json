@@ -5,7 +5,7 @@
   "main": "static/js/app.js",
   "scripts": {
     "start": "http-server .",
-    "build-js": "mkdir -p build/js && browserify -t babelify static/js/app.js -o build/js/app.js",
+    "build-js": "mkdir -p build/js && browserify -t babelify static/js/app.js -o static/build/js/app.js",
     "build": "npm install && npm run build-js",
     "lint": "jshint 'static/js/' && jscs 'static/js/'",
     "test": "npm run lint"

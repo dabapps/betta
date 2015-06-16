@@ -1,57 +1,53 @@
 'use strict';
 
-window.define(['react'], function (React) {
+var React = require('react');
 
-  var Iframe = React.createClass({
-    iframeLoaded: function (event) {
-      this.props.iframeLoaded(event.target);
-    },
+module.exports = React.createClass({
+  iframeLoaded: function (event) {
+    this.props.iframeLoaded(event.target);
+  },
 
-    componentDidMount: function () {
-      var iframe = this.getDOMNode().getElementsByTagName('iframe')[0];
+  componentDidMount: function () {
+    var iframe = this.getDOMNode().getElementsByTagName('iframe')[0];
 
-      iframe.addEventListener('load', this.iframeLoaded);
-    },
+    iframe.addEventListener('load', this.iframeLoaded);
+  },
 
-    render: function () {
-      var self = this;
-      var loadingIcon;
+  render: function () {
+    var self = this;
+    var loadingIcon;
 
-      if (this.props.loading) {
-        loadingIcon = React.createElement(
-          'div',
-          {
-            className: 'loading-container'
-          },
-          React.createElement(
-            'div',
-            {
-              className: 'loading-icon'
-            }
-          )
-        );
-      }
-
-      return React.createElement(
+    if (this.props.loading) {
+      loadingIcon = React.createElement(
         'div',
         {
-          className: 'iframe-container'
+          className: 'loading-container'
         },
         React.createElement(
-          'iframe',
+          'div',
           {
-            className: 'iframe',
-            src: 'templates/template-1.html',
-            style: {
-              maxWidth: self.props.currentFrameSize.value
-            }
+            className: 'loading-icon'
           }
-        ),
-        loadingIcon
+        )
       );
     }
-  });
 
-  return Iframe;
-
+    return React.createElement(
+      'div',
+      {
+        className: 'iframe-container'
+      },
+      React.createElement(
+        'iframe',
+        {
+          className: 'iframe',
+          src: 'templates/template-1.html',
+          style: {
+            maxWidth: self.props.currentFrameSize.value
+          }
+        }
+      ),
+      loadingIcon
+    );
+  }
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-window.define(['store'], function (Store) {
+var Store = require('./store');
 
   var searchTerm;
 
@@ -16,6 +16,4 @@ window.define(['store'], function (Store) {
     SearchStore.emitEvent('setSearchTerm');
   });
 
-  return SearchStore;
-
-});
+  module.exports = SearchStore;
