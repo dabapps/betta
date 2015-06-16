@@ -6,7 +6,9 @@
   "scripts": {
     "start": "http-server .",
     "build-js": "mkdir -p static/build/js && browserify -t babelify static/js/app.js -o static/build/js/app.js",
+    "watch-js": "watchify -t babelify static/js/app.js -o static/build/js/app.js -v",
     "build": "npm install && npm run build-js",
+    "watch": "npm run build && npm run watch-js",
     "lint": "jshint 'static/js/' && jscs 'static/js/'",
     "test": "npm run lint"
   },
