@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports =  {
+var color = {
   // Takes values from 0 to 1
   HSLToRGB: function (h, s, l) {
     var r, g, b;
@@ -115,3 +115,5 @@ module.exports =  {
     } : undefined;
   }
 };
+
+module.exports = color;

@@ -11,7 +11,7 @@ var searchableTypes = [
   'label'
 ];
 
-module.exports = React.createClass({
+var FormCollection = React.createClass({
   areDefined: function (value) {
     return typeof value !== 'undefined';
   },
@@ -170,3 +170,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = FormCollection;

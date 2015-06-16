@@ -4,7 +4,7 @@ var React = require('react');
 var ModalStore = require('./modal-store');
 var _ = require('underscore');
 
-module.exports = React.createClass({
+var ModalDialog = React.createClass({
   close: function () {
     ModalStore.action('close');
   },
@@ -99,3 +99,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ModalDialog;

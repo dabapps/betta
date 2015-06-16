@@ -6,7 +6,7 @@ var ColorPickerValues = require('./color-picker-values');
 var ColorPalette = require('./color-palette');
 var Slider = require('./slider');
 
-module.exports = React.createClass({
+var ColorPicker = React.createClass({
   getHSL: function (h, s, l) {
     var hsl = this.state.hsl;
     if (typeof h !== 'undefined') {
@@ -281,3 +281,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ColorPicker;

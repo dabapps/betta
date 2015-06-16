@@ -7,7 +7,7 @@ var ImportModal = require('./import-modal');
 var SearchStore = require('./search-store');
 var VariableStore = require('./variable-store');
 
-module.exports = React.createClass({
+var SidebarMenu = React.createClass({
   preview: function () {
     VariableStore.action('requestPreview');
   },
@@ -184,3 +184,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = SidebarMenu;

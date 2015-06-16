@@ -3,7 +3,7 @@
 var React = require('react');
 var _ = require('underscore');
 
-module.exports = React.createClass({
+var CheckBox = React.createClass({
   render: function () {
     return React.createElement(
       'div',
@@ -28,3 +28,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = CheckBox;

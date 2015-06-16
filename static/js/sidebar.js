@@ -5,7 +5,7 @@ var FormCollection = require('./form-collection');
 var SidebarMenu = require('./sidebar-menu');
 var SearchStore = require('./search-store');
 
-module.export = React.createClass({
+var Sidebar = React.createClass({
   componentWillUnmount: function () {
     SearchStore.unbind('setSearchTerm', this.getSearchTerm);
   },
@@ -84,3 +84,5 @@ module.export = React.createClass({
     );
   }
 });
+
+module.export = Sidebar;

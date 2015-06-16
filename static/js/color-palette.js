@@ -6,7 +6,7 @@ var color = require('./color');
 var MAX_SIZE = 50;
 var MIN_SIZE = 10;
 
-module.exports = React.createClass({
+var ColorPalette = React.createClass({
   addListeners: function () {
     window.addEventListener('mousemove', this.mouseMove);
     window.addEventListener('mouseup', this.mouseUp);
@@ -120,3 +120,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ColorPalette;

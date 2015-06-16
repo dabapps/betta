@@ -3,7 +3,7 @@
 var React = require('react');
 var VariableStore = require('./variable-store');
 
-module.exports = React.createClass({
+var ColorPickerValues = React.createClass({
   readableHSL: function () {
     var self = this;
 
@@ -110,3 +110,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ColorPickerValues;

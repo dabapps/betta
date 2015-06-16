@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-module.exports = React.createClass({
+var ModalTemplate = React.createClass({
   render: function () {
     var title, body, footer;
 
@@ -49,3 +49,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ModalTemplate;

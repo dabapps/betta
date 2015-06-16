@@ -5,7 +5,7 @@ var _ = require('underscore');
 var eventInProgressError = 'Event already in progress.' +
   'You cannot trigger a new event from an event listener.';
 
-module.exports = function () {
+var Store = function () {
   var eventInProgress = false;
   var listeners = {};
   var actions = {};
@@ -59,3 +59,5 @@ module.exports = function () {
     }
   };
 };
+
+module.exports = Store;

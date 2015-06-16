@@ -8,7 +8,7 @@ var Checkbox = require('./checkbox');
 var ExportSettingsStore = require('./export-settings-store');
 var _ = require('underscore');
 
-module.exports = React.createClass({
+var ExportModal = React.createClass({
   updateSetting: function (settingsIndex, event) {
     var value = event.target.parentNode.getElementsByTagName('input')[0].checked;
     ExportSettingsStore.action('updateSetting', settingsIndex, value);
@@ -120,3 +120,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ExportModal;

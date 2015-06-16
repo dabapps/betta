@@ -10,7 +10,7 @@ var ImportSettingsStore = require('./import-settings-store');
 var instructions = 'Please select an existing variables.less file, ' +
   'or paste it\'s contents into the text area.';
 
-module.exports = React.createClass({
+var ImportModal = React.createClass({
   importVariables: function () {
     var settings = this.state.settings.map(function (setting) {
       return setting.value;
@@ -213,3 +213,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ImportModal;

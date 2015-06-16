@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-module.exports = React.createClass({
+var Iframe = React.createClass({
   iframeLoaded: function (event) {
     this.props.iframeLoaded(event.target);
   },
@@ -51,3 +51,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Iframe;

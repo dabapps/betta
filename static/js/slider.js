@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-module.exports = React.createClass({
+var Slider = React.createClass({
   addListeners: function () {
     window.addEventListener('mousemove', this.mouseMove);
     window.addEventListener('mouseup', this.mouseUp);
@@ -68,3 +68,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Slider;

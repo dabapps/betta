@@ -5,7 +5,7 @@ var ModalStore = require('./modal-store');
 var ModalDialog = require('./modal-dialog');
 var _ = require('underscore');
 
-module.exports = React.createClass({
+var ModalRenderer = React.createClass({
   setTimeout: function (fn, time) {
     var timeout = setTimeout(fn, time);
 
@@ -88,3 +88,5 @@ module.exports = React.createClass({
     return false;
   }
 });
+
+module.exports = ModalRenderer;
