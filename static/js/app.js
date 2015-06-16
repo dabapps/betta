@@ -6,7 +6,7 @@ var ModalRenderer = require('./modal-renderer');
 var Iframe = require('./iframe');
 var Sidebar = require('./sidebar');
 var $ = require('jquery');
-var less = require('less');
+var less = require('less/browser');
 
 var App = React.createClass({
   applyCSS: function (css) {
