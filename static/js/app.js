@@ -8,6 +8,15 @@ var Sidebar = require('./sidebar');
 var $ = require('jquery');
 var less = require('less/browser');
 
+less = less(window, {
+  env: 'development',
+  logLevel: 2,
+  async: true,
+  fileAsync: true,
+  dumpLineNumbers: 'comments',
+  useFileCache: true
+});
+
 var App = React.createClass({
   applyCSS: function (css) {
     var iframeDoc = this.state.iframeDoc;
