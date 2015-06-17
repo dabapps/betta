@@ -95,6 +95,7 @@
   },
   "dependencies": {
     "bootstrap": "=3.3.4",
+    "holderjs": "=2.8.0",
     "jquery": "=2.1.4",
     "less": "=2.5.0",
     "react": "=0.13.3",
