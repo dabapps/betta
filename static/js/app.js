@@ -61,15 +61,15 @@ var App = React.createClass({
   getBootstrapAndRenderLess: function (callback) {
     var self = this;
 
-    $.ajax('static/lib/bootstrap/less/bootstrap.less', {
+    $.ajax('../static/build/lib/bootstrap/less/bootstrap.less', {
       success: function (result) {
         var variables = VariableStore.getPackedVariables();
         variables = variables.replace(
           /(@icon-font-path:).+?;/i,
-          '$1 "../static/lib/bootstrap/fonts/";'
+          '$1 "../static/build/lib/bootstrap/fonts/";'
         );
 
-        result = result.replace(/"(.+?)"/gi, '"static/lib/bootstrap/less/$1"');
+        result = result.replace(/"(.+?)"/gi, '"static/build/lib/bootstrap/less/$1"');
         result = result.replace(/@.+?variables.+?;/i, variables);
 
         self.renderLess(result, callback);

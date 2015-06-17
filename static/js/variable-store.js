@@ -4,6 +4,7 @@ var Store = require('./store');
 var $ = require('jquery');
 var _ = require('underscore');
 
+var variablesPath = 'static/build/lib/bootstrap/less/variables.less';
 var variables = [];
 var colorVariables = [];
 var lastLabel;
@@ -102,7 +103,7 @@ var errorLoadingLess = function (error) {
   window.alert(error.responseText);
 };
 
-$.ajax('static/lib/bootstrap/less/variables.less', {
+$.ajax(variablesPath, {
   success: unpackVariables,
   error: errorLoadingLess
 });
