@@ -5,8 +5,9 @@ Simple Bootstrap variable editor
 ### Development
 You will need to install and run an http server. Example:
 
-    npm install -g http-server
-    http-server .
+    npm install
+    npm start
+    npm watch
 
 
 ### Tests
