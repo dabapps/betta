@@ -4,7 +4,7 @@
   "description": "Simple Bootstrap variable editor",
   "main": "static/js/index.js",
   "scripts": {
-    "start": "http-server . -o & npm run watch",
+    "start": "http-server . -o -c-1 & npm run watch",
     "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js static/build/lib/",
     "copy-holder": "cp node_modules/holderjs/holder.min.js static/build/lib/",
     "copy-bootstrap": "cp -r node_modules/bootstrap/ static/build/lib/bootstrap",
