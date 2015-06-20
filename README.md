@@ -7,7 +7,6 @@ You will need to install and run an http server. Example:
 
     npm install
     npm start
-    npm watch
 
 
 ### Tests
