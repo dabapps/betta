@@ -2,8 +2,17 @@
   "name": "betta",
   "version": "0.0.0",
   "description": "Simple Bootstrap variable editor",
-  "main": "static/js/app.js",
+  "main": "static/js/index.js",
   "scripts": {
+    "start": "http-server . & npm run watch",
+    "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js static/build/lib/",
+    "copy-holder": "cp node_modules/holderjs/holder.min.js static/build/lib/",
+    "copy-bootstrap": "cp -r node_modules/bootstrap/ static/build/lib/bootstrap",
+    "copy-libs": "mkdir -p static/build/lib && npm run copy-jquery && npm run copy-holder && npm run copy-bootstrap",
+    "build-js": "mkdir -p static/build/js && browserify -t babelify static/js/index.js -o static/build/js/index.js",
+    "watch-js": "watchify -t babelify static/js/index.js -o static/build/js/index.js -v",
+    "build": "npm install && npm run copy-libs && npm run build-js",
+    "watch": "npm run build && npm run watch-js",
     "lint": "jshint 'static/js/' && jscs 'static/js/'",
     "test": "npm run lint"
   },
@@ -34,11 +43,6 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "jshint": "2.8.0",
-    "jscs": "1.13.1"
-  },
   "jshintConfig": {
     "browserify": true,
     "unused": true,
@@ -91,5 +95,20 @@
     "requireSpaceBeforeBlockStatements": true,
     "requireSpaceBeforeObjectValues": true,
     "requireSpacesInForStatement": true
+  },
+  "dependencies": {
+    "bootstrap": "=3.3.4",
+    "holderjs": "=2.8.0",
+    "jquery": "=2.1.4",
+    "less": "=2.5.0",
+    "react": "=0.13.3",
+    "underscore": "=1.8.3"
+  },
+  "devDependencies": {
+    "babelify": "=6.1.2",
+    "browserify": "=10.2.4",
+    "jscs": "=1.13.1",
+    "jshint": "=2.8.0",
+    "watchify": "=3.2.2"
   }
 }

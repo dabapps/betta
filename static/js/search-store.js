@@ -1,21 +1,19 @@
 'use strict';
 
-window.define(['store'], function (Store) {
+var Store = require('./store');
 
-  var searchTerm;
+var searchTerm;
 
-  var SearchStore = new Store();
+var SearchStore = new Store();
 
-  SearchStore.getSearchTerm = function () {
-    return searchTerm;
-  };
+SearchStore.getSearchTerm = function () {
+  return searchTerm;
+};
 
-  SearchStore.createAction('setSearchTerm', function (newSearchTerm) {
-    searchTerm = newSearchTerm;
+SearchStore.createAction('setSearchTerm', function (newSearchTerm) {
+  searchTerm = newSearchTerm;
 
-    SearchStore.emitEvent('setSearchTerm');
-  });
-
-  return SearchStore;
-
+  SearchStore.emitEvent('setSearchTerm');
 });
+
+module.exports = SearchStore;

@@ -1,103 +1,103 @@
 'use strict';
 
-window.define(['react', 'modal-store', 'underscore'], function (React, ModalStore, _) {
+var React = require('react');
+var ModalStore = require('./modal-store');
+var _ = require('underscore');
 
-  var Modal = React.createClass({
-    close: function () {
-      ModalStore.action('close');
-    },
+var ModalDialog = React.createClass({
+  close: function () {
+    ModalStore.action('close');
+  },
 
-    stopPropagation: function (event) {
-      event.stopPropagation();
-    },
+  stopPropagation: function (event) {
+    event.stopPropagation();
+  },
 
-    setTimeout: function (fn, time) {
-      var timeout = setTimeout(fn, time);
+  setTimeout: function (fn, time) {
+    var timeout = setTimeout(fn, time);
 
-      var timeouts = this.state.timeouts;
-      timeouts.push(timeout);
+    var timeouts = this.state.timeouts;
+    timeouts.push(timeout);
 
-      this.setState({
-        timeouts: timeouts
+    this.setState({
+      timeouts: timeouts
+    });
+  },
+
+  clearTimeouts: function () {
+    var timeouts = this.state.timeouts;
+
+    _.each(timeouts, function (timeout) {
+      clearTimeout(timeout);
+    });
+
+    this.setState({
+      timeouts: []
+    });
+  },
+
+  componentDidMount: function () {
+    var self = this;
+
+    this.setTimeout(function () {
+      self.setState({
+        fadeClass: 'in'
       });
-    },
+    }, 10);
+  },
 
-    clearTimeouts: function () {
-      var timeouts = this.state.timeouts;
+  componentWillUnmount: function () {
+    this.setState({
+      fadeClass: ''
+    });
 
-      _.each(timeouts, function (timeout) {
-        clearTimeout(timeout);
-      });
+    this.clearTimeouts();
+  },
 
-      this.setState({
-        timeouts: []
-      });
-    },
+  getInitialState: function () {
+    return {
+      timeouts: [],
+      fadeClass: ''
+    };
+  },
 
-    componentDidMount: function () {
-      var self = this;
+  render: function () {
+    var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
 
-      this.setTimeout(function () {
-        self.setState({
-          fadeClass: 'in'
-        });
-      }, 10);
-    },
-
-    componentWillUnmount: function () {
-      this.setState({
-        fadeClass: ''
-      });
-
-      this.clearTimeouts();
-    },
-
-    getInitialState: function () {
-      return {
-        timeouts: [],
-        fadeClass: ''
-      };
-    },
-
-    render: function () {
-      var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
-
-      return React.createElement(
+    return React.createElement(
+      'div',
+      {
+        className: 'modal fade ' + fadeClass,
+        style: {
+          display: 'block'
+        }
+      },
+      React.createElement(
         'div',
         {
-          className: 'modal fade ' + fadeClass,
-          style: {
-            display: 'block'
-          }
+          className: 'modal-overlay',
+          onClick: this.close
         },
         React.createElement(
           'div',
           {
-            className: 'modal-overlay',
-            onClick: this.close
+            className: 'modal-dialog',
+            onClick: this.stopPropagation
           },
           React.createElement(
             'div',
             {
-              className: 'modal-dialog',
-              onClick: this.stopPropagation
+              className: 'modal-content'
             },
             React.createElement(
-              'div',
-              {
-                className: 'modal-content'
-              },
-              React.createElement(
-                this.props.view,
-                this.props.props
-              )
+              this.props.view,
+              this.props.props
             )
           )
         )
-      );
-    }
-  });
-
-  return Modal;
-
+      )
+    );
+  }
 });
+
+module.exports = ModalDialog;
