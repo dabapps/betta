@@ -97,7 +97,9 @@
     "requireSpacesInForStatement": true
   },
   "dependencies": {
+    "babelify": "=6.1.2",
     "bootstrap": "=3.3.4",
+    "browserify": "=10.2.4",
     "holderjs": "=2.8.0",
     "jquery": "=2.1.4",
     "less": "=2.5.0",
@@ -105,8 +107,6 @@
     "underscore": "=1.8.3"
   },
   "devDependencies": {
-    "babelify": "=6.1.2",
-    "browserify": "=10.2.4",
     "jscs": "=1.13.1",
     "jshint": "=2.8.0",
     "watchify": "=3.2.2"
