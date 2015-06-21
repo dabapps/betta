@@ -4,6 +4,17 @@
 
 /* @end Variables */
 
+/* @group Colors */
+
+@White: #fff;
+@GreyLight: #eee;
+@GreyMedium: #ccc;
+@Grey: #aaa;
+@Black: #000;
+
+@Red: #f00;
+
+/* @end Colors */
 
 /* @group Mixins */
 
@@ -53,7 +64,7 @@ a {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #aaa;
+  background-color: @Grey;
 }
 
 .sidebar-container {
@@ -64,8 +75,8 @@ a {
   height: 100%;
   padding-top: 72px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  background-color: #fff;
-  background-color: #eee;
+  background-color: @White;
+  background-color: @GreyLight;
   overflow: hidden;
 }
 
@@ -120,7 +131,7 @@ a {
   left: 0;
   width: 100%;
   height: 72px;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid @Grey;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
   .size-control {
@@ -177,7 +188,7 @@ a {
 .form-collection {
   position: relative;
   padding: 8px;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid @Grey;
   overflow: hidden;
   height: auto;
 
@@ -250,8 +261,8 @@ a {
       width: 24px;
       height: 24px;
       margin: 5px;
-      background-color: #fff;
-      border: 1px solid #ccc;
+      background-color: @White;
+      border: 1px solid @GreyMedium;
       cursor: pointer;
     }
   }
@@ -318,8 +329,8 @@ a {
     width: 100%;
     height: auto;
     padding: 8px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: @White;
+    border: 1px solid @GreyMedium;
     margin-top: -1px;
     border-radius: 4px;
 
@@ -328,8 +339,8 @@ a {
       width: 100%;
       height: 0;
       padding-bottom: 100%;
-      background-color: #f00;
-      border: 1px solid #ccc;
+      background-color: @Red;
+      border: 1px solid @GreyMedium;
       z-index: 1;
     }
 
@@ -347,7 +358,7 @@ a {
       right: 0;
       width: 24px;
       height: 100%;
-      border: 1px solid #ccc;
+      border: 1px solid @GreyMedium;
       background-image: url('../../img/hue-background.png');
       background-position: 0 0;
       background-size: 100% 100%;
@@ -360,8 +371,8 @@ a {
         left: 0;
         width: 100%;
         height: 10px;
-        border-top: 1px solid #fff;
-        border-bottom: 1px solid #fff;
+        border-top: 1px solid @White;
+        border-bottom: 1px solid @White;
         margin-top: -4px;
 
         &::before {
@@ -372,8 +383,8 @@ a {
           left: 0;
           width: 100%;
           height: 100%;
-          border-top: 1px solid #000;
-          border-bottom: 1px solid #000;
+          border-top: 1px solid @Black;
+          border-bottom: 1px solid @Black;
         }
       }
     }
@@ -384,7 +395,7 @@ a {
       left: 0;
       width: 10px;
       height: 10px;
-      border: 1px solid #fff;
+      border: 1px solid @White;
       border-radius: 50%;
       margin-left: -4px;
       margin-top: -4px;
@@ -396,7 +407,7 @@ a {
         position: absolute;
         width: 100%;
         height: 100%;
-        border: 1px solid #000;
+        border: 1px solid @Black;
         border-radius: 50%;
       }
     }
@@ -461,7 +472,7 @@ a {
     height: 44px;
     border-radius: 50%;
     border: 2px solid transparent;
-    border-top: 2px solid grey;
+    border-top: 2px solid @Grey;
     -webkit-animation: loading-outer 1s linear infinite;
     -moz-animation: loading-outer 1s linear infinite;
     -o-animation: loading-outer 1s linear infinite;
@@ -478,7 +489,7 @@ a {
     height: 24px;
     border-radius: 50%;
     border: 2px solid transparent;
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid @Grey;
     -webkit-animation: loading-inner 2s linear infinite;
     -moz-animation: loading-inner 2s linear infinite;
     -o-animation: loading-inner 2s linear infinite;
