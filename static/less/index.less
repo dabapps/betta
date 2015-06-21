@@ -1,3 +1,16 @@
+/* @group Mixins */
+
+.transition5(@value1, @value2, @value3, @value4, @value5) {
+  -webkit-transition: @value1, @value2, @value3, @value4, @value5;
+  -moz-transition: @value1, @value2, @value3, @value4, @value5;
+  -ms-transition: @value1, @value2, @value3, @value4, @value5;
+  -o-transition: @value1, @value2, @value3, @value4, @value5;
+  transition: @value1, @value2, @value3, @value4, @value5;
+}
+
+/* @end Mixins */
+
+
 * {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -385,11 +398,7 @@ a {
       border-radius: 50%;
       margin-left: -4px;
       margin-top: -4px;
-      -webkit-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
-      -moz-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
-      -ms-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
-      -o-transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
-      transition: ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s;
+      .transition5(ease-in-out width 0.1s, ease-in-out height 0.1s, ease-in-out margin-top 0.1s, ease-in-out margin-left 0.1s, ease-in-out box-shadow 0.1s);
 
       &::before {
         content: ' ';
