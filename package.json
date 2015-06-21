@@ -109,6 +109,7 @@
   "devDependencies": {
     "jscs": "=1.13.1",
     "jshint": "=2.8.0",
+    "watch": "=0.16.0",
     "watchify": "=3.2.2"
   }
 }
