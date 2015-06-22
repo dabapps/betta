@@ -1,10 +1,20 @@
 language: node_js
 
 node_js:
-- '0.10.36'
+- 0.10.36
+
+env:
+  global:
+    - secure: Mv4XLrjdqOaXqMz3RuEtQWBze9zw6UB3uSiRUpIYZU9Wm2NgknGnZ7XkazPwZyscRd/YXLZ9znkJoEtRm9TRiVbCgFfCf8+dB0RmxYCOaRi12K0X0yofU9fT1OU1VNIYdgOIpHt5Iw9OPSVAI8npTvrjQtcrIOWVtfl4sLZpuuU=
 
 install:
 - npm install
 
+before_script:
+- npm run dist
+
 script:
 - npm test
+
+after_success:
+- bash deploy.bash
