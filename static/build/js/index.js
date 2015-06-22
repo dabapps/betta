@@ -41743,7 +41743,7 @@ var App = React.createClass({
   getBootstrapAndRenderLess: function getBootstrapAndRenderLess(callback) {
     var self = this;
 
-    $.ajax('../static/build/lib/bootstrap/less/bootstrap.less', {
+    $.ajax('static/build/lib/bootstrap/less/bootstrap.less', {
       success: function success(result) {
         var variables = VariableStore.getPackedVariables();
         variables = variables.replace(/(@icon-font-path:).+?;/i, '$1 "../static/build/lib/bootstrap/fonts/";');
