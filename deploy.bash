@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 BRANCH=gh-pages
-TARGET_REPO=dabapps/betta.github.io.git
-DIST_FOLDER=output
+TARGET_REPO=dabapps/betta.git
+DIST_FOLDER=dist
 
 echo -e "Testing travis-encrypt"
 echo -e "$VARNAME"
