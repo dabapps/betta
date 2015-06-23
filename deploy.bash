@@ -4,7 +4,7 @@ BRANCH=gh-pages
 TARGET_REPO=dabapps/betta.git
 DIST_FOLDER=dist
 
-if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master"]; then
     echo -e "Starting deployment to Github Pages\n"
 
     if [ "$TRAVIS" == "true" ]; then
@@ -25,4 +25,6 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     git push -fq origin $BRANCH > /dev/null
 
     echo -e "Deployment completed\n"
+else
+  echo -e "Will not deploy. It's either not a PR or not merging to master branch.\n"
 fi
