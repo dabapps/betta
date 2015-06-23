@@ -219,65 +219,39 @@ var ColorPicker = React.createClass({
     var picker;
 
     if (this.state.active) {
-      picker = React.createElement(
-        'div',
-        {
-          className: 'picker'
-        },
-        React.createElement(
-          'div',
-          {
-            className: 'palette'
-          },
-          React.createElement(
-            ColorPalette,
-            {
-              point: this.state.point,
-              onChange: this.setPoint,
-              hsl: this.state.hsl,
-              rgb: this.state.rgb,
-              hex: this.state.hex
-            }
-          ),
-          React.createElement(
-            Slider,
-            {
-              className: 'hue-slider',
-              value: this.state.hsl.h,
-              orientation: 'vertical',
-              onChange: this.setHue
-            }
-          )
-        ),
-        React.createElement(
-          ColorPickerValues,
-          {
-            hsl: this.state.hsl,
-            rgb: this.state.rgb,
-            hex: this.state.hex,
-            setValue: this.props.setValue,
-            togglePicker: this.togglePicker
-          }
-        )
+      picker = (
+        <div className='picker'>
+          <div className='palette'>
+            <ColorPalette
+              point={this.state.point}
+              onChange={this.setPoint}
+              hsl={this.state.hsl}
+              rgb={this.state.rgb}
+              hex={this.state.hex} />
+            <Slider
+              className='hue-slider'
+              value={this.state.hsl.h}
+              orientation='vertical'
+              onChange={this.setHue} />
+          </div>
+          <ColorPickerValues
+            hsl={this.state.hsl}
+            rgb={this.state.rgb}
+            hex={this.state.hex}
+            setValue={this.props.setValue}
+            togglePicker={this.togglePicker} />
+        </div>
       );
     }
 
-    return React.createElement(
-      'div',
-      {
-        className: 'color-picker'
-      },
-      React.createElement(
-        'div',
-        {
-          className: 'swatch',
-          style: {
-            backgroundColor: this.props.value || this.props.defaultValue
-          },
-          onClick: this.togglePicker
-        }
-      ),
-      picker
+    return (
+      <div className='color-picker'>
+        <div
+          className='swatch'
+          style={{backgroundColor: this.props.value || this.props.defaultValue}}
+          onClick={this.togglePicker} />
+        {picker}
+      </div>
     );
   }
 });
