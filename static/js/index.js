@@ -61,7 +61,7 @@ var App = React.createClass({
   getBootstrapAndRenderLess: function (callback) {
     var self = this;
 
-    $.ajax('../static/build/lib/bootstrap/less/bootstrap.less', {
+    $.ajax('static/build/lib/bootstrap/less/bootstrap.less', {
       success: function (result) {
         var variables = VariableStore.getPackedVariables();
         variables = variables.replace(
