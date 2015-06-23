@@ -56,6 +56,7 @@
     }
   },
   "jscsConfig": {
+    "esprima": "esprima-fb",
     "disallowMultipleVarDecl": "exceptUndefined",
     "validateQuoteMarks": {
       "mark": "'",
@@ -75,15 +76,6 @@
     },
     "disallowTrailingWhitespace": true,
     "maximumLineLength": 100,
-    "requireCurlyBraces": [
-      "if",
-      "else",
-      "for",
-      "while",
-      "do",
-      "try",
-      "catch"
-    ],
     "disallowMixedSpacesAndTabs": true,
     "requireSpaceBeforeBinaryOperators": true,
     "safeContextKeyword": [
@@ -111,6 +103,7 @@
     "underscore": "=1.8.3"
   },
   "devDependencies": {
+    "esprima-fb": "=15001.1.0-dev-harmony-fb",
     "jscs": "=1.13.1",
     "jsxhint": "=0.15.1",
     "watch": "=0.16.0",

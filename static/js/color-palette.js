@@ -75,7 +75,10 @@ var ColorPalette = React.createClass({
       '0 0 0 0 rgba(0, 0, 0, 0)';
 
     return (
-      <div className='background' onMouseDown={this.mouseDown} style={{backgroundColor: backgroundColor}}>
+      <div
+        className='background'
+        onMouseDown={this.mouseDown}
+        style={{backgroundColor: backgroundColor}}>
           <div className='gradient grey' />
           <div className='gradient white' />
           <div className='gradient black' />
