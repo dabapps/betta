@@ -4,7 +4,7 @@ BRANCH=gh-pages
 TARGET_REPO=dabapps/betta.git
 DIST_FOLDER=dist
 
-if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master"]; then
+if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
     echo -e "Starting deployment to Github Pages\n"
 
     if [ "$TRAVIS" == "true" ]; then
