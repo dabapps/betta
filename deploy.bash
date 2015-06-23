@@ -24,7 +24,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
     git commit -m "Deployment - Travis build $TRAVIS_BUILD_NUMBER"
     git push -fq origin $BRANCH > /dev/null
 
-    echo -e "Deployment completed\n"
+    echo -e "Deployment completed.\n"
 else
-  echo -e "Will not deploy. It's either not a PR or not merging to master branch.\n"
+  echo -e "Deployment cancelled. It's either a PR and not merging to master branch.\n"
 fi
