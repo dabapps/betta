@@ -26,5 +26,5 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
 
     echo -e "Deployment completed.\n"
 else
-  echo -e "Deployment cancelled. It's either a PR and not merging to master branch.\n"
+  echo -e "Deployment cancelled. It's either a PR or not the master branch.\n"
 fi
