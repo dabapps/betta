@@ -74,49 +74,23 @@ var ColorPalette = React.createClass({
       '0 3px 6px 0 rgba(0, 0, 0, 0.5)' :
       '0 0 0 0 rgba(0, 0, 0, 0)';
 
-    return React.createElement(
-      'div',
-      {
-        className: 'background',
-        onMouseDown: this.mouseDown,
-        style: {
-          backgroundColor: backgroundColor
-        }
-      },
-      React.createElement(
-        'div',
-        {
-          className: 'gradient grey'
-        }
-      ),
-      React.createElement(
-        'div',
-        {
-          className: 'gradient white'
-        }
-      ),
-      React.createElement(
-        'div',
-        {
-          className: 'gradient black'
-        }
-      ),
-      React.createElement(
-        'div',
-        {
-          className: 'point',
-          style: {
-            top: this.props.point.y * 100 + '%',
-            left: this.props.point.x * 100 + '%',
-            backgroundColor: this.props.hex,
-            width: this.state.dragging ? MAX_SIZE : MIN_SIZE,
-            height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
-            marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
-            marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
-            boxShadow: dropShadow
-          }
-        }
-      )
+    return (
+      <div className='background' onMouseDown={this.mouseDown} style={{backgroundColor: backgroundColor}}>
+          <div className='gradient grey' />
+          <div className='gradient white' />
+          <div className='gradient black' />
+          <div
+            className='point'
+            style={{
+              top: this.props.point.y * 100 + '%',
+              left: this.props.point.x * 100 + '%',
+              backgroundColor: this.props.hex,
+              width: this.state.dragging ? MAX_SIZE : MIN_SIZE,
+              height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
+              marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
+              marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
+              boxShadow: dropShadow}} />
+      </div>
     );
   }
 });
