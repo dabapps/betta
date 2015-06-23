@@ -17,7 +17,7 @@
     "watch": "npm run build && npm run watch-js & npm run watch-less",
     "dist-static": "cp -r static/build dist/static/ && cp -r static/css/ dist/static/css/ && cp -r static/img/ dist/static/img/",
     "dist": "npm run build && mkdir -p dist/static/build && npm run dist-static && cp -r index.html dist/ && cp -r templates/ dist/templates/",
-    "lint": "jshint 'static/js/' && jscs 'static/js/'",
+    "lint": "jsxhint 'static/js/' && jscs 'static/js/'",
     "test": "npm run lint"
   },
   "keywords": [
@@ -112,7 +112,7 @@
   },
   "devDependencies": {
     "jscs": "=1.13.1",
-    "jshint": "=2.8.0",
+    "jsxhint": "=0.15.1",
     "watch": "=0.16.0",
     "watchify": "=3.2.2"
   }
