@@ -11,10 +11,10 @@ install:
 - npm install
 
 before_script:
-- npm run dist
 
 script:
 - npm test
 
 after_success:
+- npm run dist
 - bash deploy.bash
