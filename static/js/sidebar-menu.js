@@ -45,142 +45,50 @@ var SidebarMenu = React.createClass({
     var dropdown;
 
     var frameSizes = this.props.frameSizes.map(function (size) {
-      return React.createElement(
-        'option',
-        {
-          key: size.name,
-          value: size.name
-        },
-        size.name
+      return (
+        <option key={size.name} value={size.name}>{size.name}</option>
       );
     });
 
     if (this.state.dropdownActive) {
-      dropdown = React.createElement(
-        'ul',
-        {
-          className: 'dropdown-menu'
-        },
-        React.createElement(
-          'li',
-          null,
-          React.createElement(
-            'a',
-            {
-              onClick: self.import
-            },
-            'Import'
-          )
-        ),
-        React.createElement(
-          'li',
-          null,
-          React.createElement(
-            'a',
-            {
-              onClick: self.export
-            },
-            'Export'
-          )
-        ),
-        React.createElement(
-          'li',
-          {
-            className: 'divider'
-          }
-        ),
-        React.createElement(
-          'li',
-          null,
-          React.createElement(
-            'a',
-            {
-              onClick: self.props.reset
-            },
-            'Reset'
-          )
-        )
+      dropdown = (
+        <ul className='dropdown-menu'>
+          <li><a onClick={self.import}>Import</a></li>
+          <li><a onClick={self.export}>Export</a></li>
+          <li className='divider' />
+          <li><a onClick={self.props.reset}>Reset</a></li>
+        </ul>
       );
     }
 
-    return React.createElement(
-      'div',
-      {
-        className: 'sidebar-menu'
-      },
-      React.createElement(
-        'div',
-        {
-          className: 'form-group'
-        },
-        React.createElement(
-          'select',
-          {
-            className: 'form-control size-control',
-            onChange: self.props.setFrameSize,
-            value: self.props.currentFrameSize.name
-          },
-          frameSizes
-        ),
-        React.createElement(
-          'button',
-          {
-            className: 'btn btn-small btn-default',
-            onClick: self.preview
-          },
-          'Preview'
-        ),
-        React.createElement(
-          'div',
-          {
-            className: 'dropdown pull-right' + (self.state.dropdownActive ? ' open' : ''),
-            onClick: self.toggleDropdown
-          },
-          React.createElement(
-            'button',
-            {
-              className: 'btn btn-small btn-default'
-            },
-            'File ',
-            React.createElement(
-              'span',
-              {
-                className: 'caret'
-              }
-            )
-          ),
-          dropdown
-        )
-      ),
-      React.createElement(
-        'div',
-        {
-          className: 'form-group'
-        },
-        React.createElement(
-          'div',
-          {
-            className: 'input-wrapper search-wrapper'
-          },
-          React.createElement(
-            'input',
-            {
-              type: 'text',
-              className: 'form-control',
-              placeholder: 'Search variables',
-              onChange: this.setSearchTerm,
-              value: this.props.searchTerm
-            }
-          ),
-          React.createElement(
-            'span',
-            {
-              className: 'glyphicon glyphicon-remove',
-              onClick: this.clearSearchTerm
-            }
-          )
-        )
-      )
+    return (
+      <div className='sidebar-menu'>
+        <div className='form-group'>
+          <select
+            className='form-control size-control'
+            onChange={self.props.setFrameSize}
+            value={self.props.currentFrameSize.name}>{frameSizes}</select>
+          <button className='btn btn-small btn-default' onClick={self.preview}>Preview</button>
+          <div
+            className={'dropdown pull-right' + (self.state.dropdownActive ? ' open' : '')}
+            onClick={self.toggleDropdown}>
+            <button className='btn btn-small btn-default'>File <span className='caret' /></button>
+            {dropdown}
+          </div>
+        </div>
+        <div className='form-group'>
+          <div className='input-wrapper search-wrapper'>
+            <input
+              type='text'
+              className='form-control'
+              placeholder='Search variables'
+              onChange={this.setSearchTerm}
+              value={this.props.searchTerm}>
+            </input>
+            <span className='glyphicon glyphicon-remove' onClick={this.clearSearchTerm} />
+          </div>
+        </div>
+      </div>
     );
   }
 });
