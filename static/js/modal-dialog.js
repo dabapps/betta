@@ -64,38 +64,19 @@ var ModalDialog = React.createClass({
   render: function () {
     var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
 
-    return React.createElement(
-      'div',
-      {
-        className: 'modal fade ' + fadeClass,
-        style: {
-          display: 'block'
-        }
-      },
-      React.createElement(
-        'div',
-        {
-          className: 'modal-overlay',
-          onClick: this.close
-        },
-        React.createElement(
-          'div',
-          {
-            className: 'modal-dialog',
-            onClick: this.stopPropagation
-          },
-          React.createElement(
-            'div',
-            {
-              className: 'modal-content'
-            },
-            React.createElement(
-              this.props.view,
-              this.props.props
-            )
-          )
-        )
-      )
+    return (
+      <div className={'modal fade ' + fadeClass} style={{display: 'block'}}>
+        <div className='modal-overlay' onClick={this.close}>
+          <div className='modal-dialog' onClick={this.stopPropagation}>
+            <div className='modal-content'>
+              {React.createElement(
+                this.props.view,
+                this.props.props
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 });
