@@ -121,12 +121,15 @@ var FormCollection = React.createClass({
     return (
       <div
         key={this.props.key}
-        className={'form-collection' + (isActiveCollection ? ' active' : '') + (hasSearchResults ? ' filtered' : '')}>
-          <a onClick={self.props.setActiveCollection.bind(null, this.props.index)}>
-            <h4>{this.props.group.value}</h4>
-          </a>
-          {description}
-          {children}
+        className={
+          'form-collection' +
+          (isActiveCollection ? ' active' : '') +
+          (hasSearchResults ? ' filtered' : '')}>
+            <a onClick={self.props.setActiveCollection.bind(null, this.props.index)}>
+              <h4>{this.props.group.value}</h4>
+            </a>
+            {description}
+            {children}
       </div>
     );
   }
