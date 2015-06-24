@@ -61,14 +61,12 @@ var ExportModal = React.createClass({
         return undefined;
       }
 
-      return React.createElement(
-        Checkbox,
-        {
-          key: setting.name,
-          checked: setting.value,
-          label: setting.name,
-          onClick: self.updateSetting.bind(self, settingsIndex)
-        }
+      return (
+        <Checkbox
+          key={setting.name}
+          checked={setting.value}
+          label={setting.name}
+          onClick={self.updateSetting.bind(self, settingsIndex)} />
       );
     });
 

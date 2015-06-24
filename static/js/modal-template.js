@@ -7,45 +7,31 @@ var ModalTemplate = React.createClass({
     var title, body, footer;
 
     if (typeof this.props.title !== 'undefined') {
-      title = React.createElement(
-        'div',
-        {
-          className: 'modal-header'
-        },
-        React.createElement(
-          'h4',
-          null,
-          this.props.title
-        )
+      title = (
+        <div className='modal-header'>
+          <h4>this.props.title</h4>
+        </div>
       );
     }
 
     if (typeof this.props.body !== 'undefined') {
-      body = React.createElement(
-        'div',
-        {
-          className: 'modal-body'
-        },
-        this.props.body
+      body = (
+        <div className='modal-body'>{this.props.body}</div>
       );
     }
 
     if (typeof this.props.footer !== 'undefined') {
-      footer = React.createElement(
-        'div',
-        {
-          className: 'modal-footer'
-        },
-        this.props.footer
+      footer = (
+        <div className='modal-footer'>{this.props.footer}</div>
       );
     }
 
-    return React.createElement(
-      'div',
-      null,
-      title,
-      body,
-      footer
+    return (
+      <div>
+        {title}
+        {body}
+        {footer}
+      </div>
     );
   }
 });

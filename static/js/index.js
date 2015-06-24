@@ -204,4 +204,4 @@ var App = React.createClass({
   }
 });
 
-React.render(React.createElement(App), document.body);
+React.render(<App />, document.body);
