@@ -76,13 +76,11 @@ var ModalRenderer = React.createClass({
 
   render: function () {
     if (this.state.open || this.state.closing) {
-      return React.createElement(
-        ModalDialog,
-        {
-          view: this.state.view,
-          props: this.state.props,
-          closing: this.state.closing
-        }
+      return (
+        <ModalDialog
+          view={this.state.view}
+          props={this.state.props}
+          closing={this.state.closing} />
       );
     }
     return false;
