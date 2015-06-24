@@ -38,12 +38,8 @@ var FormCollection = React.createClass({
       if (this.props.searchTerm) {
         return undefined;
       }
-      return React.createElement(
-        'h5',
-        {
-          key: child.value
-        },
-        child.value
+      return (
+        <h5 key={child.value}>child.value</h5>
       );
     },
 
@@ -56,57 +52,35 @@ var FormCollection = React.createClass({
       }
 
       if (child.type === 'color') {
-        colorPicker = React.createElement(
-          ColorPicker,
-          {
-            setValue: self.props.updateVariable.bind(null, self.props.index, index),
-            value: child.value,
-            defaultValue: child.defaultValue
-          }
+        colorPicker = (
+          <ColorPicker
+            setValue={self.props.updateVariable.bind(null, self.props.index, index)}
+            value={child.value}
+            defaultValue={child.defaultValue} />
         );
       }
 
       if (child.label) {
-        label = React.createElement(
-          'p',
-          null,
-          React.createElement(
-            'sub',
-            null,
-            child.label
-          )
+        label = (
+          <p>
+            <sub>{child.label}</sub>
+          </p>
         );
       }
 
-      return React.createElement(
-        'div',
-        {
-          className: 'form-group',
-          key: child.name
-        },
-        label,
-        React.createElement(
-          'label',
-          null,
-          child.name
-        ),
-        React.createElement(
-          'div',
-          {
-            className: 'input-wrapper'
-          },
-          React.createElement(
-            'input',
-            {
-              text: 'text',
-              className: 'form-control',
-              placeholder: child.defaultValue,
-              value: child.value,
-              onChange: self.props.updateVariable.bind(null, self.props.index, index)
-            }
-          ),
-          colorPicker
-        )
+      return (
+        <div className='form-group' key={child.name}>
+          <label>{child.name}</label>
+          <div className='input-wrapper'>
+            <input
+              text='text'
+              className='form-control'
+              placeholder={child.defaultValue}
+              value={child.value}
+              onChange={self.props.updateVariable.bind(null, self.props.index, index)} />
+            {colorPicker}
+          </div>
+        </div>
       );
     }
   },
@@ -131,10 +105,8 @@ var FormCollection = React.createClass({
     }
 
     if (isActiveCollection && this.props.group.description) {
-      description = React.createElement(
-        'p',
-        null,
-        this.props.group.description
+      description = (
+        <p>{this.props.group.description}</p>
       );
     }
 
@@ -146,27 +118,16 @@ var FormCollection = React.createClass({
       }
     }
 
-    return React.createElement(
-      'div',
-      {
-        key: this.props.key,
-        className: 'form-collection' +
-          (isActiveCollection ? ' active' : '') +
-          (hasSearchResults ? ' filtered' : '')
-      },
-      React.createElement(
-        'a',
-        {
-          onClick: self.props.setActiveCollection.bind(null, this.props.index)
-        },
-        React.createElement(
-          'h4',
-          null,
-          this.props.group.value
-        )
-      ),
-      description,
-      children
+    return (
+      <div
+        key={this.props.key}
+        className={'form-collection' + (isActiveCollection ? ' active' : '') + (hasSearchResults ? ' filtered' : '')}>
+          <a onClick={self.props.setActiveCollection.bind(null, this.props.index)}>
+            <h4>{this.props.group.value}</h4>
+          </a>
+          {description}
+          {children}
+      </div>
     );
   }
 });
