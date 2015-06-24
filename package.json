@@ -76,6 +76,15 @@
     },
     "disallowTrailingWhitespace": true,
     "maximumLineLength": 100,
+    "requireCurlyBraces": [
+      "if",
+      "else",
+      "for",
+      "while",
+      "do",
+      "try",
+      "catch"
+    ],
     "disallowMixedSpacesAndTabs": true,
     "requireSpaceBeforeBinaryOperators": true,
     "safeContextKeyword": [
