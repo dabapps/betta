@@ -185,33 +185,21 @@ var App = React.createClass({
   render: function () {
     var self = this;
 
-    return React.createElement(
-      'div',
-      {
-        className: 'app'
-      },
-      React.createElement(
-        Iframe,
-        {
-          iframeLoaded: self.iframeLoaded,
-          loading: self.state.loading,
-          currentFrameSize: self.state.currentFrameSize
-        }
-      ),
-      React.createElement(
-        Sidebar,
-        {
-          variables: self.state.variables,
-          updateVariable: self.updateVariable,
-          setFrameSize: self.setFrameSize,
-          frameSizes: self.state.frameSizes,
-          currentFrameSize: self.state.currentFrameSize,
-          reset: self.reset
-        }
-      ),
-      React.createElement(
-        ModalRenderer
-      )
+    return (
+      <div className='app'>
+        <Iframe
+          iframeLoaded={self.iframeLoaded}
+          loading={self.state.loading}
+          currentFrameSize={self.state.currentFrameSize} />
+        <Sidebar
+          variables={self.state.variables}
+          updateVariable={self.updateVariable}
+          setFrameSize={self.setFrameSize}
+          frameSizes={self.state.frameSizes}
+          currentFrameSize={self.state.currentFrameSize}
+          reset={self.reset} />
+        <ModalRenderer />
+      </div>
     );
   }
 });
