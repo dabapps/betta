@@ -40,47 +40,31 @@ var Sidebar = React.createClass({
 
     var formControls = this.props.variables.map(function (item, index) {
       if (item.element === 'collection') {
-        return React.createElement(
-          FormCollection,
-          {
-            key: item.value,
-            group: item,
-            index: index,
-            activeIndex: self.state.activeIndex,
-            setActiveCollection: self.setActiveCollection,
-            updateVariable: self.props.updateVariable,
-            searchTerm: self.state.searchTerm
-          }
+        return (
+          <FormCollection
+            key={item.value}
+            group={item}
+            index={index}
+            activeIndex={self.state.activeIndex}
+            setActiveCollection={self.setActiveCollection}
+            updateVariable={self.props.updateVariable}
+            searchTerm={self.state.searchTerm} />
         );
       }
     });
 
-    return React.createElement(
-      'div',
-      {
-        className: 'sidebar-container'
-      },
-      React.createElement(
-        SidebarMenu,
-        {
-          setFrameSize: self.props.setFrameSize,
-          frameSizes: self.props.frameSizes,
-          currentFrameSize: self.props.currentFrameSize,
-          reset: self.props.reset,
-          searchTerm: self.state.searchTerm
-        }
-      ),
-      React.createElement(
-        'div',
-        {
-          className: 'sidebar'
-        },
-        React.createElement(
-          'div',
-          null,
-          formControls
-        )
-      )
+    return (
+      <div className='sidebar-container'>
+        <SidebarMenu
+          setFrameSize={self.props.setFrameSize}
+          frameSizes={self.props.frameSizes}
+          currentFrameSize={self.props.currentFrameSize}
+          reset={self.props.reset}
+          searchTerm={self.state.searchTerm} />
+        <div className='sidebar'>
+          <div>{formControls}</div>
+        </div>
+      </div>
     );
   }
 });
