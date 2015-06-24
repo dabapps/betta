@@ -18,36 +18,23 @@ var Iframe = React.createClass({
     var loadingIcon;
 
     if (this.props.loading) {
-      loadingIcon = React.createElement(
-        'div',
-        {
-          className: 'loading-container'
-        },
-        React.createElement(
-          'div',
-          {
-            className: 'loading-icon'
-          }
-        )
+      loadingIcon = (
+        <div className='loading-container'>
+          <div className='loading-icon' />
+        </div>
       );
     }
 
-    return React.createElement(
-      'div',
-      {
-        className: 'iframe-container'
-      },
-      React.createElement(
-        'iframe',
-        {
-          className: 'iframe',
-          src: 'templates/template-1.html',
-          style: {
+    return (
+      <div className='iframe-container'>
+        <iframe
+          className='iframe'
+          src='templates/template-1.html'
+          style={{
             maxWidth: self.props.currentFrameSize.value
-          }
-        }
-      ),
-      loadingIcon
+          }} />
+        {loadingIcon}
+      </div>
     );
   }
 });
