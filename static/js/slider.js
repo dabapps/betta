@@ -50,21 +50,16 @@ var Slider = React.createClass({
   },
 
   render: function () {
-    return React.createElement(
-      'div',
-      {
-        className: this.props.className,
-        onMouseDown: this.mouseDown
-      },
-      React.createElement(
-        'div',
-        {
-          className: 'handle',
-          style: {
+    return (
+      <div
+        className={this.props.className}
+        onMouseDown={this.mouseDown}>
+        <div
+          className='handle'
+          style={{
             top: (this.props.value * 100) + '%'
-          }
-        }
-      )
+          }} />
+      </div>
     );
   }
 });
