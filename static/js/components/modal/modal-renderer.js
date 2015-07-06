@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var ModalStore = require('./stores/modal-store');
+var ModalStore = require('../../stores/modal-store');
 var ModalDialog = require('./modal-dialog');
 var _ = require('underscore');
 

@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var color = require('./color');
+var color = require('../utils/color');
 var ColorPickerValues = require('./color-picker-values');
 var ColorPalette = require('./color-palette');
 var Slider = require('./slider');

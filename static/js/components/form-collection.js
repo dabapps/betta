@@ -2,7 +2,7 @@
 
 var React = require('react');
 var ColorPicker = require('./color-picker');
-var SearchStore = require('./stores/search-store');
+var SearchStore = require('../stores/search-store');
 var _ = require('underscore');
 
 var searchableTypes = [
