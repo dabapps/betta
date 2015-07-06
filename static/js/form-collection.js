@@ -70,6 +70,7 @@ var FormCollection = React.createClass({
 
       return (
         <div className='form-group' key={child.name}>
+          {label}
           <label>{child.name}</label>
           <div className='input-wrapper'>
             <input
