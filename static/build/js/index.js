@@ -41520,7 +41520,7 @@ var FormCollection = React.createClass({
         { onClick: self.props.setActiveCollection.bind(null, this.props.index) },
         React.createElement(
           'h4',
-          null,
+          { title: this.props.group.value },
           this.props.group.value
         )
       ),
