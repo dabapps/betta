@@ -9,7 +9,7 @@ var ModalTemplate = React.createClass({
     if (typeof this.props.title !== 'undefined') {
       title = (
         <div className='modal-header'>
-          <h4>this.props.title</h4>
+          <h4>{this.props.title}</h4>
         </div>
       );
     }
