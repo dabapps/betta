@@ -79,7 +79,9 @@ var FormCollection = React.createClass({
           {label}
           <label>
             {child.name}
-            <span className='glyphicon glyphicon glyphicon-search' onClick={this.addToSearch.bind(null, child.name)} />
+            <span
+              className='glyphicon glyphicon glyphicon-search'
+              onClick={this.addToSearch.bind(null, child.name)} />
           </label>
           <div className='input-wrapper'>
             <input
