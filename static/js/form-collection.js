@@ -137,7 +137,7 @@ var FormCollection = React.createClass({
           (isActiveCollection ? ' active' : '') +
           (hasSearchResults ? ' filtered' : '')}>
             <a onClick={self.props.setActiveCollection.bind(null, this.props.index)}>
-              <h4>{this.props.group.value}</h4>
+              <h4 title={this.props.group.value}>{this.props.group.value}</h4>
             </a>
             {description}
             {children}
