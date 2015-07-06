@@ -41383,6 +41383,7 @@ module.exports = ExportSettingsStore;
 
 var React = require('react');
 var ColorPicker = require('./color-picker');
+var SearchStore = require('./search-store');
 var _ = require('underscore');
 
 var searchableTypes = ['name', 'defaultValue', 'value', 'label'];
@@ -41404,6 +41405,10 @@ var FormCollection = React.createClass({
     var searchTerms = searchTerm.split(' ');
 
     return searchableTypes.indexOf(key) >= 0 && value && (value.toLowerCase().indexOf(searchTerm) >= 0 || _.every(searchTerms, self.areInValue.bind(self, value)));
+  },
+
+  addToSearch: function addToSearch(val) {
+    SearchStore.action('setSearchTerm', val);
   },
 
   create: {
@@ -41452,7 +41457,10 @@ var FormCollection = React.createClass({
         React.createElement(
           'label',
           null,
-          child.name
+          child.name,
+          React.createElement('span', {
+            className: 'glyphicon glyphicon glyphicon-search',
+            onClick: this.addToSearch.bind(null, child.name) })
         ),
         React.createElement(
           'div',
@@ -41524,7 +41532,7 @@ var FormCollection = React.createClass({
 
 module.exports = FormCollection;
 
-},{"./color-picker":255,"react":250,"underscore":251}],260:[function(require,module,exports){
+},{"./color-picker":255,"./search-store":268,"react":250,"underscore":251}],260:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
