@@ -35,7 +35,6 @@ var FormCollection = React.createClass({
   },
 
   addToSearch: function (val) {
-    console.log(val);
     SearchStore.action('setSearchTerm', val);
   },
 
