@@ -1,21 +1,10 @@
 'use strict';
 
-var _ = require('underscore');
 var React = require('react');
 
 var Iframe = React.createClass({
   iframeLoaded: function (event) {
     this.props.iframeLoaded(event.target);
-  },
-
-  getFrameSize: function () {
-    var self = this;
-
-    var foundSize = _.find(self.props.frameSizes, function (frameSize) {
-      return frameSize.name === self.props.currentFrameSize.name;
-    });
-
-    return foundSize ? foundSize.value : '100%';
   },
 
   componentDidMount: function () {
@@ -25,6 +14,7 @@ var Iframe = React.createClass({
   },
 
   render: function () {
+    var self = this;
     var loadingIcon;
 
     if (this.props.loading) {
@@ -41,7 +31,7 @@ var Iframe = React.createClass({
           className='iframe'
           src='templates/template-1.html'
           style={{
-            maxWidth: this.getFrameSize()
+            maxWidth: self.props.currentFrameSize.value
           }} />
         {loadingIcon}
       </div>
