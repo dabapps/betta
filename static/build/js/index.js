@@ -41535,7 +41535,6 @@ module.exports = FormCollection;
 },{"./color-picker":255,"./search-store":268,"react":250,"underscore":251}],260:[function(require,module,exports){
 'use strict';
 
-var _ = require('underscore');
 var React = require('react');
 
 var Iframe = React.createClass({
@@ -41545,16 +41544,6 @@ var Iframe = React.createClass({
     this.props.iframeLoaded(event.target);
   },
 
-  getFrameSize: function getFrameSize() {
-    var self = this;
-
-    var foundSize = _.find(self.props.frameSizes, function (frameSize) {
-      return frameSize.name === self.props.currentFrameSize.name;
-    });
-
-    return foundSize ? foundSize.value : '100%';
-  },
-
   componentDidMount: function componentDidMount() {
     var iframe = this.getDOMNode().getElementsByTagName('iframe')[0];
 
@@ -41562,6 +41551,7 @@ var Iframe = React.createClass({
   },
 
   render: function render() {
+    var self = this;
     var loadingIcon;
 
     if (this.props.loading) {
@@ -41579,7 +41569,7 @@ var Iframe = React.createClass({
         className: 'iframe',
         src: 'templates/template-1.html',
         style: {
-          maxWidth: this.getFrameSize()
+          maxWidth: self.props.currentFrameSize.value
         } }),
       loadingIcon
     );
@@ -41588,7 +41578,7 @@ var Iframe = React.createClass({
 
 module.exports = Iframe;
 
-},{"react":250,"underscore":251}],261:[function(require,module,exports){
+},{"react":250}],261:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41809,7 +41799,6 @@ module.exports = ImportSettingsStore;
 },{"./store":272}],263:[function(require,module,exports){
 'use strict';
 
-var _ = require('underscore');
 var React = require('react');
 var VariableStore = require('./variable-store');
 var ModalRenderer = require('./modal-renderer');
@@ -41827,57 +41816,9 @@ less = less(window, {
   useFileCache: true
 });
 
-var availableFrameSizes = ['xs', 'sm', 'md', 'lg'];
-
 var App = React.createClass({
   displayName: 'App',
 
-  concatMediaQueries: function concatMediaQueries(variables) {
-    var prefix = '@screen';
-    var suffix = 'min';
-
-    return variables.concat(_.map(availableFrameSizes, function (size) {
-      var className = [prefix.replace('@', '.'), size, suffix].join('-');
-      var variableName = [prefix, size, suffix].join('-');
-
-      return [className, '{width:', variableName, ';}'].join('');
-    }).join('\n'));
-  },
-  applyFrameSizes: function applyFrameSizes(css) {
-    var sizes = this.state.frameSizes;
-
-    var regy = /\.screen-(..)-min\s*?{[\n\r]*?\s*?width:\s*(.+?);[\n\r]*?}/gi;
-    var match;
-
-    while (match = regy.exec(css)) {
-      var index = availableFrameSizes.indexOf(match[1].toLowerCase());
-      if (index >= 0) {
-        sizes[index] = {
-          name: match[1].toUpperCase(),
-          value: match[2]
-        };
-      }
-    }
-
-    this.setState({
-      frameSizes: sizes
-    });
-  },
-  updateFrameSizes: function updateFrameSizes() {
-    var self = this;
-    var variables = VariableStore.getPackedVariables();
-
-    variables = this.concatMediaQueries(variables);
-
-    less.render(variables, function (error, tree) {
-      if (error) {
-        window.alert(error);
-        return;
-      }
-
-      self.applyFrameSizes(tree.css);
-    });
-  },
   applyCSS: function applyCSS(css) {
     var iframeDoc = this.state.iframeDoc;
 
@@ -41910,7 +41851,6 @@ var App = React.createClass({
       }
 
       self.applyCSS(tree.css);
-      self.updateFrameSizes();
 
       if (typeof callback === 'function') {
         callback();
@@ -42042,8 +41982,7 @@ var App = React.createClass({
       React.createElement(Iframe, {
         iframeLoaded: self.iframeLoaded,
         loading: self.state.loading,
-        currentFrameSize: self.state.currentFrameSize,
-        frameSizes: self.state.frameSizes }),
+        currentFrameSize: self.state.currentFrameSize }),
       React.createElement(Sidebar, {
         variables: self.state.variables,
         updateVariable: self.updateVariable,
@@ -42058,7 +41997,7 @@ var App = React.createClass({
 
 React.render(React.createElement(App, null), document.body);
 
-},{"./iframe":260,"./modal-renderer":265,"./sidebar":270,"./variable-store":273,"jquery":2,"less/browser":3,"react":250,"underscore":251}],264:[function(require,module,exports){
+},{"./iframe":260,"./modal-renderer":265,"./sidebar":270,"./variable-store":273,"jquery":2,"less/browser":3,"react":250}],264:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
