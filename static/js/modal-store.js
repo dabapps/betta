@@ -1,6 +1,6 @@
 'use strict';
 
-var Store = require('../stores/store');
+var Store = require('./store');
 
 var modalOpen = false;
 var modalView, modalProps;
