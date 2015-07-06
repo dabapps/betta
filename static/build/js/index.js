@@ -40777,7 +40777,7 @@ module.exports = ColorPalette;
 'use strict';
 
 var React = require('react');
-var VariableStore = require('./stores/variable-store');
+var VariableStore = require('./variable-store');
 
 var ColorPickerValues = React.createClass({
   displayName: 'ColorPickerValues',
@@ -40867,7 +40867,7 @@ var ColorPickerValues = React.createClass({
 
 module.exports = ColorPickerValues;
 
-},{"./stores/variable-store":273,"react":250}],255:[function(require,module,exports){
+},{"./variable-store":273,"react":250}],255:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41123,7 +41123,7 @@ var ColorPicker = React.createClass({
 
 module.exports = ColorPicker;
 
-},{"./color":256,"./color-palette":253,"./color-picker-values":254,"./slider":267,"react":250}],256:[function(require,module,exports){
+},{"./color":256,"./color-palette":253,"./color-picker-values":254,"./slider":271,"react":250}],256:[function(require,module,exports){
 'use strict';
 
 var color = {
@@ -41246,10 +41246,10 @@ module.exports = color;
 
 var React = require('react');
 var ModalTemplate = require('./modal-template');
-var ModalStore = require('./stores/modal-store');
-var VariableStore = require('./stores/variable-store');
+var ModalStore = require('./modal-store');
+var VariableStore = require('./variable-store');
 var Checkbox = require('./checkbox');
-var ExportSettingsStore = require('./stores/export-settings-store');
+var ExportSettingsStore = require('./export-settings-store');
 var _ = require('underscore');
 
 var ExportModal = React.createClass({
@@ -41345,12 +41345,45 @@ var ExportModal = React.createClass({
 
 module.exports = ExportModal;
 
-},{"./checkbox":252,"./modal-template":264,"./stores/export-settings-store":268,"./stores/modal-store":270,"./stores/variable-store":273,"react":250,"underscore":251}],258:[function(require,module,exports){
+},{"./checkbox":252,"./export-settings-store":258,"./modal-store":266,"./modal-template":267,"./variable-store":273,"react":250,"underscore":251}],258:[function(require,module,exports){
+'use strict';
+
+var Store = require('./store');
+
+var settings = [{
+  name: 'Include headers',
+  value: true
+}, {
+  name: 'Include labels',
+  value: true
+}, {
+  name: 'Exclude unedited',
+  value: false
+}, {
+  name: 'Comment out unedited',
+  value: true
+}];
+
+var ExportSettingsStore = new Store();
+
+ExportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
+  settings[settingIndex].value = value;
+
+  ExportSettingsStore.emitEvent('updateSetting');
+});
+
+ExportSettingsStore.getSettings = function () {
+  return settings;
+};
+
+module.exports = ExportSettingsStore;
+
+},{"./store":272}],259:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var ColorPicker = require('./color-picker');
-var SearchStore = require('./stores/search-store');
+var SearchStore = require('./search-store');
 var _ = require('underscore');
 
 var searchableTypes = ['name', 'defaultValue', 'value', 'label'];
@@ -41499,7 +41532,7 @@ var FormCollection = React.createClass({
 
 module.exports = FormCollection;
 
-},{"./color-picker":255,"./stores/search-store":271,"react":250,"underscore":251}],259:[function(require,module,exports){
+},{"./color-picker":255,"./search-store":268,"react":250,"underscore":251}],260:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41545,15 +41578,15 @@ var Iframe = React.createClass({
 
 module.exports = Iframe;
 
-},{"react":250}],260:[function(require,module,exports){
+},{"react":250}],261:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var ModalTemplate = require('./modal-template');
-var ModalStore = require('./stores/modal-store');
-var VariableStore = require('./stores/variable-store');
+var ModalStore = require('./modal-store');
+var VariableStore = require('./variable-store');
 var Checkbox = require('./checkbox');
-var ImportSettingsStore = require('./stores/import-settings-store');
+var ImportSettingsStore = require('./import-settings-store');
 
 var instructions = 'Please select an existing variables.less file, ' + 'or paste it\'s contents into the text area.';
 
@@ -41733,11 +41766,41 @@ var ImportModal = React.createClass({
 
 module.exports = ImportModal;
 
-},{"./checkbox":252,"./modal-template":264,"./stores/import-settings-store":269,"./stores/modal-store":270,"./stores/variable-store":273,"react":250}],261:[function(require,module,exports){
+},{"./checkbox":252,"./import-settings-store":262,"./modal-store":266,"./modal-template":267,"./variable-store":273,"react":250}],262:[function(require,module,exports){
+'use strict';
+
+var Store = require('./store');
+
+var settings = [{
+  name: 'Clear existing variables',
+  value: true
+}, {
+  name: 'Override existing variables',
+  value: true
+}, {
+  name: 'Import commented variables',
+  value: false
+}];
+
+var ImportSettingsStore = new Store();
+
+ImportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
+  settings[settingIndex].value = value;
+
+  ImportSettingsStore.emitEvent('updateSetting');
+});
+
+ImportSettingsStore.getSettings = function () {
+  return settings;
+};
+
+module.exports = ImportSettingsStore;
+
+},{"./store":272}],263:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var VariableStore = require('./stores/variable-store');
+var VariableStore = require('./variable-store');
 var ModalRenderer = require('./modal-renderer');
 var Iframe = require('./iframe');
 var Sidebar = require('./sidebar');
@@ -41934,11 +41997,11 @@ var App = React.createClass({
 
 React.render(React.createElement(App, null), document.body);
 
-},{"./iframe":259,"./modal-renderer":263,"./sidebar":266,"./stores/variable-store":273,"jquery":2,"less/browser":3,"react":250}],262:[function(require,module,exports){
+},{"./iframe":260,"./modal-renderer":265,"./sidebar":270,"./variable-store":273,"jquery":2,"less/browser":3,"react":250}],264:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var ModalStore = require('./stores/modal-store');
+var ModalStore = require('./modal-store');
 var _ = require('underscore');
 
 var ModalDialog = React.createClass({
@@ -42035,11 +42098,11 @@ var ModalDialog = React.createClass({
 
 module.exports = ModalDialog;
 
-},{"./stores/modal-store":270,"react":250,"underscore":251}],263:[function(require,module,exports){
+},{"./modal-store":266,"react":250,"underscore":251}],265:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var ModalStore = require('./stores/modal-store');
+var ModalStore = require('./modal-store');
 var ModalDialog = require('./modal-dialog');
 var _ = require('underscore');
 
@@ -42137,7 +42200,43 @@ var ModalRenderer = React.createClass({
 
 module.exports = ModalRenderer;
 
-},{"./modal-dialog":262,"./stores/modal-store":270,"react":250,"underscore":251}],264:[function(require,module,exports){
+},{"./modal-dialog":264,"./modal-store":266,"react":250,"underscore":251}],266:[function(require,module,exports){
+'use strict';
+
+var Store = require('./store');
+
+var modalOpen = false;
+var modalView, modalProps;
+
+var ModalStore = new Store();
+
+ModalStore.isOpen = function () {
+  return modalOpen;
+};
+
+ModalStore.getView = function () {
+  return modalView;
+};
+
+ModalStore.getProps = function () {
+  return modalProps;
+};
+
+ModalStore.createAction('open', function (view, props) {
+  modalView = view;
+  modalProps = props;
+  modalOpen = true;
+  ModalStore.emitEvent('open');
+});
+
+ModalStore.createAction('close', function () {
+  modalOpen = false;
+  ModalStore.emitEvent('close');
+});
+
+module.exports = ModalStore;
+
+},{"./store":272}],267:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -42188,15 +42287,36 @@ var ModalTemplate = React.createClass({
 
 module.exports = ModalTemplate;
 
-},{"react":250}],265:[function(require,module,exports){
+},{"react":250}],268:[function(require,module,exports){
+'use strict';
+
+var Store = require('./store');
+
+var searchTerm;
+
+var SearchStore = new Store();
+
+SearchStore.getSearchTerm = function () {
+  return searchTerm;
+};
+
+SearchStore.createAction('setSearchTerm', function (newSearchTerm) {
+  searchTerm = newSearchTerm;
+
+  SearchStore.emitEvent('setSearchTerm');
+});
+
+module.exports = SearchStore;
+
+},{"./store":272}],269:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var ModalStore = require('./stores/modal-store');
+var ModalStore = require('./modal-store');
 var ExportModal = require('./export-modal');
 var ImportModal = require('./import-modal');
-var SearchStore = require('./stores/search-store');
-var VariableStore = require('./stores/variable-store');
+var SearchStore = require('./search-store');
+var VariableStore = require('./variable-store');
 
 var SidebarMenu = React.createClass({
   displayName: 'SidebarMenu',
@@ -42334,13 +42454,13 @@ var SidebarMenu = React.createClass({
 
 module.exports = SidebarMenu;
 
-},{"./export-modal":257,"./import-modal":260,"./stores/modal-store":270,"./stores/search-store":271,"./stores/variable-store":273,"react":250}],266:[function(require,module,exports){
+},{"./export-modal":257,"./import-modal":261,"./modal-store":266,"./search-store":268,"./variable-store":273,"react":250}],270:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var FormCollection = require('./form-collection');
 var SidebarMenu = require('./sidebar-menu');
-var SearchStore = require('./stores/search-store');
+var SearchStore = require('./search-store');
 
 var Sidebar = React.createClass({
   displayName: 'Sidebar',
@@ -42414,7 +42534,7 @@ var Sidebar = React.createClass({
 
 module.exports = Sidebar;
 
-},{"./form-collection":258,"./sidebar-menu":265,"./stores/search-store":271,"react":250}],267:[function(require,module,exports){
+},{"./form-collection":259,"./search-store":268,"./sidebar-menu":269,"react":250}],271:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -42485,127 +42605,7 @@ var Slider = React.createClass({
 
 module.exports = Slider;
 
-},{"react":250}],268:[function(require,module,exports){
-'use strict';
-
-var Store = require('../stores/store');
-
-var settings = [{
-  name: 'Include headers',
-  value: true
-}, {
-  name: 'Include labels',
-  value: true
-}, {
-  name: 'Exclude unedited',
-  value: false
-}, {
-  name: 'Comment out unedited',
-  value: true
-}];
-
-var ExportSettingsStore = new Store();
-
-ExportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
-  settings[settingIndex].value = value;
-
-  ExportSettingsStore.emitEvent('updateSetting');
-});
-
-ExportSettingsStore.getSettings = function () {
-  return settings;
-};
-
-module.exports = ExportSettingsStore;
-
-},{"../stores/store":272}],269:[function(require,module,exports){
-'use strict';
-
-var Store = require('../stores/store');
-
-var settings = [{
-  name: 'Clear existing variables',
-  value: true
-}, {
-  name: 'Override existing variables',
-  value: true
-}, {
-  name: 'Import commented variables',
-  value: false
-}];
-
-var ImportSettingsStore = new Store();
-
-ImportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
-  settings[settingIndex].value = value;
-
-  ImportSettingsStore.emitEvent('updateSetting');
-});
-
-ImportSettingsStore.getSettings = function () {
-  return settings;
-};
-
-module.exports = ImportSettingsStore;
-
-},{"../stores/store":272}],270:[function(require,module,exports){
-'use strict';
-
-var Store = require('../stores/store');
-
-var modalOpen = false;
-var modalView, modalProps;
-
-var ModalStore = new Store();
-
-ModalStore.isOpen = function () {
-  return modalOpen;
-};
-
-ModalStore.getView = function () {
-  return modalView;
-};
-
-ModalStore.getProps = function () {
-  return modalProps;
-};
-
-ModalStore.createAction('open', function (view, props) {
-  modalView = view;
-  modalProps = props;
-  modalOpen = true;
-  ModalStore.emitEvent('open');
-});
-
-ModalStore.createAction('close', function () {
-  modalOpen = false;
-  ModalStore.emitEvent('close');
-});
-
-module.exports = ModalStore;
-
-},{"../stores/store":272}],271:[function(require,module,exports){
-'use strict';
-
-var Store = require('../stores/store');
-
-var searchTerm;
-
-var SearchStore = new Store();
-
-SearchStore.getSearchTerm = function () {
-  return searchTerm;
-};
-
-SearchStore.createAction('setSearchTerm', function (newSearchTerm) {
-  searchTerm = newSearchTerm;
-
-  SearchStore.emitEvent('setSearchTerm');
-});
-
-module.exports = SearchStore;
-
-},{"../stores/store":272}],272:[function(require,module,exports){
+},{"react":250}],272:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -42672,7 +42672,7 @@ module.exports = Store;
 },{"underscore":251}],273:[function(require,module,exports){
 'use strict';
 
-var Store = require('../stores/store');
+var Store = require('./store');
 var $ = require('jquery');
 var _ = require('underscore');
 
@@ -42894,4 +42894,4 @@ VariableStore.createAction('requestPreview', function () {
 
 module.exports = VariableStore;
 
-},{"../stores/store":272,"jquery":2,"underscore":251}]},{},[261]);
+},{"./store":272,"jquery":2,"underscore":251}]},{},[263]);
