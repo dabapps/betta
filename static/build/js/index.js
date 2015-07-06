@@ -41827,15 +41827,16 @@ less = less(window, {
   useFileCache: true
 });
 
+var availableFrameSizes = ['xs', 'sm', 'md', 'lg'];
+
 var App = React.createClass({
   displayName: 'App',
 
   concatMediaQueries: function concatMediaQueries(variables) {
     var prefix = '@screen';
     var suffix = 'min';
-    var availableSizes = ['xs', 'sm', 'md', 'lg'];
 
-    return variables.concat(_.map(availableSizes, function (size) {
+    return variables.concat(_.map(availableFrameSizes, function (size) {
       var className = [prefix.replace('@', '.'), size, suffix].join('-');
       var variableName = [prefix, size, suffix].join('-');
 
@@ -41846,15 +41847,16 @@ var App = React.createClass({
     var sizes = this.state.frameSizes;
 
     var regy = /\.screen-(..)-min\s*?{[\n\r]*?\s*?width:\s*(.+?);[\n\r]*?}/gi;
-    var index = 0;
     var match;
 
     while (match = regy.exec(css)) {
-      sizes[index] = {
-        name: match[1].toUpperCase(),
-        value: match[2]
-      };
-      index += 1;
+      var index = availableFrameSizes.indexOf(match[1].toLowerCase());
+      if (index >= 0) {
+        sizes[index] = {
+          name: match[1].toUpperCase(),
+          value: match[2]
+        };
+      }
     }
 
     this.setState({
