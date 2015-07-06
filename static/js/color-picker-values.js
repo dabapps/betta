@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var VariableStore = require('./variable-store');
+var VariableStore = require('./stores/variable-store');
 
 var ColorPickerValues = React.createClass({
   readableHSL: function () {
