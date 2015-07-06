@@ -2,10 +2,10 @@
 
 var React = require('react');
 var ModalTemplate = require('./modal-template');
-var ModalStore = require('./modal-store');
-var VariableStore = require('./variable-store');
+var ModalStore = require('./stores/modal-store');
+var VariableStore = require('./stores/variable-store');
 var Checkbox = require('./checkbox');
-var ImportSettingsStore = require('./import-settings-store');
+var ImportSettingsStore = require('./stores/import-settings-store');
 
 var instructions = 'Please select an existing variables.less file, ' +
   'or paste it\'s contents into the text area.';
