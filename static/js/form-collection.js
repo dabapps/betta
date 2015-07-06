@@ -2,6 +2,7 @@
 
 var React = require('react');
 var ColorPicker = require('./color-picker');
+var SearchStore = require('./search-store');
 var _ = require('underscore');
 
 var searchableTypes = [
@@ -31,6 +32,11 @@ var FormCollection = React.createClass({
         value.toLowerCase().indexOf(searchTerm) >= 0 ||
         _.every(searchTerms, self.areInValue.bind(self, value))
       );
+  },
+
+  addToSearch: function (val) {
+    console.log(val);
+    SearchStore.action('setSearchTerm', val);
   },
 
   create: {
@@ -79,6 +85,7 @@ var FormCollection = React.createClass({
               placeholder={child.defaultValue}
               value={child.value}
               onChange={self.props.updateVariable.bind(null, self.props.index, index)} />
+            <span className='glyphicon glyphicon glyphicon-search' onClick={this.addToSearch.bind(null, child.name)} />
             {colorPicker}
           </div>
         </div>
