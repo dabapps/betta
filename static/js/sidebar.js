@@ -3,7 +3,7 @@
 var React = require('react');
 var FormCollection = require('./form-collection');
 var SidebarMenu = require('./sidebar-menu');
-var SearchStore = require('./stores/search-store');
+var SearchStore = require('./search-store');
 
 var Sidebar = React.createClass({
   componentWillUnmount: function () {
