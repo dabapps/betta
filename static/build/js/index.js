@@ -40655,15 +40655,16 @@ var CheckBox = React.createClass({
   displayName: 'CheckBox',
 
   render: function render() {
-    return React.createElement('div', {
-      className: 'checkbox'
-    }, React.createElement('label', {
-      onClick: this.props.onClick
-    }, React.createElement('input', {
-      type: 'checkbox',
-      checked: this.props.checked,
-      onChange: _.noop
-    }), this.props.label));
+    return React.createElement(
+      'div',
+      { className: 'checkbox' },
+      React.createElement(
+        'label',
+        { onClick: this.props.onClick },
+        React.createElement('input', { type: 'checkbox', checked: this.props.checked, onChange: _.noop }),
+        this.props.label
+      )
+    );
   }
 });
 
@@ -40746,31 +40747,27 @@ var ColorPalette = React.createClass({
 
     var dropShadow = this.state.dragging ? '0 3px 6px 0 rgba(0, 0, 0, 0.5)' : '0 0 0 0 rgba(0, 0, 0, 0)';
 
-    return React.createElement('div', {
-      className: 'background',
-      onMouseDown: this.mouseDown,
-      style: {
-        backgroundColor: backgroundColor
-      }
-    }, React.createElement('div', {
-      className: 'gradient grey'
-    }), React.createElement('div', {
-      className: 'gradient white'
-    }), React.createElement('div', {
-      className: 'gradient black'
-    }), React.createElement('div', {
-      className: 'point',
-      style: {
-        top: this.props.point.y * 100 + '%',
-        left: this.props.point.x * 100 + '%',
-        backgroundColor: this.props.hex,
-        width: this.state.dragging ? MAX_SIZE : MIN_SIZE,
-        height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
-        marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
-        marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
-        boxShadow: dropShadow
-      }
-    }));
+    return React.createElement(
+      'div',
+      {
+        className: 'background',
+        onMouseDown: this.mouseDown,
+        style: { backgroundColor: backgroundColor } },
+      React.createElement('div', { className: 'gradient grey' }),
+      React.createElement('div', { className: 'gradient white' }),
+      React.createElement('div', { className: 'gradient black' }),
+      React.createElement('div', {
+        className: 'point',
+        style: {
+          top: this.props.point.y * 100 + '%',
+          left: this.props.point.x * 100 + '%',
+          backgroundColor: this.props.hex,
+          width: this.state.dragging ? MAX_SIZE : MIN_SIZE,
+          height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
+          marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
+          marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
+          boxShadow: dropShadow } })
+    );
   }
 });
 
@@ -40813,24 +40810,58 @@ var ColorPickerValues = React.createClass({
   },
 
   render: function render() {
-    return React.createElement('div', {
-      className: 'row values'
-    }, React.createElement('div', {
-      className: 'col-xs-12'
-    }, React.createElement('code', null, this.readableHSL()), React.createElement('button', {
-      className: 'btn btn-primary btn-xs pull-right',
-      onClick: this.setValue.bind(this, 'HSL')
-    }, 'Use')), React.createElement('div', {
-      className: 'col-xs-12'
-    }, React.createElement('code', null, this.readableRGB()), React.createElement('button', {
-      className: 'btn btn-primary btn-xs pull-right',
-      onClick: this.setValue.bind(this, 'RGB')
-    }, 'Use')), React.createElement('div', {
-      className: 'col-xs-12'
-    }, React.createElement('code', null, this.readableHex()), React.createElement('button', {
-      className: 'btn btn-primary btn-xs pull-right',
-      onClick: this.setValue.bind(this, 'Hex')
-    }, 'Use')));
+    return React.createElement(
+      'div',
+      { className: 'row values' },
+      React.createElement(
+        'div',
+        { className: 'col-xs-12' },
+        React.createElement(
+          'code',
+          null,
+          this.readableHSL()
+        ),
+        React.createElement(
+          'button',
+          {
+            className: 'btn btn-primary btn-xs pull-right',
+            onClick: this.setValue.bind(this, 'HSL') },
+          'Use'
+        )
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-xs-12' },
+        React.createElement(
+          'code',
+          null,
+          this.readableRGB()
+        ),
+        React.createElement(
+          'button',
+          {
+            className: 'btn btn-primary btn-xs pull-right',
+            onClick: this.setValue.bind(this, 'RGB') },
+          'Use'
+        )
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-xs-12' },
+        React.createElement(
+          'code',
+          null,
+          this.readableHex()
+        ),
+        React.createElement(
+          'button',
+          {
+            className: 'btn btn-primary btn-xs pull-right',
+            onClick: this.setValue.bind(this, 'Hex') },
+          'Use'
+        )
+      )
+    );
   }
 });
 
@@ -41051,39 +41082,42 @@ var ColorPicker = React.createClass({
     var picker;
 
     if (this.state.active) {
-      picker = React.createElement('div', {
-        className: 'picker'
-      }, React.createElement('div', {
-        className: 'palette'
-      }, React.createElement(ColorPalette, {
-        point: this.state.point,
-        onChange: this.setPoint,
-        hsl: this.state.hsl,
-        rgb: this.state.rgb,
-        hex: this.state.hex
-      }), React.createElement(Slider, {
-        className: 'hue-slider',
-        value: this.state.hsl.h,
-        orientation: 'vertical',
-        onChange: this.setHue
-      })), React.createElement(ColorPickerValues, {
-        hsl: this.state.hsl,
-        rgb: this.state.rgb,
-        hex: this.state.hex,
-        setValue: this.props.setValue,
-        togglePicker: this.togglePicker
-      }));
+      picker = React.createElement(
+        'div',
+        { className: 'picker' },
+        React.createElement(
+          'div',
+          { className: 'palette' },
+          React.createElement(ColorPalette, {
+            point: this.state.point,
+            onChange: this.setPoint,
+            hsl: this.state.hsl,
+            rgb: this.state.rgb,
+            hex: this.state.hex }),
+          React.createElement(Slider, {
+            className: 'hue-slider',
+            value: this.state.hsl.h,
+            orientation: 'vertical',
+            onChange: this.setHue })
+        ),
+        React.createElement(ColorPickerValues, {
+          hsl: this.state.hsl,
+          rgb: this.state.rgb,
+          hex: this.state.hex,
+          setValue: this.props.setValue,
+          togglePicker: this.togglePicker })
+      );
     }
 
-    return React.createElement('div', {
-      className: 'color-picker'
-    }, React.createElement('div', {
-      className: 'swatch',
-      style: {
-        backgroundColor: this.props.value || this.props.defaultValue
-      },
-      onClick: this.togglePicker
-    }), picker);
+    return React.createElement(
+      'div',
+      { className: 'color-picker' },
+      React.createElement('div', {
+        className: 'swatch',
+        style: { backgroundColor: this.props.value || this.props.defaultValue },
+        onClick: this.togglePicker }),
+      picker
+    );
   }
 });
 
@@ -41274,28 +41308,38 @@ var ExportModal = React.createClass({
         key: setting.name,
         checked: setting.value,
         label: setting.name,
-        onClick: self.updateSetting.bind(self, settingsIndex)
-      });
+        onClick: self.updateSetting.bind(self, settingsIndex) });
     });
 
     return React.createElement(ModalTemplate, {
       title: 'Export',
-      body: React.createElement('div', null, React.createElement('div', {
-        className: 'row'
-      }, React.createElement('div', {
-        className: 'col-xs-12'
-      }, settings)), React.createElement('pre', {
-        className: 'file-name'
-      }, 'variables.less'), React.createElement('textarea', {
-        className: 'variable-textarea',
-        value: this.state.packedVariables,
-        onChange: _.noop
-      })),
-      footer: React.createElement('button', {
-        className: 'btn btn-default pull-right',
-        onClick: this.close
-      }, 'Close')
-    });
+      body: React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'div',
+          { className: 'row' },
+          React.createElement(
+            'div',
+            { className: 'col-xs-12' },
+            settings
+          )
+        ),
+        React.createElement(
+          'pre',
+          { className: 'file-name' },
+          'variables.less'
+        ),
+        React.createElement('textarea', {
+          className: 'variable-textarea',
+          value: this.state.packedVariables,
+          onChange: _.noop })
+      ),
+      footer: React.createElement(
+        'button',
+        { className: 'btn btn-default pull-right', onClick: this.close },
+        'Close'
+      ) });
   }
 });
 
@@ -41367,9 +41411,11 @@ var FormCollection = React.createClass({
       if (this.props.searchTerm) {
         return undefined;
       }
-      return React.createElement('h5', {
-        key: child.value
-      }, child.value);
+      return React.createElement(
+        'h5',
+        { key: child.value },
+        'child.value'
+      );
     },
 
     variable: function variable(child, index) {
@@ -41384,26 +41430,42 @@ var FormCollection = React.createClass({
         colorPicker = React.createElement(ColorPicker, {
           setValue: self.props.updateVariable.bind(null, self.props.index, index),
           value: child.value,
-          defaultValue: child.defaultValue
-        });
+          defaultValue: child.defaultValue });
       }
 
       if (child.label) {
-        label = React.createElement('p', null, React.createElement('sub', null, child.label));
+        label = React.createElement(
+          'p',
+          null,
+          React.createElement(
+            'sub',
+            null,
+            child.label
+          )
+        );
       }
 
-      return React.createElement('div', {
-        className: 'form-group',
-        key: child.name
-      }, label, React.createElement('label', null, child.name), React.createElement('div', {
-        className: 'input-wrapper'
-      }, React.createElement('input', {
-        text: 'text',
-        className: 'form-control',
-        placeholder: child.defaultValue,
-        value: child.value,
-        onChange: self.props.updateVariable.bind(null, self.props.index, index)
-      }), colorPicker));
+      return React.createElement(
+        'div',
+        { className: 'form-group', key: child.name },
+        label,
+        React.createElement(
+          'label',
+          null,
+          child.name
+        ),
+        React.createElement(
+          'div',
+          { className: 'input-wrapper' },
+          React.createElement('input', {
+            text: 'text',
+            className: 'form-control',
+            placeholder: child.defaultValue,
+            value: child.value,
+            onChange: self.props.updateVariable.bind(null, self.props.index, index) }),
+          colorPicker
+        )
+      );
     }
   },
 
@@ -41425,7 +41487,11 @@ var FormCollection = React.createClass({
     }
 
     if (isActiveCollection && this.props.group.description) {
-      description = React.createElement('p', null, this.props.group.description);
+      description = React.createElement(
+        'p',
+        null,
+        this.props.group.description
+      );
     }
 
     if (this.props.searchTerm) {
@@ -41436,12 +41502,23 @@ var FormCollection = React.createClass({
       }
     }
 
-    return React.createElement('div', {
-      key: this.props.key,
-      className: 'form-collection' + (isActiveCollection ? ' active' : '') + (hasSearchResults ? ' filtered' : '')
-    }, React.createElement('a', {
-      onClick: self.props.setActiveCollection.bind(null, this.props.index)
-    }, React.createElement('h4', null, this.props.group.value)), description, children);
+    return React.createElement(
+      'div',
+      {
+        key: this.props.key,
+        className: 'form-collection' + (isActiveCollection ? ' active' : '') + (hasSearchResults ? ' filtered' : '') },
+      React.createElement(
+        'a',
+        { onClick: self.props.setActiveCollection.bind(null, this.props.index) },
+        React.createElement(
+          'h4',
+          null,
+          this.props.group.value
+        )
+      ),
+      description,
+      children
+    );
   }
 });
 
@@ -41470,22 +41547,24 @@ var Iframe = React.createClass({
     var loadingIcon;
 
     if (this.props.loading) {
-      loadingIcon = React.createElement('div', {
-        className: 'loading-container'
-      }, React.createElement('div', {
-        className: 'loading-icon'
-      }));
+      loadingIcon = React.createElement(
+        'div',
+        { className: 'loading-container' },
+        React.createElement('div', { className: 'loading-icon' })
+      );
     }
 
-    return React.createElement('div', {
-      className: 'iframe-container'
-    }, React.createElement('iframe', {
-      className: 'iframe',
-      src: 'templates/template-1.html',
-      style: {
-        maxWidth: self.props.currentFrameSize.value
-      }
-    }), loadingIcon);
+    return React.createElement(
+      'div',
+      { className: 'iframe-container' },
+      React.createElement('iframe', {
+        className: 'iframe',
+        src: 'templates/template-1.html',
+        style: {
+          maxWidth: self.props.currentFrameSize.value
+        } }),
+      loadingIcon
+    );
   }
 });
 
@@ -41593,56 +41672,87 @@ var ImportModal = React.createClass({
         key: setting.name,
         checked: setting.value,
         label: setting.name,
-        onClick: self.updateSetting.bind(self, settingsIndex)
-      });
+        onClick: self.updateSetting.bind(self, settingsIndex) });
     });
 
     if (this.state.uploadError) {
-      uploadError = React.createElement('div', {
-        className: 'alert alert-danger'
-      }, this.state.uploadError);
+      uploadError = React.createElement(
+        'div',
+        { className: 'alert alert-danger' },
+        this.state.uploadError
+      );
     }
 
     if (this.state.uploadSuccess) {
-      uploadSuccess = React.createElement('div', {
-        className: 'alert alert-success'
-      }, this.state.uploadSuccess);
+      uploadSuccess = React.createElement(
+        'div',
+        { className: 'alert alert-success' },
+        this.state.uploadSuccess
+      );
     }
 
     if (window.FileReader) {
-      filePicker = React.createElement('div', {
-        className: 'form-group'
-      }, React.createElement('input', {
-        type: 'file',
-        accept: '.less',
-        onChange: this.fileChanged
-      }));
+      filePicker = React.createElement(
+        'div',
+        { className: 'form-group' },
+        React.createElement('input', {
+          type: 'file',
+          accept: '.less',
+          onChange: this.fileChanged })
+      );
     }
 
     return React.createElement(ModalTemplate, {
       title: 'Import',
-      body: React.createElement('div', null, React.createElement('div', {
-        className: 'row'
-      }, React.createElement('div', {
-        className: 'col-xs-12'
-      }, React.createElement('p', null, instructions), uploadError, uploadSuccess, filePicker, settings)), React.createElement('pre', {
-        className: 'file-name'
-      }, 'variables.less'), React.createElement('textarea', {
-        className: 'variable-textarea',
-        value: this.state.packedVariables,
-        onChange: this.updateVariables
-      })),
-      footer: React.createElement('div', {
-        className: 'pull-right'
-      }, React.createElement('button', {
-        className: 'btn btn-default',
-        onClick: this.close
-      }, 'Close'), React.createElement('button', {
-        className: 'btn btn-primary',
-        onClick: this.importVariables,
-        disabled: !this.state.packedVariables
-      }, 'Import'))
-    });
+      body: React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'div',
+          { className: 'row' },
+          React.createElement(
+            'div',
+            { className: 'col-xs-12' },
+            React.createElement(
+              'p',
+              null,
+              instructions
+            ),
+            uploadError,
+            uploadSuccess,
+            filePicker,
+            settings
+          )
+        ),
+        React.createElement(
+          'pre',
+          { className: 'file-name' },
+          'variables.less'
+        ),
+        React.createElement('textarea', {
+          className: 'variable-textarea',
+          value: this.state.packedVariables,
+          onChange: this.updateVariables })
+      ),
+      footer: React.createElement(
+        'div',
+        { className: 'pull-right' },
+        React.createElement(
+          'button',
+          {
+            className: 'btn btn-default',
+            onClick: this.close },
+          'Close'
+        ),
+        React.createElement(
+          'button',
+          {
+            className: 'btn btn-primary',
+            onClick: this.importVariables,
+            disabled: !this.state.packedVariables },
+          'Import'
+        )
+      ) });
   }
 });
 
@@ -41858,24 +41968,26 @@ var App = React.createClass({
   render: function render() {
     var self = this;
 
-    return React.createElement('div', {
-      className: 'app'
-    }, React.createElement(Iframe, {
-      iframeLoaded: self.iframeLoaded,
-      loading: self.state.loading,
-      currentFrameSize: self.state.currentFrameSize
-    }), React.createElement(Sidebar, {
-      variables: self.state.variables,
-      updateVariable: self.updateVariable,
-      setFrameSize: self.setFrameSize,
-      frameSizes: self.state.frameSizes,
-      currentFrameSize: self.state.currentFrameSize,
-      reset: self.reset
-    }), React.createElement(ModalRenderer));
+    return React.createElement(
+      'div',
+      { className: 'app' },
+      React.createElement(Iframe, {
+        iframeLoaded: self.iframeLoaded,
+        loading: self.state.loading,
+        currentFrameSize: self.state.currentFrameSize }),
+      React.createElement(Sidebar, {
+        variables: self.state.variables,
+        updateVariable: self.updateVariable,
+        setFrameSize: self.setFrameSize,
+        frameSizes: self.state.frameSizes,
+        currentFrameSize: self.state.currentFrameSize,
+        reset: self.reset }),
+      React.createElement(ModalRenderer, null)
+    );
   }
 });
 
-React.render(React.createElement(App), document.body);
+React.render(React.createElement(App, null), document.body);
 
 },{"./iframe":260,"./modal-renderer":265,"./sidebar":270,"./variable-store":273,"jquery":2,"less/browser":3,"react":250}],264:[function(require,module,exports){
 'use strict';
@@ -41956,20 +42068,23 @@ var ModalDialog = React.createClass({
   render: function render() {
     var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
 
-    return React.createElement('div', {
-      className: 'modal fade ' + fadeClass,
-      style: {
-        display: 'block'
-      }
-    }, React.createElement('div', {
-      className: 'modal-overlay',
-      onClick: this.close
-    }, React.createElement('div', {
-      className: 'modal-dialog',
-      onClick: this.stopPropagation
-    }, React.createElement('div', {
-      className: 'modal-content'
-    }, React.createElement(this.props.view, this.props.props)))));
+    return React.createElement(
+      'div',
+      { className: 'modal fade ' + fadeClass, style: { display: 'block' } },
+      React.createElement(
+        'div',
+        { className: 'modal-overlay', onClick: this.close },
+        React.createElement(
+          'div',
+          { className: 'modal-dialog', onClick: this.stopPropagation },
+          React.createElement(
+            'div',
+            { className: 'modal-content' },
+            React.createElement(this.props.view, this.props.props)
+          )
+        )
+      )
+    );
   }
 });
 
@@ -42069,8 +42184,7 @@ var ModalRenderer = React.createClass({
       return React.createElement(ModalDialog, {
         view: this.state.view,
         props: this.state.props,
-        closing: this.state.closing
-      });
+        closing: this.state.closing });
     }
     return false;
   }
@@ -42126,24 +42240,40 @@ var ModalTemplate = React.createClass({
     var title, body, footer;
 
     if (typeof this.props.title !== 'undefined') {
-      title = React.createElement('div', {
-        className: 'modal-header'
-      }, React.createElement('h4', null, this.props.title));
+      title = React.createElement(
+        'div',
+        { className: 'modal-header' },
+        React.createElement(
+          'h4',
+          null,
+          this.props.title
+        )
+      );
     }
 
     if (typeof this.props.body !== 'undefined') {
-      body = React.createElement('div', {
-        className: 'modal-body'
-      }, this.props.body);
+      body = React.createElement(
+        'div',
+        { className: 'modal-body' },
+        this.props.body
+      );
     }
 
     if (typeof this.props.footer !== 'undefined') {
-      footer = React.createElement('div', {
-        className: 'modal-footer'
-      }, this.props.footer);
+      footer = React.createElement(
+        'div',
+        { className: 'modal-footer' },
+        this.props.footer
+      );
     }
 
-    return React.createElement('div', null, title, body, footer);
+    return React.createElement(
+      'div',
+      null,
+      title,
+      body,
+      footer
+    );
   }
 });
 
@@ -42220,58 +42350,97 @@ var SidebarMenu = React.createClass({
     var dropdown;
 
     var frameSizes = this.props.frameSizes.map(function (size) {
-      return React.createElement('option', {
-        key: size.name,
-        value: size.name
-      }, size.name);
+      return React.createElement(
+        'option',
+        { key: size.name, value: size.name },
+        size.name
+      );
     });
 
     if (this.state.dropdownActive) {
-      dropdown = React.createElement('ul', {
-        className: 'dropdown-menu'
-      }, React.createElement('li', null, React.createElement('a', {
-        onClick: self['import']
-      }, 'Import')), React.createElement('li', null, React.createElement('a', {
-        onClick: self['export']
-      }, 'Export')), React.createElement('li', {
-        className: 'divider'
-      }), React.createElement('li', null, React.createElement('a', {
-        onClick: self.props.reset
-      }, 'Reset')));
+      dropdown = React.createElement(
+        'ul',
+        { className: 'dropdown-menu' },
+        React.createElement(
+          'li',
+          null,
+          React.createElement(
+            'a',
+            { onClick: self['import'] },
+            'Import'
+          )
+        ),
+        React.createElement(
+          'li',
+          null,
+          React.createElement(
+            'a',
+            { onClick: self['export'] },
+            'Export'
+          )
+        ),
+        React.createElement('li', { className: 'divider' }),
+        React.createElement(
+          'li',
+          null,
+          React.createElement(
+            'a',
+            { onClick: self.props.reset },
+            'Reset'
+          )
+        )
+      );
     }
 
-    return React.createElement('div', {
-      className: 'sidebar-menu'
-    }, React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('select', {
-      className: 'form-control size-control',
-      onChange: self.props.setFrameSize,
-      value: self.props.currentFrameSize.name
-    }, frameSizes), React.createElement('button', {
-      className: 'btn btn-small btn-default',
-      onClick: self.preview
-    }, 'Preview'), React.createElement('div', {
-      className: 'dropdown pull-right' + (self.state.dropdownActive ? ' open' : ''),
-      onClick: self.toggleDropdown
-    }, React.createElement('button', {
-      className: 'btn btn-small btn-default'
-    }, 'File ', React.createElement('span', {
-      className: 'caret'
-    })), dropdown)), React.createElement('div', {
-      className: 'form-group'
-    }, React.createElement('div', {
-      className: 'input-wrapper search-wrapper'
-    }, React.createElement('input', {
-      type: 'text',
-      className: 'form-control',
-      placeholder: 'Search variables',
-      onChange: this.setSearchTerm,
-      value: this.props.searchTerm
-    }), React.createElement('span', {
-      className: 'glyphicon glyphicon-remove',
-      onClick: this.clearSearchTerm
-    }))));
+    return React.createElement(
+      'div',
+      { className: 'sidebar-menu' },
+      React.createElement(
+        'div',
+        { className: 'form-group' },
+        React.createElement(
+          'select',
+          {
+            className: 'form-control size-control',
+            onChange: self.props.setFrameSize,
+            value: self.props.currentFrameSize.name },
+          frameSizes
+        ),
+        React.createElement(
+          'button',
+          { className: 'btn btn-small btn-default', onClick: self.preview },
+          'Preview'
+        ),
+        React.createElement(
+          'div',
+          {
+            className: 'dropdown pull-right' + (self.state.dropdownActive ? ' open' : ''),
+            onClick: self.toggleDropdown },
+          React.createElement(
+            'button',
+            { className: 'btn btn-small btn-default' },
+            'File ',
+            React.createElement('span', { className: 'caret' })
+          ),
+          dropdown
+        )
+      ),
+      React.createElement(
+        'div',
+        { className: 'form-group' },
+        React.createElement(
+          'div',
+          { className: 'input-wrapper search-wrapper' },
+          React.createElement('input', {
+            type: 'text',
+            className: 'form-control',
+            placeholder: 'Search variables',
+            onChange: this.setSearchTerm,
+            value: this.props.searchTerm }),
+          React.createElement('span', { className: 'glyphicon glyphicon-remove', onClick: this.clearSearchTerm })
+        )
+      )
+    );
   }
 });
 
@@ -42329,22 +42498,29 @@ var Sidebar = React.createClass({
           activeIndex: self.state.activeIndex,
           setActiveCollection: self.setActiveCollection,
           updateVariable: self.props.updateVariable,
-          searchTerm: self.state.searchTerm
-        });
+          searchTerm: self.state.searchTerm });
       }
     });
 
-    return React.createElement('div', {
-      className: 'sidebar-container'
-    }, React.createElement(SidebarMenu, {
-      setFrameSize: self.props.setFrameSize,
-      frameSizes: self.props.frameSizes,
-      currentFrameSize: self.props.currentFrameSize,
-      reset: self.props.reset,
-      searchTerm: self.state.searchTerm
-    }), React.createElement('div', {
-      className: 'sidebar'
-    }, React.createElement('div', null, formControls)));
+    return React.createElement(
+      'div',
+      { className: 'sidebar-container' },
+      React.createElement(SidebarMenu, {
+        setFrameSize: self.props.setFrameSize,
+        frameSizes: self.props.frameSizes,
+        currentFrameSize: self.props.currentFrameSize,
+        reset: self.props.reset,
+        searchTerm: self.state.searchTerm }),
+      React.createElement(
+        'div',
+        { className: 'sidebar' },
+        React.createElement(
+          'div',
+          null,
+          formControls
+        )
+      )
+    );
   }
 });
 
@@ -42405,15 +42581,17 @@ var Slider = React.createClass({
   },
 
   render: function render() {
-    return React.createElement('div', {
-      className: this.props.className,
-      onMouseDown: this.mouseDown
-    }, React.createElement('div', {
-      className: 'handle',
-      style: {
-        top: this.props.value * 100 + '%'
-      }
-    }));
+    return React.createElement(
+      'div',
+      {
+        className: this.props.className,
+        onMouseDown: this.mouseDown },
+      React.createElement('div', {
+        className: 'handle',
+        style: {
+          top: this.props.value * 100 + '%'
+        } })
+    );
   }
 });
 
