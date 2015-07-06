@@ -45,68 +45,29 @@ var ColorPickerValues = React.createClass({
   },
 
   render: function () {
-    return React.createElement(
-      'div',
-      {
-        className: 'row values'
-      },
-      React.createElement(
-        'div',
-        {
-          className: 'col-xs-12'
-        },
-        React.createElement(
-          'code',
-          null,
-          this.readableHSL()
-        ),
-        React.createElement(
-          'button',
-          {
-            className: 'btn btn-primary btn-xs pull-right',
-            onClick: this.setValue.bind(this, 'HSL')
-          },
-          'Use'
-        )
-      ),
-      React.createElement(
-        'div',
-        {
-          className: 'col-xs-12'
-        },
-        React.createElement(
-          'code',
-          null,
-          this.readableRGB()
-        ),
-        React.createElement(
-          'button',
-          {
-            className: 'btn btn-primary btn-xs pull-right',
-            onClick: this.setValue.bind(this, 'RGB')
-          },
-          'Use'
-        )
-      ),
-      React.createElement(
-        'div',
-        {
-          className: 'col-xs-12'
-        },
-        React.createElement(
-          'code',
-          null,
-          this.readableHex()
-        ),
-        React.createElement(
-          'button',
-          {
-            className: 'btn btn-primary btn-xs pull-right',
-            onClick: this.setValue.bind(this, 'Hex')
-          },
-          'Use'
-        )
-      )
+    return (
+      <div className='row values'>
+        <div className='col-xs-12'>
+          <code>{this.readableHSL()}</code>
+          <button
+            className='btn btn-primary btn-xs pull-right'
+            onClick={this.setValue.bind(this, 'HSL')}>Use</button>
+        </div>
+
+        <div className='col-xs-12'>
+          <code>{this.readableRGB()}</code>
+          <button
+            className='btn btn-primary btn-xs pull-right'
+            onClick={this.setValue.bind(this, 'RGB')}>Use</button>
+        </div>
+
+        <div className='col-xs-12'>
+          <code>{this.readableHex()}</code>
+          <button
+            className='btn btn-primary btn-xs pull-right'
+            onClick={this.setValue.bind(this, 'Hex')}>Use</button>
+        </div>
+      </div>
     );
   }
 });

@@ -94,122 +94,78 @@ var ImportModal = React.createClass({
         return undefined;
       }
 
-      return React.createElement(
-        Checkbox,
-        {
-          key: setting.name,
-          checked: setting.value,
-          label: setting.name,
-          onClick: self.updateSetting.bind(self, settingsIndex)
-        }
+      return (
+        <Checkbox
+          key={setting.name}
+          checked={setting.value}
+          label={setting.name}
+          onClick={self.updateSetting.bind(self, settingsIndex)} />
       );
     });
 
     if (this.state.uploadError) {
-      uploadError = React.createElement(
-        'div',
-        {
-          className: 'alert alert-danger'
-        },
-        this.state.uploadError
+      uploadError = (
+        <div className='alert alert-danger'>
+          {this.state.uploadError}
+        </div>
       );
     }
 
     if (this.state.uploadSuccess) {
-      uploadSuccess = React.createElement(
-        'div',
-        {
-          className: 'alert alert-success'
-        },
-        this.state.uploadSuccess
+      uploadSuccess = (
+        <div className='alert alert-success'>
+          {this.state.uploadSuccess}
+        </div>
       );
     }
 
     if (window.FileReader) {
-      filePicker = React.createElement(
-        'div',
-        {
-          className: 'form-group'
-        },
-        React.createElement(
-          'input',
-          {
-            type: 'file',
-            accept: '.less',
-            onChange: this.fileChanged
-          }
-        )
+      filePicker = (
+        <div className='form-group'>
+          <input
+            type='file'
+            accept='.less'
+            onChange={this.fileChanged} />
+        </div>
       );
     }
 
-    return React.createElement(
-      ModalTemplate,
-      {
-        title: 'Import',
-        body: React.createElement(
-          'div',
-          null,
-          React.createElement(
-            'div',
-            {
-              className: 'row'
-            },
-            React.createElement(
-              'div',
-              {
-                className: 'col-xs-12'
-              },
-              React.createElement(
-                'p',
-                null,
-                instructions
-              ),
-              uploadError,
-              uploadSuccess,
-              filePicker,
-              settings
-            )
-          ),
-          React.createElement(
-            'pre',
-            {
-              className: 'file-name'
-            },
-            'variables.less'
-          ),
-          React.createElement(
-            'textarea',
-            {
-              className: 'variable-textarea',
-              value: this.state.packedVariables,
-              onChange: this.updateVariables
-            }
-          )
-        ),
-        footer: React.createElement(
-          'div',
-          {
-            className: 'pull-right'
-          },
-          React.createElement(
-            'button',
-            {
-              className: 'btn btn-default',
-              onClick: this.close
-            },
-            'Close'
-          ),
-          React.createElement(
-            'button',
-            {
-              className: 'btn btn-primary',
-              onClick: this.importVariables,
-              disabled: !this.state.packedVariables
-            },
-            'Import'
-          )
-        )
-      }
+    return (
+      <ModalTemplate
+        title='Import'
+        body={
+          <div>
+            <div className='row'>
+              <div className='col-xs-12'>
+                <p>{instructions}</p>
+                  {uploadError}
+                  {uploadSuccess}
+                  {filePicker}
+                  {settings}
+              </div>
+            </div>
+            <pre className='file-name'>variables.less</pre>
+            <textarea
+              className='variable-textarea'
+              value={this.state.packedVariables}
+              onChange={this.updateVariables} />
+          </div>
+        }
+        footer={
+          <div className='pull-right'>
+            <button
+              className='btn btn-default'
+              onClick={this.close}>
+                Close
+            </button>
+            <button
+              className='btn btn-primary'
+              onClick={this.importVariables}
+              disabled={!this.state.packedVariables}>
+                Import
+            </button>
+          </div>
+        } />
     );
   }
 });

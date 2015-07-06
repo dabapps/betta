@@ -61,62 +61,33 @@ var ExportModal = React.createClass({
         return undefined;
       }
 
-      return React.createElement(
-        Checkbox,
-        {
-          key: setting.name,
-          checked: setting.value,
-          label: setting.name,
-          onClick: self.updateSetting.bind(self, settingsIndex)
-        }
+      return (
+        <Checkbox
+          key={setting.name}
+          checked={setting.value}
+          label={setting.name}
+          onClick={self.updateSetting.bind(self, settingsIndex)} />
       );
     });
 
-    return React.createElement(
-      ModalTemplate,
-      {
-        title: 'Export',
-        body: React.createElement(
-          'div',
-          null,
-          React.createElement(
-            'div',
-            {
-              className: 'row'
-            },
-            React.createElement(
-              'div',
-              {
-                className: 'col-xs-12'
-              },
-              settings
-            )
-          ),
-          React.createElement(
-            'pre',
-            {
-              className: 'file-name'
-            },
-            'variables.less'
-          ),
-          React.createElement(
-            'textarea',
-            {
-              className: 'variable-textarea',
-              value: this.state.packedVariables,
-              onChange: _.noop
-            }
-          )
-        ),
-        footer: React.createElement(
-          'button',
-          {
-            className: 'btn btn-default pull-right',
-            onClick: this.close
-          },
-          'Close'
-        )
-      }
+    return (
+      <ModalTemplate
+        title='Export'
+        body={
+          <div>
+            <div className='row'>
+              <div className='col-xs-12'>{settings}</div>
+            </div>
+            <pre className='file-name'>variables.less</pre>
+            <textarea
+              className='variable-textarea'
+              value={this.state.packedVariables}
+              onChange={_.noop} />
+          </div>
+        }
+        footer={
+          <button className='btn btn-default pull-right' onClick={this.close}>Close</button>
+        } />
     );
   }
 });
