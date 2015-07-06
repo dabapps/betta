@@ -77,7 +77,10 @@ var FormCollection = React.createClass({
       return (
         <div className='form-group' key={child.name}>
           {label}
-          <label>{child.name}</label>
+          <label>
+            {child.name}
+            <span className='glyphicon glyphicon glyphicon-search' onClick={this.addToSearch.bind(null, child.name)} />
+          </label>
           <div className='input-wrapper'>
             <input
               text='text'
@@ -85,7 +88,6 @@ var FormCollection = React.createClass({
               placeholder={child.defaultValue}
               value={child.value}
               onChange={self.props.updateVariable.bind(null, self.props.index, index)} />
-            <span className='glyphicon glyphicon glyphicon-search' onClick={this.addToSearch.bind(null, child.name)} />
             {colorPicker}
           </div>
         </div>
