@@ -84,7 +84,9 @@ var SidebarMenu = React.createClass({
           <div
             className={'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : '')}
             onClick={self.toggleDropdownSizes}>
-            <button className='btn btn-small btn-default'>{self.props.currentFrameSize.name} <span className='caret' /></button>
+            <button className='btn btn-small btn-default'>
+              {self.props.currentFrameSize.name} <span className='caret' />
+            </button>
             {dropdownSizes}
           </div>
 
