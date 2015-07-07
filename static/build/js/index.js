@@ -40674,7 +40674,7 @@ module.exports = CheckBox;
 'use strict';
 
 var React = require('react');
-var color = require('./color');
+var color = require('../utils/color');
 
 var MAX_SIZE = 50;
 var MIN_SIZE = 10;
@@ -40773,11 +40773,11 @@ var ColorPalette = React.createClass({
 
 module.exports = ColorPalette;
 
-},{"./color":256,"react":250}],254:[function(require,module,exports){
+},{"../utils/color":273,"react":250}],254:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var VariableStore = require('./variable-store');
+var VariableStore = require('../stores/variable-store');
 
 var ColorPickerValues = React.createClass({
   displayName: 'ColorPickerValues',
@@ -40867,11 +40867,11 @@ var ColorPickerValues = React.createClass({
 
 module.exports = ColorPickerValues;
 
-},{"./variable-store":273,"react":250}],255:[function(require,module,exports){
+},{"../stores/variable-store":272,"react":250}],255:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var color = require('./color');
+var color = require('../utils/color');
 var ColorPickerValues = require('./color-picker-values');
 var ColorPalette = require('./color-palette');
 var Slider = require('./slider');
@@ -41123,267 +41123,12 @@ var ColorPicker = React.createClass({
 
 module.exports = ColorPicker;
 
-},{"./color":256,"./color-palette":253,"./color-picker-values":254,"./slider":271,"react":250}],256:[function(require,module,exports){
-'use strict';
-
-var color = {
-  // Takes values from 0 to 1
-  HSLToRGB: function HSLToRGB(h, s, l) {
-    var r, g, b;
-
-    if (s === 0) {
-      r = g = b = l;
-    } else {
-      var hueToRGB = function hue2rgb(p, q, t) {
-        if (t < 0) {
-          t += 1;
-        }
-        if (t > 1) {
-          t -= 1;
-        }
-        if (t < 1 / 6) {
-          return p + (q - p) * 6 * t;
-        }
-        if (t < 1 / 2) {
-          return q;
-        }
-        if (t < 2 / 3) {
-          return p + (q - p) * (2 / 3 - t) * 6;
-        }
-        return p;
-      };
-
-      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      var p = 2 * l - q;
-      r = hueToRGB(p, q, h + 1 / 3);
-      g = hueToRGB(p, q, h);
-      b = hueToRGB(p, q, h - 1 / 3);
-    }
-
-    return {
-      r: Math.round(r * 255),
-      g: Math.round(g * 255),
-      b: Math.round(b * 255)
-    };
-  },
-
-  // Takes values from 0 to 255
-  RGBToHSL: function RGBToHSL(r, g, b) {
-    r = r / 255;
-    g = g / 255;
-    b = b / 255;
-
-    var max = Math.max(r, g, b);
-    var min = Math.min(r, g, b);
-    var h, s;
-    var l = (max + min) / 2;
-
-    if (max === min) {
-      h = s = 0;
-    } else {
-      var d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-
-      switch (max) {
-        case r:
-          h = (g - b) / d + (g < b ? 6 : 0);
-          break;
-        case g:
-          h = (b - r) / d + 2;
-          break;
-        case b:
-          h = (r - g) / d + 4;
-          break;
-      }
-
-      h /= 6;
-    }
-
-    return {
-      h: Math.round(h * 360),
-      s: Math.round(s * 100),
-      l: Math.round(l * 100)
-    };
-  },
-
-  // Takes values from 0 to 255
-  RGBToHex: function RGBToHex(r, g, b) {
-    var colorToHex = function colorToHex(c) {
-      var hexSegment = c.toString(16);
-      return hexSegment.length === 1 ? '0'.concat(hexSegment) : hexSegment;
-    };
-
-    var hex = [colorToHex(r), colorToHex(g), colorToHex(b)].join('');
-
-    if (hex.length === 6 && hex[0] === hex[1] && hex[2] === hex[3] && hex[4] === hex[5]) {
-      hex = [hex[0], hex[2], hex[4]].join('');
-    }
-
-    return '#'.concat(hex);
-  },
-
-  // Takes 3 or 6 digit hex
-  HexToRGB: function HexToRGB(hex) {
-    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-      return [r, r, g, g, b, b].join('');
-    });
-
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : undefined;
-  }
-};
-
-module.exports = color;
-
-},{}],257:[function(require,module,exports){
-'use strict';
-
-var React = require('react');
-var ModalTemplate = require('./modal-template');
-var ModalStore = require('./modal-store');
-var VariableStore = require('./variable-store');
-var Checkbox = require('./checkbox');
-var ExportSettingsStore = require('./export-settings-store');
-var _ = require('underscore');
-
-var ExportModal = React.createClass({
-  displayName: 'ExportModal',
-
-  updateSetting: function updateSetting(settingsIndex, event) {
-    var value = event.target.parentNode.getElementsByTagName('input')[0].checked;
-    ExportSettingsStore.action('updateSetting', settingsIndex, value);
-  },
-
-  getSettings: function getSettings() {
-    var settings = ExportSettingsStore.getSettings();
-
-    this.setState({
-      settings: settings,
-      packedVariables: this.getPackedVariables(settings)
-    });
-  },
-
-  close: function close() {
-    ModalStore.action('close');
-  },
-
-  getPackedVariables: function getPackedVariables(settings) {
-    return VariableStore.getPackedVariables.apply(null, settings.map(function (setting) {
-      return setting.value;
-    }));
-  },
-
-  componentWillUnmount: function componentWillUnmount() {
-    ExportSettingsStore.unbind('updateSetting', this.getSettings);
-  },
-
-  componentWillMount: function componentWillMount() {
-    ExportSettingsStore.bind('updateSetting', this.getSettings);
-  },
-
-  getInitialState: function getInitialState() {
-    var settings = ExportSettingsStore.getSettings();
-
-    return {
-      settings: settings,
-      packedVariables: this.getPackedVariables(settings)
-    };
-  },
-
-  render: function render() {
-    var self = this;
-
-    var settings = this.state.settings.map(function (setting, settingsIndex) {
-      if (settingsIndex === 3 && self.state.settings[2] && self.state.settings[2].value) {
-        return undefined;
-      }
-
-      return React.createElement(Checkbox, {
-        key: setting.name,
-        checked: setting.value,
-        label: setting.name,
-        onClick: self.updateSetting.bind(self, settingsIndex) });
-    });
-
-    return React.createElement(ModalTemplate, {
-      title: 'Export',
-      body: React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'div',
-          { className: 'row' },
-          React.createElement(
-            'div',
-            { className: 'col-xs-12' },
-            settings
-          )
-        ),
-        React.createElement(
-          'pre',
-          { className: 'file-name' },
-          'variables.less'
-        ),
-        React.createElement('textarea', {
-          className: 'variable-textarea',
-          value: this.state.packedVariables,
-          onChange: _.noop })
-      ),
-      footer: React.createElement(
-        'button',
-        { className: 'btn btn-default pull-right', onClick: this.close },
-        'Close'
-      ) });
-  }
-});
-
-module.exports = ExportModal;
-
-},{"./checkbox":252,"./export-settings-store":258,"./modal-store":266,"./modal-template":267,"./variable-store":273,"react":250,"underscore":251}],258:[function(require,module,exports){
-'use strict';
-
-var Store = require('./store');
-
-var settings = [{
-  name: 'Include headers',
-  value: true
-}, {
-  name: 'Include labels',
-  value: true
-}, {
-  name: 'Exclude unedited',
-  value: false
-}, {
-  name: 'Comment out unedited',
-  value: true
-}];
-
-var ExportSettingsStore = new Store();
-
-ExportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
-  settings[settingIndex].value = value;
-
-  ExportSettingsStore.emitEvent('updateSetting');
-});
-
-ExportSettingsStore.getSettings = function () {
-  return settings;
-};
-
-module.exports = ExportSettingsStore;
-
-},{"./store":272}],259:[function(require,module,exports){
+},{"../utils/color":273,"./color-palette":253,"./color-picker-values":254,"./slider":265,"react":250}],256:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var ColorPicker = require('./color-picker');
-var SearchStore = require('./search-store');
+var SearchStore = require('../stores/search-store');
 var _ = require('underscore');
 
 var searchableTypes = ['name', 'defaultValue', 'value', 'label'];
@@ -41532,7 +41277,7 @@ var FormCollection = React.createClass({
 
 module.exports = FormCollection;
 
-},{"./color-picker":255,"./search-store":268,"react":250,"underscore":251}],260:[function(require,module,exports){
+},{"../stores/search-store":270,"./color-picker":255,"react":250,"underscore":251}],257:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41578,15 +41323,119 @@ var Iframe = React.createClass({
 
 module.exports = Iframe;
 
-},{"react":250}],261:[function(require,module,exports){
+},{"react":250}],258:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var ModalTemplate = require('./modal-template');
-var ModalStore = require('./modal-store');
-var VariableStore = require('./variable-store');
-var Checkbox = require('./checkbox');
-var ImportSettingsStore = require('./import-settings-store');
+var ModalStore = require('../../stores/modal-store');
+var VariableStore = require('../../stores/variable-store');
+var Checkbox = require('../checkbox');
+var ExportSettingsStore = require('../../stores/export-settings-store');
+var _ = require('underscore');
+
+var ExportModal = React.createClass({
+  displayName: 'ExportModal',
+
+  updateSetting: function updateSetting(settingsIndex, event) {
+    var value = event.target.parentNode.getElementsByTagName('input')[0].checked;
+    ExportSettingsStore.action('updateSetting', settingsIndex, value);
+  },
+
+  getSettings: function getSettings() {
+    var settings = ExportSettingsStore.getSettings();
+
+    this.setState({
+      settings: settings,
+      packedVariables: this.getPackedVariables(settings)
+    });
+  },
+
+  close: function close() {
+    ModalStore.action('close');
+  },
+
+  getPackedVariables: function getPackedVariables(settings) {
+    return VariableStore.getPackedVariables.apply(null, settings.map(function (setting) {
+      return setting.value;
+    }));
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    ExportSettingsStore.unbind('updateSetting', this.getSettings);
+  },
+
+  componentWillMount: function componentWillMount() {
+    ExportSettingsStore.bind('updateSetting', this.getSettings);
+  },
+
+  getInitialState: function getInitialState() {
+    var settings = ExportSettingsStore.getSettings();
+
+    return {
+      settings: settings,
+      packedVariables: this.getPackedVariables(settings)
+    };
+  },
+
+  render: function render() {
+    var self = this;
+
+    var settings = this.state.settings.map(function (setting, settingsIndex) {
+      if (settingsIndex === 3 && self.state.settings[2] && self.state.settings[2].value) {
+        return undefined;
+      }
+
+      return React.createElement(Checkbox, {
+        key: setting.name,
+        checked: setting.value,
+        label: setting.name,
+        onClick: self.updateSetting.bind(self, settingsIndex) });
+    });
+
+    return React.createElement(ModalTemplate, {
+      title: 'Export',
+      body: React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'div',
+          { className: 'row' },
+          React.createElement(
+            'div',
+            { className: 'col-xs-12' },
+            settings
+          )
+        ),
+        React.createElement(
+          'pre',
+          { className: 'file-name' },
+          'variables.less'
+        ),
+        React.createElement('textarea', {
+          className: 'variable-textarea',
+          value: this.state.packedVariables,
+          onChange: _.noop })
+      ),
+      footer: React.createElement(
+        'button',
+        { className: 'btn btn-default pull-right', onClick: this.close },
+        'Close'
+      ) });
+  }
+});
+
+module.exports = ExportModal;
+
+},{"../../stores/export-settings-store":267,"../../stores/modal-store":269,"../../stores/variable-store":272,"../checkbox":252,"./modal-template":262,"react":250,"underscore":251}],259:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ModalTemplate = require('./modal-template');
+var ModalStore = require('../../stores/modal-store');
+var VariableStore = require('../../stores/variable-store');
+var Checkbox = require('../checkbox');
+var ImportSettingsStore = require('../../stores/import-settings-store');
 
 var instructions = 'Please select an existing variables.less file, ' + 'or paste it\'s contents into the text area.';
 
@@ -41766,44 +41615,565 @@ var ImportModal = React.createClass({
 
 module.exports = ImportModal;
 
-},{"./checkbox":252,"./import-settings-store":262,"./modal-store":266,"./modal-template":267,"./variable-store":273,"react":250}],262:[function(require,module,exports){
-'use strict';
-
-var Store = require('./store');
-
-var settings = [{
-  name: 'Clear existing variables',
-  value: true
-}, {
-  name: 'Override existing variables',
-  value: true
-}, {
-  name: 'Import commented variables',
-  value: false
-}];
-
-var ImportSettingsStore = new Store();
-
-ImportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
-  settings[settingIndex].value = value;
-
-  ImportSettingsStore.emitEvent('updateSetting');
-});
-
-ImportSettingsStore.getSettings = function () {
-  return settings;
-};
-
-module.exports = ImportSettingsStore;
-
-},{"./store":272}],263:[function(require,module,exports){
+},{"../../stores/import-settings-store":268,"../../stores/modal-store":269,"../../stores/variable-store":272,"../checkbox":252,"./modal-template":262,"react":250}],260:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
-var VariableStore = require('./variable-store');
-var ModalRenderer = require('./modal-renderer');
-var Iframe = require('./iframe');
-var Sidebar = require('./sidebar');
+var ModalStore = require('../../stores/modal-store');
+var _ = require('underscore');
+
+var ModalDialog = React.createClass({
+  displayName: 'ModalDialog',
+
+  close: function close() {
+    ModalStore.action('close');
+  },
+
+  stopPropagation: function stopPropagation(event) {
+    event.stopPropagation();
+  },
+
+  setTimeout: (function (_setTimeout) {
+    function setTimeout(_x, _x2) {
+      return _setTimeout.apply(this, arguments);
+    }
+
+    setTimeout.toString = function () {
+      return _setTimeout.toString();
+    };
+
+    return setTimeout;
+  })(function (fn, time) {
+    var timeout = setTimeout(fn, time);
+
+    var timeouts = this.state.timeouts;
+    timeouts.push(timeout);
+
+    this.setState({
+      timeouts: timeouts
+    });
+  }),
+
+  clearTimeouts: function clearTimeouts() {
+    var timeouts = this.state.timeouts;
+
+    _.each(timeouts, function (timeout) {
+      clearTimeout(timeout);
+    });
+
+    this.setState({
+      timeouts: []
+    });
+  },
+
+  componentDidMount: function componentDidMount() {
+    var self = this;
+
+    this.setTimeout(function () {
+      self.setState({
+        fadeClass: 'in'
+      });
+    }, 10);
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this.setState({
+      fadeClass: ''
+    });
+
+    this.clearTimeouts();
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      timeouts: [],
+      fadeClass: ''
+    };
+  },
+
+  render: function render() {
+    var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
+
+    return React.createElement(
+      'div',
+      { className: 'modal fade ' + fadeClass, style: { display: 'block' } },
+      React.createElement(
+        'div',
+        { className: 'modal-overlay', onClick: this.close },
+        React.createElement(
+          'div',
+          { className: 'modal-dialog', onClick: this.stopPropagation },
+          React.createElement(
+            'div',
+            { className: 'modal-content' },
+            React.createElement(this.props.view, this.props.props)
+          )
+        )
+      )
+    );
+  }
+});
+
+module.exports = ModalDialog;
+
+},{"../../stores/modal-store":269,"react":250,"underscore":251}],261:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ModalStore = require('../../stores/modal-store');
+var ModalDialog = require('./modal-dialog');
+var _ = require('underscore');
+
+var ModalRenderer = React.createClass({
+  displayName: 'ModalRenderer',
+
+  setTimeout: (function (_setTimeout) {
+    function setTimeout(_x, _x2) {
+      return _setTimeout.apply(this, arguments);
+    }
+
+    setTimeout.toString = function () {
+      return _setTimeout.toString();
+    };
+
+    return setTimeout;
+  })(function (fn, time) {
+    var timeout = setTimeout(fn, time);
+
+    var timeouts = this.state.timeouts;
+    timeouts.push(timeout);
+
+    this.setState({
+      timeouts: timeouts
+    });
+  }),
+
+  clearTimeouts: function clearTimeouts() {
+    var timeouts = this.state.timeouts;
+
+    _.each(timeouts, function (timeout) {
+      clearTimeout(timeout);
+    });
+
+    this.setState({
+      timeouts: []
+    });
+  },
+
+  modalChanged: function modalChanged() {
+    var self = this;
+    var closing = false;
+    var previousState = this.state.open;
+    var newState = ModalStore.isOpen();
+
+    if (previousState === true && newState === false) {
+      closing = true;
+
+      this.setTimeout(function () {
+        self.setState({
+          closing: false
+        });
+      }, 500);
+    }
+
+    this.setState({
+      open: newState,
+      closing: closing,
+      view: ModalStore.getView(),
+      props: ModalStore.getProps()
+    });
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    ModalStore.unbind('open', this.modalChanged);
+    ModalStore.unbind('close', this.modalChanged);
+    this.clearTimeouts();
+  },
+
+  componentWillMount: function componentWillMount() {
+    ModalStore.bind('open', this.modalChanged);
+    ModalStore.bind('close', this.modalChanged);
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      timeouts: [],
+      closing: false,
+      open: ModalStore.isOpen(),
+      view: ModalStore.getView(),
+      props: ModalStore.getProps()
+    };
+  },
+
+  render: function render() {
+    if (this.state.open || this.state.closing) {
+      return React.createElement(ModalDialog, {
+        view: this.state.view,
+        props: this.state.props,
+        closing: this.state.closing });
+    }
+    return false;
+  }
+});
+
+module.exports = ModalRenderer;
+
+},{"../../stores/modal-store":269,"./modal-dialog":260,"react":250,"underscore":251}],262:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+var ModalTemplate = React.createClass({
+  displayName: 'ModalTemplate',
+
+  render: function render() {
+    var title, body, footer;
+
+    if (typeof this.props.title !== 'undefined') {
+      title = React.createElement(
+        'div',
+        { className: 'modal-header' },
+        React.createElement(
+          'h4',
+          null,
+          this.props.title
+        )
+      );
+    }
+
+    if (typeof this.props.body !== 'undefined') {
+      body = React.createElement(
+        'div',
+        { className: 'modal-body' },
+        this.props.body
+      );
+    }
+
+    if (typeof this.props.footer !== 'undefined') {
+      footer = React.createElement(
+        'div',
+        { className: 'modal-footer' },
+        this.props.footer
+      );
+    }
+
+    return React.createElement(
+      'div',
+      null,
+      title,
+      body,
+      footer
+    );
+  }
+});
+
+module.exports = ModalTemplate;
+
+},{"react":250}],263:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ModalStore = require('../stores/modal-store');
+var ExportModal = require('./modal/export-modal');
+var ImportModal = require('./modal/import-modal');
+var SearchStore = require('../stores/search-store');
+var VariableStore = require('../stores/variable-store');
+
+var SidebarMenu = React.createClass({
+  displayName: 'SidebarMenu',
+
+  preview: function preview() {
+    VariableStore.action('requestPreview');
+  },
+
+  'export': function _export() {
+    ModalStore.action('open', ExportModal);
+  },
+
+  'import': function _import() {
+    ModalStore.action('open', ImportModal);
+  },
+
+  toggleDropdown: function toggleDropdown() {
+    this.setState({
+      dropdownActive: !this.state.dropdownActive
+    });
+  },
+
+  setSearchTerm: function setSearchTerm(event) {
+    SearchStore.action('setSearchTerm', event.target.value);
+  },
+
+  clearSearchTerm: function clearSearchTerm() {
+    SearchStore.action('setSearchTerm', undefined);
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      dropdownActive: false
+    };
+  },
+
+  render: function render() {
+    var self = this;
+    var dropdown;
+
+    var frameSizes = this.props.frameSizes.map(function (size) {
+      return React.createElement(
+        'option',
+        { key: size.name, value: size.name },
+        size.name
+      );
+    });
+
+    if (this.state.dropdownActive) {
+      dropdown = React.createElement(
+        'ul',
+        { className: 'dropdown-menu' },
+        React.createElement(
+          'li',
+          null,
+          React.createElement(
+            'a',
+            { onClick: self['import'] },
+            'Import'
+          )
+        ),
+        React.createElement(
+          'li',
+          null,
+          React.createElement(
+            'a',
+            { onClick: self['export'] },
+            'Export'
+          )
+        ),
+        React.createElement('li', { className: 'divider' }),
+        React.createElement(
+          'li',
+          null,
+          React.createElement(
+            'a',
+            { onClick: self.props.reset },
+            'Reset'
+          )
+        )
+      );
+    }
+
+    return React.createElement(
+      'div',
+      { className: 'sidebar-menu' },
+      React.createElement(
+        'div',
+        { className: 'form-group' },
+        React.createElement(
+          'select',
+          {
+            className: 'form-control size-control',
+            onChange: self.props.setFrameSize,
+            value: self.props.currentFrameSize.name },
+          frameSizes
+        ),
+        React.createElement(
+          'button',
+          { className: 'btn btn-small btn-default', onClick: self.preview },
+          'Preview'
+        ),
+        React.createElement(
+          'div',
+          {
+            className: 'dropdown pull-right' + (self.state.dropdownActive ? ' open' : ''),
+            onClick: self.toggleDropdown },
+          React.createElement(
+            'button',
+            { className: 'btn btn-small btn-default' },
+            'File ',
+            React.createElement('span', { className: 'caret' })
+          ),
+          dropdown
+        )
+      ),
+      React.createElement(
+        'div',
+        { className: 'form-group' },
+        React.createElement(
+          'div',
+          { className: 'input-wrapper search-wrapper' },
+          React.createElement('input', {
+            type: 'text',
+            className: 'form-control',
+            placeholder: 'Search variables',
+            onChange: this.setSearchTerm,
+            value: this.props.searchTerm }),
+          React.createElement('span', { className: 'glyphicon glyphicon-remove', onClick: this.clearSearchTerm })
+        )
+      )
+    );
+  }
+});
+
+module.exports = SidebarMenu;
+
+},{"../stores/modal-store":269,"../stores/search-store":270,"../stores/variable-store":272,"./modal/export-modal":258,"./modal/import-modal":259,"react":250}],264:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var FormCollection = require('./form-collection');
+var SidebarMenu = require('./sidebar-menu');
+var SearchStore = require('../stores/search-store');
+
+var Sidebar = React.createClass({
+  displayName: 'Sidebar',
+
+  componentWillUnmount: function componentWillUnmount() {
+    SearchStore.unbind('setSearchTerm', this.getSearchTerm);
+  },
+
+  componentWillMount: function componentWillMount() {
+    SearchStore.bind('setSearchTerm', this.getSearchTerm);
+  },
+
+  setActiveCollection: function setActiveCollection(index) {
+    index = this.state.activeIndex === index ? undefined : index;
+
+    this.setState({
+      activeIndex: index
+    });
+  },
+
+  getSearchTerm: function getSearchTerm() {
+    this.setState({
+      searchTerm: SearchStore.getSearchTerm()
+    });
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      activeIndex: undefined,
+      searchTerm: SearchStore.getSearchTerm()
+    };
+  },
+
+  render: function render() {
+    var self = this;
+
+    var formControls = this.props.variables.map(function (item, index) {
+      if (item.element === 'collection') {
+        return React.createElement(FormCollection, {
+          key: item.value,
+          group: item,
+          index: index,
+          activeIndex: self.state.activeIndex,
+          setActiveCollection: self.setActiveCollection,
+          updateVariable: self.props.updateVariable,
+          searchTerm: self.state.searchTerm });
+      }
+    });
+
+    return React.createElement(
+      'div',
+      { className: 'sidebar-container' },
+      React.createElement(SidebarMenu, {
+        setFrameSize: self.props.setFrameSize,
+        frameSizes: self.props.frameSizes,
+        currentFrameSize: self.props.currentFrameSize,
+        reset: self.props.reset,
+        searchTerm: self.state.searchTerm }),
+      React.createElement(
+        'div',
+        { className: 'sidebar' },
+        React.createElement(
+          'div',
+          null,
+          formControls
+        )
+      )
+    );
+  }
+});
+
+module.exports = Sidebar;
+
+},{"../stores/search-store":270,"./form-collection":256,"./sidebar-menu":263,"react":250}],265:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+var Slider = React.createClass({
+  displayName: 'Slider',
+
+  addListeners: function addListeners() {
+    window.addEventListener('mousemove', this.mouseMove);
+    window.addEventListener('mouseup', this.mouseUp);
+  },
+
+  removeListeners: function removeListeners() {
+    window.removeEventListener('mousemove', this.mouseMove);
+    window.removeEventListener('mouseup', this.mouseUp);
+  },
+
+  getValue: function getValue(event) {
+    var box = this.getDOMNode().getBoundingClientRect();
+
+    var xInPalette = Math.min(Math.max(event.clientX - box.left, 0), box.width);
+    var yInPalette = Math.min(Math.max(event.clientY - box.top, 0), box.height);
+
+    if (this.props.orientation === 'vertical') {
+      return Math.min(Math.max(yInPalette / (box.height / 100) / 100, 0), 100);
+    }
+
+    return Math.min(Math.max(xInPalette / (box.width / 100) / 100, 0), 100);
+  },
+
+  mouseDown: function mouseDown(event) {
+    event.preventDefault();
+    var point = this.getValue(event);
+
+    this.props.onChange(point);
+
+    this.addListeners();
+  },
+
+  mouseMove: function mouseMove(event) {
+    var point = this.getValue(event);
+
+    this.props.onChange(point);
+  },
+
+  mouseUp: function mouseUp() {
+    this.removeListeners();
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this.removeListeners();
+  },
+
+  render: function render() {
+    return React.createElement(
+      'div',
+      {
+        className: this.props.className,
+        onMouseDown: this.mouseDown },
+      React.createElement('div', {
+        className: 'handle',
+        style: {
+          top: this.props.value * 100 + '%'
+        } })
+    );
+  }
+});
+
+module.exports = Slider;
+
+},{"react":250}],266:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var VariableStore = require('./stores/variable-store');
+var ModalRenderer = require('./components/modal/modal-renderer');
+var Iframe = require('./components/iframe');
+var Sidebar = require('./components/sidebar');
 var $ = require('jquery');
 var less = require('less/browser');
 
@@ -41997,213 +42367,73 @@ var App = React.createClass({
 
 React.render(React.createElement(App, null), document.body);
 
-},{"./iframe":260,"./modal-renderer":265,"./sidebar":270,"./variable-store":273,"jquery":2,"less/browser":3,"react":250}],264:[function(require,module,exports){
+},{"./components/iframe":257,"./components/modal/modal-renderer":261,"./components/sidebar":264,"./stores/variable-store":272,"jquery":2,"less/browser":3,"react":250}],267:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
-var ModalStore = require('./modal-store');
-var _ = require('underscore');
+var Store = require('../stores/store');
 
-var ModalDialog = React.createClass({
-  displayName: 'ModalDialog',
+var settings = [{
+  name: 'Include headers',
+  value: true
+}, {
+  name: 'Include labels',
+  value: true
+}, {
+  name: 'Exclude unedited',
+  value: false
+}, {
+  name: 'Comment out unedited',
+  value: true
+}];
 
-  close: function close() {
-    ModalStore.action('close');
-  },
+var ExportSettingsStore = new Store();
 
-  stopPropagation: function stopPropagation(event) {
-    event.stopPropagation();
-  },
+ExportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
+  settings[settingIndex].value = value;
 
-  setTimeout: (function (_setTimeout) {
-    function setTimeout(_x, _x2) {
-      return _setTimeout.apply(this, arguments);
-    }
-
-    setTimeout.toString = function () {
-      return _setTimeout.toString();
-    };
-
-    return setTimeout;
-  })(function (fn, time) {
-    var timeout = setTimeout(fn, time);
-
-    var timeouts = this.state.timeouts;
-    timeouts.push(timeout);
-
-    this.setState({
-      timeouts: timeouts
-    });
-  }),
-
-  clearTimeouts: function clearTimeouts() {
-    var timeouts = this.state.timeouts;
-
-    _.each(timeouts, function (timeout) {
-      clearTimeout(timeout);
-    });
-
-    this.setState({
-      timeouts: []
-    });
-  },
-
-  componentDidMount: function componentDidMount() {
-    var self = this;
-
-    this.setTimeout(function () {
-      self.setState({
-        fadeClass: 'in'
-      });
-    }, 10);
-  },
-
-  componentWillUnmount: function componentWillUnmount() {
-    this.setState({
-      fadeClass: ''
-    });
-
-    this.clearTimeouts();
-  },
-
-  getInitialState: function getInitialState() {
-    return {
-      timeouts: [],
-      fadeClass: ''
-    };
-  },
-
-  render: function render() {
-    var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
-
-    return React.createElement(
-      'div',
-      { className: 'modal fade ' + fadeClass, style: { display: 'block' } },
-      React.createElement(
-        'div',
-        { className: 'modal-overlay', onClick: this.close },
-        React.createElement(
-          'div',
-          { className: 'modal-dialog', onClick: this.stopPropagation },
-          React.createElement(
-            'div',
-            { className: 'modal-content' },
-            React.createElement(this.props.view, this.props.props)
-          )
-        )
-      )
-    );
-  }
+  ExportSettingsStore.emitEvent('updateSetting');
 });
 
-module.exports = ModalDialog;
+ExportSettingsStore.getSettings = function () {
+  return settings;
+};
 
-},{"./modal-store":266,"react":250,"underscore":251}],265:[function(require,module,exports){
+module.exports = ExportSettingsStore;
+
+},{"../stores/store":271}],268:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
-var ModalStore = require('./modal-store');
-var ModalDialog = require('./modal-dialog');
-var _ = require('underscore');
+var Store = require('../stores/store');
 
-var ModalRenderer = React.createClass({
-  displayName: 'ModalRenderer',
+var settings = [{
+  name: 'Clear existing variables',
+  value: true
+}, {
+  name: 'Override existing variables',
+  value: true
+}, {
+  name: 'Import commented variables',
+  value: false
+}];
 
-  setTimeout: (function (_setTimeout) {
-    function setTimeout(_x, _x2) {
-      return _setTimeout.apply(this, arguments);
-    }
+var ImportSettingsStore = new Store();
 
-    setTimeout.toString = function () {
-      return _setTimeout.toString();
-    };
+ImportSettingsStore.createAction('updateSetting', function (settingIndex, value) {
+  settings[settingIndex].value = value;
 
-    return setTimeout;
-  })(function (fn, time) {
-    var timeout = setTimeout(fn, time);
-
-    var timeouts = this.state.timeouts;
-    timeouts.push(timeout);
-
-    this.setState({
-      timeouts: timeouts
-    });
-  }),
-
-  clearTimeouts: function clearTimeouts() {
-    var timeouts = this.state.timeouts;
-
-    _.each(timeouts, function (timeout) {
-      clearTimeout(timeout);
-    });
-
-    this.setState({
-      timeouts: []
-    });
-  },
-
-  modalChanged: function modalChanged() {
-    var self = this;
-    var closing = false;
-    var previousState = this.state.open;
-    var newState = ModalStore.isOpen();
-
-    if (previousState === true && newState === false) {
-      closing = true;
-
-      this.setTimeout(function () {
-        self.setState({
-          closing: false
-        });
-      }, 500);
-    }
-
-    this.setState({
-      open: newState,
-      closing: closing,
-      view: ModalStore.getView(),
-      props: ModalStore.getProps()
-    });
-  },
-
-  componentWillUnmount: function componentWillUnmount() {
-    ModalStore.unbind('open', this.modalChanged);
-    ModalStore.unbind('close', this.modalChanged);
-    this.clearTimeouts();
-  },
-
-  componentWillMount: function componentWillMount() {
-    ModalStore.bind('open', this.modalChanged);
-    ModalStore.bind('close', this.modalChanged);
-  },
-
-  getInitialState: function getInitialState() {
-    return {
-      timeouts: [],
-      closing: false,
-      open: ModalStore.isOpen(),
-      view: ModalStore.getView(),
-      props: ModalStore.getProps()
-    };
-  },
-
-  render: function render() {
-    if (this.state.open || this.state.closing) {
-      return React.createElement(ModalDialog, {
-        view: this.state.view,
-        props: this.state.props,
-        closing: this.state.closing });
-    }
-    return false;
-  }
+  ImportSettingsStore.emitEvent('updateSetting');
 });
 
-module.exports = ModalRenderer;
+ImportSettingsStore.getSettings = function () {
+  return settings;
+};
 
-},{"./modal-dialog":264,"./modal-store":266,"react":250,"underscore":251}],266:[function(require,module,exports){
+module.exports = ImportSettingsStore;
+
+},{"../stores/store":271}],269:[function(require,module,exports){
 'use strict';
 
-var Store = require('./store');
+var Store = require('../stores/store');
 
 var modalOpen = false;
 var modalView, modalProps;
@@ -42236,61 +42466,10 @@ ModalStore.createAction('close', function () {
 
 module.exports = ModalStore;
 
-},{"./store":272}],267:[function(require,module,exports){
+},{"../stores/store":271}],270:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
-
-var ModalTemplate = React.createClass({
-  displayName: 'ModalTemplate',
-
-  render: function render() {
-    var title, body, footer;
-
-    if (typeof this.props.title !== 'undefined') {
-      title = React.createElement(
-        'div',
-        { className: 'modal-header' },
-        React.createElement(
-          'h4',
-          null,
-          this.props.title
-        )
-      );
-    }
-
-    if (typeof this.props.body !== 'undefined') {
-      body = React.createElement(
-        'div',
-        { className: 'modal-body' },
-        this.props.body
-      );
-    }
-
-    if (typeof this.props.footer !== 'undefined') {
-      footer = React.createElement(
-        'div',
-        { className: 'modal-footer' },
-        this.props.footer
-      );
-    }
-
-    return React.createElement(
-      'div',
-      null,
-      title,
-      body,
-      footer
-    );
-  }
-});
-
-module.exports = ModalTemplate;
-
-},{"react":250}],268:[function(require,module,exports){
-'use strict';
-
-var Store = require('./store');
+var Store = require('../stores/store');
 
 var searchTerm;
 
@@ -42308,304 +42487,7 @@ SearchStore.createAction('setSearchTerm', function (newSearchTerm) {
 
 module.exports = SearchStore;
 
-},{"./store":272}],269:[function(require,module,exports){
-'use strict';
-
-var React = require('react');
-var ModalStore = require('./modal-store');
-var ExportModal = require('./export-modal');
-var ImportModal = require('./import-modal');
-var SearchStore = require('./search-store');
-var VariableStore = require('./variable-store');
-
-var SidebarMenu = React.createClass({
-  displayName: 'SidebarMenu',
-
-  preview: function preview() {
-    VariableStore.action('requestPreview');
-  },
-
-  'export': function _export() {
-    ModalStore.action('open', ExportModal);
-  },
-
-  'import': function _import() {
-    ModalStore.action('open', ImportModal);
-  },
-
-  toggleDropdown: function toggleDropdown() {
-    this.setState({
-      dropdownActive: !this.state.dropdownActive
-    });
-  },
-
-  setSearchTerm: function setSearchTerm(event) {
-    SearchStore.action('setSearchTerm', event.target.value);
-  },
-
-  clearSearchTerm: function clearSearchTerm() {
-    SearchStore.action('setSearchTerm', undefined);
-  },
-
-  getInitialState: function getInitialState() {
-    return {
-      dropdownActive: false
-    };
-  },
-
-  render: function render() {
-    var self = this;
-    var dropdown;
-
-    var frameSizes = this.props.frameSizes.map(function (size) {
-      return React.createElement(
-        'option',
-        { key: size.name, value: size.name },
-        size.name
-      );
-    });
-
-    if (this.state.dropdownActive) {
-      dropdown = React.createElement(
-        'ul',
-        { className: 'dropdown-menu' },
-        React.createElement(
-          'li',
-          null,
-          React.createElement(
-            'a',
-            { onClick: self['import'] },
-            'Import'
-          )
-        ),
-        React.createElement(
-          'li',
-          null,
-          React.createElement(
-            'a',
-            { onClick: self['export'] },
-            'Export'
-          )
-        ),
-        React.createElement('li', { className: 'divider' }),
-        React.createElement(
-          'li',
-          null,
-          React.createElement(
-            'a',
-            { onClick: self.props.reset },
-            'Reset'
-          )
-        )
-      );
-    }
-
-    return React.createElement(
-      'div',
-      { className: 'sidebar-menu' },
-      React.createElement(
-        'div',
-        { className: 'form-group' },
-        React.createElement(
-          'select',
-          {
-            className: 'form-control size-control',
-            onChange: self.props.setFrameSize,
-            value: self.props.currentFrameSize.name },
-          frameSizes
-        ),
-        React.createElement(
-          'button',
-          { className: 'btn btn-small btn-default', onClick: self.preview },
-          'Preview'
-        ),
-        React.createElement(
-          'div',
-          {
-            className: 'dropdown pull-right' + (self.state.dropdownActive ? ' open' : ''),
-            onClick: self.toggleDropdown },
-          React.createElement(
-            'button',
-            { className: 'btn btn-small btn-default' },
-            'File ',
-            React.createElement('span', { className: 'caret' })
-          ),
-          dropdown
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: 'form-group' },
-        React.createElement(
-          'div',
-          { className: 'input-wrapper search-wrapper' },
-          React.createElement('input', {
-            type: 'text',
-            className: 'form-control',
-            placeholder: 'Search variables',
-            onChange: this.setSearchTerm,
-            value: this.props.searchTerm }),
-          React.createElement('span', { className: 'glyphicon glyphicon-remove', onClick: this.clearSearchTerm })
-        )
-      )
-    );
-  }
-});
-
-module.exports = SidebarMenu;
-
-},{"./export-modal":257,"./import-modal":261,"./modal-store":266,"./search-store":268,"./variable-store":273,"react":250}],270:[function(require,module,exports){
-'use strict';
-
-var React = require('react');
-var FormCollection = require('./form-collection');
-var SidebarMenu = require('./sidebar-menu');
-var SearchStore = require('./search-store');
-
-var Sidebar = React.createClass({
-  displayName: 'Sidebar',
-
-  componentWillUnmount: function componentWillUnmount() {
-    SearchStore.unbind('setSearchTerm', this.getSearchTerm);
-  },
-
-  componentWillMount: function componentWillMount() {
-    SearchStore.bind('setSearchTerm', this.getSearchTerm);
-  },
-
-  setActiveCollection: function setActiveCollection(index) {
-    index = this.state.activeIndex === index ? undefined : index;
-
-    this.setState({
-      activeIndex: index
-    });
-  },
-
-  getSearchTerm: function getSearchTerm() {
-    this.setState({
-      searchTerm: SearchStore.getSearchTerm()
-    });
-  },
-
-  getInitialState: function getInitialState() {
-    return {
-      activeIndex: undefined,
-      searchTerm: SearchStore.getSearchTerm()
-    };
-  },
-
-  render: function render() {
-    var self = this;
-
-    var formControls = this.props.variables.map(function (item, index) {
-      if (item.element === 'collection') {
-        return React.createElement(FormCollection, {
-          key: item.value,
-          group: item,
-          index: index,
-          activeIndex: self.state.activeIndex,
-          setActiveCollection: self.setActiveCollection,
-          updateVariable: self.props.updateVariable,
-          searchTerm: self.state.searchTerm });
-      }
-    });
-
-    return React.createElement(
-      'div',
-      { className: 'sidebar-container' },
-      React.createElement(SidebarMenu, {
-        setFrameSize: self.props.setFrameSize,
-        frameSizes: self.props.frameSizes,
-        currentFrameSize: self.props.currentFrameSize,
-        reset: self.props.reset,
-        searchTerm: self.state.searchTerm }),
-      React.createElement(
-        'div',
-        { className: 'sidebar' },
-        React.createElement(
-          'div',
-          null,
-          formControls
-        )
-      )
-    );
-  }
-});
-
-module.exports = Sidebar;
-
-},{"./form-collection":259,"./search-store":268,"./sidebar-menu":269,"react":250}],271:[function(require,module,exports){
-'use strict';
-
-var React = require('react');
-
-var Slider = React.createClass({
-  displayName: 'Slider',
-
-  addListeners: function addListeners() {
-    window.addEventListener('mousemove', this.mouseMove);
-    window.addEventListener('mouseup', this.mouseUp);
-  },
-
-  removeListeners: function removeListeners() {
-    window.removeEventListener('mousemove', this.mouseMove);
-    window.removeEventListener('mouseup', this.mouseUp);
-  },
-
-  getValue: function getValue(event) {
-    var box = this.getDOMNode().getBoundingClientRect();
-
-    var xInPalette = Math.min(Math.max(event.clientX - box.left, 0), box.width);
-    var yInPalette = Math.min(Math.max(event.clientY - box.top, 0), box.height);
-
-    if (this.props.orientation === 'vertical') {
-      return Math.min(Math.max(yInPalette / (box.height / 100) / 100, 0), 100);
-    }
-
-    return Math.min(Math.max(xInPalette / (box.width / 100) / 100, 0), 100);
-  },
-
-  mouseDown: function mouseDown(event) {
-    event.preventDefault();
-    var point = this.getValue(event);
-
-    this.props.onChange(point);
-
-    this.addListeners();
-  },
-
-  mouseMove: function mouseMove(event) {
-    var point = this.getValue(event);
-
-    this.props.onChange(point);
-  },
-
-  mouseUp: function mouseUp() {
-    this.removeListeners();
-  },
-
-  componentWillUnmount: function componentWillUnmount() {
-    this.removeListeners();
-  },
-
-  render: function render() {
-    return React.createElement(
-      'div',
-      {
-        className: this.props.className,
-        onMouseDown: this.mouseDown },
-      React.createElement('div', {
-        className: 'handle',
-        style: {
-          top: this.props.value * 100 + '%'
-        } })
-    );
-  }
-});
-
-module.exports = Slider;
-
-},{"react":250}],272:[function(require,module,exports){
+},{"../stores/store":271}],271:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -42669,10 +42551,10 @@ var Store = function Store() {
 
 module.exports = Store;
 
-},{"underscore":251}],273:[function(require,module,exports){
+},{"underscore":251}],272:[function(require,module,exports){
 'use strict';
 
-var Store = require('./store');
+var Store = require('../stores/store');
 var $ = require('jquery');
 var _ = require('underscore');
 
@@ -42894,4 +42776,122 @@ VariableStore.createAction('requestPreview', function () {
 
 module.exports = VariableStore;
 
-},{"./store":272,"jquery":2,"underscore":251}]},{},[263]);
+},{"../stores/store":271,"jquery":2,"underscore":251}],273:[function(require,module,exports){
+'use strict';
+
+var color = {
+  // Takes values from 0 to 1
+  HSLToRGB: function HSLToRGB(h, s, l) {
+    var r, g, b;
+
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      var hueToRGB = function hue2rgb(p, q, t) {
+        if (t < 0) {
+          t += 1;
+        }
+        if (t > 1) {
+          t -= 1;
+        }
+        if (t < 1 / 6) {
+          return p + (q - p) * 6 * t;
+        }
+        if (t < 1 / 2) {
+          return q;
+        }
+        if (t < 2 / 3) {
+          return p + (q - p) * (2 / 3 - t) * 6;
+        }
+        return p;
+      };
+
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hueToRGB(p, q, h + 1 / 3);
+      g = hueToRGB(p, q, h);
+      b = hueToRGB(p, q, h - 1 / 3);
+    }
+
+    return {
+      r: Math.round(r * 255),
+      g: Math.round(g * 255),
+      b: Math.round(b * 255)
+    };
+  },
+
+  // Takes values from 0 to 255
+  RGBToHSL: function RGBToHSL(r, g, b) {
+    r = r / 255;
+    g = g / 255;
+    b = b / 255;
+
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var h, s;
+    var l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0;
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+      switch (max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+      }
+
+      h /= 6;
+    }
+
+    return {
+      h: Math.round(h * 360),
+      s: Math.round(s * 100),
+      l: Math.round(l * 100)
+    };
+  },
+
+  // Takes values from 0 to 255
+  RGBToHex: function RGBToHex(r, g, b) {
+    var colorToHex = function colorToHex(c) {
+      var hexSegment = c.toString(16);
+      return hexSegment.length === 1 ? '0'.concat(hexSegment) : hexSegment;
+    };
+
+    var hex = [colorToHex(r), colorToHex(g), colorToHex(b)].join('');
+
+    if (hex.length === 6 && hex[0] === hex[1] && hex[2] === hex[3] && hex[4] === hex[5]) {
+      hex = [hex[0], hex[2], hex[4]].join('');
+    }
+
+    return '#'.concat(hex);
+  },
+
+  // Takes 3 or 6 digit hex
+  HexToRGB: function HexToRGB(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+      return [r, r, g, g, b, b].join('');
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : undefined;
+  }
+};
+
+module.exports = color;
+
+},{}]},{},[266]);
