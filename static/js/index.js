@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var React = require('react');
 var VariableStore = require('./stores/variable-store');
 var ModalRenderer = require('./components/modal/modal-renderer');
@@ -17,7 +18,55 @@ less = less(window, {
   useFileCache: true
 });
 
+var availableFrameSizes = ['xs', 'sm', 'md', 'lg'];
+
 var App = React.createClass({
+  concatMediaQueries: function (variables) {
+    var prefix = '@screen';
+    var suffix = 'min';
+
+    return variables.concat(_.map(availableFrameSizes, function (size) {
+      var className = [prefix.replace('@', '.'), size, suffix].join('-');
+      var variableName = [prefix, size, suffix].join('-');
+
+      return [className, '{width:', variableName, ';}'].join('');
+    }).join('\n'));
+  },
+  applyFrameSizes: function (css) {
+    var sizes = this.state.frameSizes;
+
+    var regy = /\.screen-(..)-min\s*?{[\n\r]*?\s*?width:\s*(.+?);[\n\r]*?}/gi;
+    var match;
+
+    while ((match = regy.exec(css))) {
+      var index = availableFrameSizes.indexOf(match[1].toLowerCase());
+      if (index >= 0) {
+        sizes[index] = {
+          name: match[1].toUpperCase(),
+          value: match[2]
+        };
+      }
+    }
+
+    this.setState({
+      frameSizes: sizes
+    });
+  },
+  updateFrameSizes: function () {
+    var self = this;
+    var variables = VariableStore.getPackedVariables();
+
+    variables = this.concatMediaQueries(variables);
+
+    less.render(variables, function (error, tree) {
+      if (error) {
+        window.alert(error);
+        return;
+      }
+
+      self.applyFrameSizes(tree.css);
+    });
+  },
   applyCSS: function (css) {
     var iframeDoc = this.state.iframeDoc;
 
@@ -51,6 +100,7 @@ var App = React.createClass({
       }
 
       self.applyCSS(tree.css);
+      self.updateFrameSizes();
 
       if (typeof callback === 'function') {
         callback();
@@ -190,7 +240,8 @@ var App = React.createClass({
         <Iframe
           iframeLoaded={self.iframeLoaded}
           loading={self.state.loading}
-          currentFrameSize={self.state.currentFrameSize} />
+          currentFrameSize={self.state.currentFrameSize}
+          frameSizes={self.state.frameSizes} />
         <Sidebar
           variables={self.state.variables}
           updateVariable={self.updateVariable}
