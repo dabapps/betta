@@ -20,9 +20,15 @@ var SidebarMenu = React.createClass({
     ModalStore.action('open', ImportModal);
   },
 
-  toggleDropdown: function () {
+  toggleDropdownFile: function () {
     this.setState({
-      dropdownActive: !this.state.dropdownActive
+      dropdownFileActive: !this.state.dropdownFileActive
+    });
+  },
+
+  toggleDropdownSizes: function () {
+    this.setState({
+      dropdownSizesActive: !this.state.dropdownSizesActive
     });
   },
 
@@ -36,22 +42,33 @@ var SidebarMenu = React.createClass({
 
   getInitialState: function () {
     return {
-      dropdownActive: false
+      dropdownFileActive: false,
+      dropdownSizesActive: false
     };
   },
 
   render: function () {
     var self = this;
-    var dropdown;
+    var dropdownFile, dropdownSizes;
 
     var frameSizes = this.props.frameSizes.map(function (size) {
       return (
-        <option key={size.name} value={size.name}>{size.name}</option>
+        <li key={size.name}>
+          <a onClick={self.props.setFrameSize.bind(null, size)}>{size.name}</a>
+        </li>
       );
     });
 
-    if (this.state.dropdownActive) {
-      dropdown = (
+    if (this.state.dropdownSizesActive) {
+      dropdownSizes = (
+        <ul className='dropdown-menu'>
+          {frameSizes}
+        </ul>
+      );
+    }
+
+    if (this.state.dropdownFileActive) {
+      dropdownFile = (
         <ul className='dropdown-menu'>
           <li><a onClick={self.import}>Import</a></li>
           <li><a onClick={self.export}>Export</a></li>
@@ -64,16 +81,19 @@ var SidebarMenu = React.createClass({
     return (
       <div className='sidebar-menu'>
         <div className='form-group'>
-          <select
-            className='form-control size-control'
-            onChange={self.props.setFrameSize}
-            value={self.props.currentFrameSize.name}>{frameSizes}</select>
+          <div
+            className={'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : '')}
+            onClick={self.toggleDropdownSizes}>
+            <button className='btn btn-small btn-default'>{self.props.currentFrameSize.name} <span className='caret' /></button>
+            {dropdownSizes}
+          </div>
+
           <button className='btn btn-small btn-default' onClick={self.preview}>Preview</button>
           <div
-            className={'dropdown pull-right' + (self.state.dropdownActive ? ' open' : '')}
-            onClick={self.toggleDropdown}>
+            className={'dropdown pull-right' + (self.state.dropdownFileActive ? ' open' : '')}
+            onClick={self.toggleDropdownFile}>
             <button className='btn btn-small btn-default'>File <span className='caret' /></button>
-            {dropdown}
+            {dropdownFile}
           </div>
         </div>
         <div className='form-group'>
