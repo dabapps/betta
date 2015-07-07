@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var color = require('./color');
+var color = require('../utils/color');
 
 var MAX_SIZE = 50;
 var MIN_SIZE = 10;

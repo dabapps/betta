@@ -2,10 +2,10 @@
 
 var React = require('react');
 var ModalTemplate = require('./modal-template');
-var ModalStore = require('./modal-store');
-var VariableStore = require('./variable-store');
-var Checkbox = require('./checkbox');
-var ExportSettingsStore = require('./export-settings-store');
+var ModalStore = require('../../stores/modal-store');
+var VariableStore = require('../../stores/variable-store');
+var Checkbox = require('../checkbox');
+var ExportSettingsStore = require('../../stores/export-settings-store');
 var _ = require('underscore');
 
 var ExportModal = React.createClass({
