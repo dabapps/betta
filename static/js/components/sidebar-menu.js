@@ -22,13 +22,15 @@ var SidebarMenu = React.createClass({
 
   toggleDropdownFile: function () {
     this.setState({
+      dropdownSizesActive: false,
       dropdownFileActive: !this.state.dropdownFileActive
     });
   },
 
   toggleDropdownSizes: function () {
     this.setState({
-      dropdownSizesActive: !this.state.dropdownSizesActive
+      dropdownSizesActive: !this.state.dropdownSizesActive,
+      dropdownFileActive: false
     });
   },
 
