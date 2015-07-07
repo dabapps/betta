@@ -41904,9 +41904,17 @@ var SidebarMenu = React.createClass({
     ModalStore.action('open', ImportModal);
   },
 
-  toggleDropdown: function toggleDropdown() {
+  toggleDropdownFile: function toggleDropdownFile() {
     this.setState({
-      dropdownActive: !this.state.dropdownActive
+      dropdownSizesActive: false,
+      dropdownFileActive: !this.state.dropdownFileActive
+    });
+  },
+
+  toggleDropdownSizes: function toggleDropdownSizes() {
+    this.setState({
+      dropdownSizesActive: !this.state.dropdownSizesActive,
+      dropdownFileActive: false
     });
   },
 
@@ -41920,24 +41928,37 @@ var SidebarMenu = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      dropdownActive: false
+      dropdownFileActive: false,
+      dropdownSizesActive: false
     };
   },
 
   render: function render() {
     var self = this;
-    var dropdown;
+    var dropdownFile, dropdownSizes;
 
     var frameSizes = this.props.frameSizes.map(function (size) {
       return React.createElement(
-        'option',
-        { key: size.name, value: size.name },
-        size.name
+        'li',
+        { key: size.name },
+        React.createElement(
+          'a',
+          { onClick: self.props.setFrameSize.bind(null, size) },
+          size.name
+        )
       );
     });
 
-    if (this.state.dropdownActive) {
-      dropdown = React.createElement(
+    if (this.state.dropdownSizesActive) {
+      dropdownSizes = React.createElement(
+        'ul',
+        { className: 'dropdown-menu' },
+        frameSizes
+      );
+    }
+
+    if (this.state.dropdownFileActive) {
+      dropdownFile = React.createElement(
         'ul',
         { className: 'dropdown-menu' },
         React.createElement(
@@ -41978,12 +41999,18 @@ var SidebarMenu = React.createClass({
         'div',
         { className: 'form-group' },
         React.createElement(
-          'select',
+          'div',
           {
-            className: 'form-control size-control',
-            onChange: self.props.setFrameSize,
-            value: self.props.currentFrameSize.name },
-          frameSizes
+            className: 'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : ''),
+            onClick: self.toggleDropdownSizes },
+          React.createElement(
+            'button',
+            { className: 'btn btn-small btn-default' },
+            self.props.currentFrameSize.name,
+            ' ',
+            React.createElement('span', { className: 'caret' })
+          ),
+          dropdownSizes
         ),
         React.createElement(
           'button',
@@ -41993,15 +42020,15 @@ var SidebarMenu = React.createClass({
         React.createElement(
           'div',
           {
-            className: 'dropdown pull-right' + (self.state.dropdownActive ? ' open' : ''),
-            onClick: self.toggleDropdown },
+            className: 'dropdown pull-right' + (self.state.dropdownFileActive ? ' open' : ''),
+            onClick: self.toggleDropdownFile },
           React.createElement(
             'button',
             { className: 'btn btn-small btn-default' },
             'File ',
             React.createElement('span', { className: 'caret' })
           ),
-          dropdown
+          dropdownFile
         )
       ),
       React.createElement(
@@ -42323,12 +42350,11 @@ var App = React.createClass({
     VariableStore.action('reset');
   },
 
-  setFrameSize: function setFrameSize(event) {
-    var value = event.target.value;
+  setFrameSize: function setFrameSize(size) {
 
     var index = this.state.frameSizes.map(function (size) {
       return size.name;
-    }).indexOf(value);
+    }).indexOf(size.name);
 
     this.setState({
       currentFrameSize: this.state.frameSizes[index]
