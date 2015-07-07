@@ -1,4 +1,8 @@
+@import "node_modules/bootstrap/less/bootstrap";
+
 /* @group Variables */
+
+@border-radius-base: 0;
 
 @SidebarWidth: 256px;
 
@@ -78,7 +82,7 @@ a {
   right: 0;
   width: @SidebarWidth;
   height: 100%;
-  padding-top: 72px;
+  padding-top: 87px;
   box-shadow: 0 0 5px @TransparentBlack;
   background-color: @White;
   background-color: @GreyLight;
@@ -135,9 +139,10 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  height: 72px;
+  height: 87px;
   border-bottom: 1px solid @Grey;
   box-shadow: 0 0 10px @TransparentBlack;
+  padding: 5px;
 
   .size-control {
     width: 64px;
@@ -145,11 +150,26 @@ a {
 
   .form-group {
     height: 36px;
-    margin-bottom: 0;
+
+    &:first-child{
+      margin-bottom: 5px;
+    }
 
     select,
     button {
       float: left;
+    }
+
+    select {
+      -webkit-appearance: none;
+    }
+  }
+
+  .btn {
+    margin-left: 5px;
+
+    &:first-child {
+      margin-left: 0px;
     }
   }
 }

@@ -146,12 +146,11 @@ var App = React.createClass({
     VariableStore.action('reset');
   },
 
-  setFrameSize: function (event) {
-    var value = event.target.value;
+  setFrameSize: function (size) {
 
     var index = this.state.frameSizes.map(function (size) {
       return size.name;
-    }).indexOf(value);
+    }).indexOf(size.name);
 
     this.setState({
       currentFrameSize: this.state.frameSizes[index]
