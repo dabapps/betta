@@ -1,11 +1,11 @@
 'use strict';
 
 var React = require('react');
-var ModalStore = require('./modal-store');
-var ExportModal = require('./export-modal');
-var ImportModal = require('./import-modal');
-var SearchStore = require('./search-store');
-var VariableStore = require('./variable-store');
+var ModalStore = require('../stores/modal-store');
+var ExportModal = require('./modal/export-modal');
+var ImportModal = require('./modal/import-modal');
+var SearchStore = require('../stores/search-store');
+var VariableStore = require('../stores/variable-store');
 
 var SidebarMenu = React.createClass({
   preview: function () {

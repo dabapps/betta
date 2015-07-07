@@ -1,6 +1,6 @@
 'use strict';
 
-var Store = require('./store');
+var Store = require('../stores/store');
 
 var settings = [
   {

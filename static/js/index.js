@@ -2,10 +2,10 @@
 
 var _ = require('underscore');
 var React = require('react');
-var VariableStore = require('./variable-store');
-var ModalRenderer = require('./modal-renderer');
-var Iframe = require('./iframe');
-var Sidebar = require('./sidebar');
+var VariableStore = require('./stores/variable-store');
+var ModalRenderer = require('./components/modal/modal-renderer');
+var Iframe = require('./components/iframe');
+var Sidebar = require('./components/sidebar');
 var $ = require('jquery');
 var less = require('less/browser');
 
