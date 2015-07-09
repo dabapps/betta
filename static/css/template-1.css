@@ -24,6 +24,10 @@
   top: 70px;
 }
 
+.input-group {
+  margin: 10px 0;
+}
+
 @media all and (min-width: 768px) {
 
   .github-badge {
