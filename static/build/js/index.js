@@ -41202,7 +41202,11 @@ var FormCollection = React.createClass({
         React.createElement(
           'label',
           null,
-          child.name,
+          React.createElement(
+            'span',
+            { className: 'variable-name', title: child.name },
+            child.name
+          ),
           React.createElement('span', {
             className: 'glyphicon glyphicon glyphicon-search',
             onClick: this.addToSearch.bind(null, child.name) })
