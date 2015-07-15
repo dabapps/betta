@@ -41,6 +41,12 @@ body {
 
 }
 
+.dropdown.clearfix .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
 .navbar .container {
   width: 100%;
 }
