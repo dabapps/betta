@@ -77,7 +77,9 @@ var FormCollection = React.createClass({
         <div className='form-group' key={child.name}>
           {label}
           <label>
-            {child.name}
+            <span className='variable-name' title={child.name}>
+              {child.name}
+            </span>
             <span
               className='glyphicon glyphicon glyphicon-search'
               onClick={this.addToSearch.bind(null, child.name)} />

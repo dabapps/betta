@@ -204,6 +204,29 @@ a {
   height: 100%;
   overflow: auto;
   text-align: left;
+
+  label {
+    position: relative;
+
+    .variable-name {
+      display: block;
+      position: relative;
+      width: 100%;
+      padding-right: 20px;
+      z-index: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .glyphicon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      cursor: pointer;
+    }
+  }
 }
 
 /* @end Sidebar */
