@@ -84,7 +84,7 @@ var SidebarMenu = React.createClass({
       <div className='sidebar-menu'>
         <div className='form-group'>
           <div
-            className={'dropdown' + (self.state.dropdownFileActive ? ' open' : '')}
+            className={'dropdown pull-left' + (self.state.dropdownFileActive ? ' open' : '')}
             onClick={self.toggleDropdownFile}>
             <button className='btn btn-small btn-default'>File <span className='caret' /></button>
             {dropdownFile}
