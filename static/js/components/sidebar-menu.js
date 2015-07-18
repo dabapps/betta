@@ -99,8 +99,11 @@ var SidebarMenu = React.createClass({
             {dropdownSizes}
           </div>
 
-          <button className='btn btn-small btn-default pull-right' onClick={self.preview}>Preview</button>
-
+          <button
+            className='btn btn-small btn-default pull-right'
+            onClick={self.preview}>
+              Preview
+          </button>
         </div>
         <div className='form-group'>
           <div className='input-wrapper search-wrapper'>
