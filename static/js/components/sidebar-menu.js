@@ -84,6 +84,13 @@ var SidebarMenu = React.createClass({
       <div className='sidebar-menu'>
         <div className='form-group'>
           <div
+            className={'dropdown' + (self.state.dropdownFileActive ? ' open' : '')}
+            onClick={self.toggleDropdownFile}>
+            <button className='btn btn-small btn-default'>File <span className='caret' /></button>
+            {dropdownFile}
+          </div>
+
+          <div
             className={'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : '')}
             onClick={self.toggleDropdownSizes}>
             <button className='btn btn-small btn-default'>
@@ -92,13 +99,8 @@ var SidebarMenu = React.createClass({
             {dropdownSizes}
           </div>
 
-          <button className='btn btn-small btn-default' onClick={self.preview}>Preview</button>
-          <div
-            className={'dropdown pull-right' + (self.state.dropdownFileActive ? ' open' : '')}
-            onClick={self.toggleDropdownFile}>
-            <button className='btn btn-small btn-default'>File <span className='caret' /></button>
-            {dropdownFile}
-          </div>
+          <button className='btn btn-small btn-default pull-right' onClick={self.preview}>Preview</button>
+
         </div>
         <div className='form-group'>
           <div className='input-wrapper search-wrapper'>
