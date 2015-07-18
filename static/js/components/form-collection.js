@@ -3,6 +3,7 @@
 var React = require('react');
 var ColorPicker = require('./color-picker');
 var SearchStore = require('../stores/search-store');
+var VariableStore = require('../stores/variable-store');
 var _ = require('underscore');
 
 var searchableTypes = [
@@ -36,6 +37,20 @@ var FormCollection = React.createClass({
 
   addToSearch: function (val) {
     SearchStore.action('setSearchTerm', val);
+  },
+
+  componentWillMount: function () {
+    document.addEventListener('keydown', this._handleKey, false);
+  },
+
+  componentWillUnmount: function () {
+    document.removeEventListener('keydown', this._handleKey, false);
+  },
+
+  _handleKey: function (key) {
+    if (key.keyCode === 13) {
+      VariableStore.action('requestPreview');
+    }
   },
 
   create: {
