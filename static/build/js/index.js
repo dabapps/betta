@@ -42005,6 +42005,19 @@ var SidebarMenu = React.createClass({
         React.createElement(
           'div',
           {
+            className: 'dropdown pull-left' + (self.state.dropdownFileActive ? ' open' : ''),
+            onClick: self.toggleDropdownFile },
+          React.createElement(
+            'button',
+            { className: 'btn btn-small btn-default' },
+            'File ',
+            React.createElement('span', { className: 'caret' })
+          ),
+          dropdownFile
+        ),
+        React.createElement(
+          'div',
+          {
             className: 'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : ''),
             onClick: self.toggleDropdownSizes },
           React.createElement(
@@ -42018,21 +42031,10 @@ var SidebarMenu = React.createClass({
         ),
         React.createElement(
           'button',
-          { className: 'btn btn-small btn-default', onClick: self.preview },
-          'Preview'
-        ),
-        React.createElement(
-          'div',
           {
-            className: 'dropdown pull-right' + (self.state.dropdownFileActive ? ' open' : ''),
-            onClick: self.toggleDropdownFile },
-          React.createElement(
-            'button',
-            { className: 'btn btn-small btn-default' },
-            'File ',
-            React.createElement('span', { className: 'caret' })
-          ),
-          dropdownFile
+            className: 'btn btn-small btn-default pull-right',
+            onClick: self.preview },
+          'Preview'
         )
       ),
       React.createElement(

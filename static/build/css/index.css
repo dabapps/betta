@@ -6650,10 +6650,15 @@ a {
 }
 .sidebar-menu .form-group:first-child {
   margin-bottom: 5px;
+  margin-left: 0;
 }
-.sidebar-menu .form-group select,
+.sidebar-menu .form-group .pull-right {
+  margin-right: 0;
+}
 .sidebar-menu .form-group button {
   float: left;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .sidebar-menu .form-group select {
   -webkit-appearance: none;
