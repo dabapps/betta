@@ -254,6 +254,6 @@ var App = React.createClass({
   }
 });
 
-document.getElementById("start-app").onclick=function(){
+document.getElementById('start-app').onclick = function () {
   React.render(<App />, document.body);
 };
