@@ -41129,6 +41129,7 @@ module.exports = ColorPicker;
 var React = require('react');
 var ColorPicker = require('./color-picker');
 var SearchStore = require('../stores/search-store');
+var VariableStore = require('../stores/variable-store');
 var _ = require('underscore');
 
 var searchableTypes = ['name', 'defaultValue', 'value', 'label'];
@@ -41154,6 +41155,12 @@ var FormCollection = React.createClass({
 
   addToSearch: function addToSearch(val) {
     SearchStore.action('setSearchTerm', val);
+  },
+
+  handleKeyPress: function handleKeyPress(event) {
+    if (event.keyCode === 13) {
+      VariableStore.action('requestPreview');
+    }
   },
 
   create: {
@@ -41219,7 +41226,8 @@ var FormCollection = React.createClass({
             className: 'form-control',
             placeholder: child.defaultValue,
             value: child.value,
-            onChange: self.props.updateVariable.bind(null, self.props.index, index) }),
+            onChange: self.props.updateVariable.bind(null, self.props.index, index),
+            onKeyDown: this.handleKeyPress }),
           colorPicker
         )
       );
@@ -41281,7 +41289,7 @@ var FormCollection = React.createClass({
 
 module.exports = FormCollection;
 
-},{"../stores/search-store":270,"./color-picker":255,"react":250,"underscore":251}],257:[function(require,module,exports){
+},{"../stores/search-store":270,"../stores/variable-store":272,"./color-picker":255,"react":250,"underscore":251}],257:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
