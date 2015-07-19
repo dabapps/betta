@@ -13,7 +13,10 @@
 
 /* @group Colors */
 
-@ThemePrimary: rgba(248,80,50,1);
+@ThemePrimary: #F85032;
+
+@ThemeGradientTop: @ThemePrimary;
+@ThemeGradientBottom: darken(@ThemeGradientTop, 10%);
 
 @White: #fff;
 @GreyLight: #eee;
@@ -663,14 +666,14 @@ a {
 
   .header {
     color: @White;
-    background: @ThemePrimary;
-    background: -moz-linear-gradient(-45deg, @ThemePrimary 0%, rgba(231,56,39,1) 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, @ThemePrimary), color-stop(100%, rgba(231,56,39,1)));
-    background: -webkit-linear-gradient(-45deg, @ThemePrimary 0%, rgba(231,56,39,1) 100%);
-    background: -o-linear-gradient(-45deg, @ThemePrimary 0%, rgba(231,56,39,1) 100%);
-    background: -ms-linear-gradient(-45deg, @ThemePrimary 0%, rgba(231,56,39,1) 100%);
-    background: linear-gradient(135deg, @ThemePrimary 0%, rgba(231,56,39,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#e73827', GradientType=1 );
+    background: @ThemeGradientTop;
+    background: -moz-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, @ThemeGradientTop), color-stop(100%, @ThemeGradientBottom));
+    background: -webkit-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
+    background: -o-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
+    background: -ms-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
+    background: linear-gradient(135deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@ThemeGradientTop', endColorstr='@ThemeGradientBottom', GradientType=1 );
 
     text-align: center;
 
