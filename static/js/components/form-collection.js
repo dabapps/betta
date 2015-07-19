@@ -3,6 +3,7 @@
 var React = require('react');
 var ColorPicker = require('./color-picker');
 var SearchStore = require('../stores/search-store');
+var VariableStore = require('../stores/variable-store');
 var _ = require('underscore');
 
 var searchableTypes = [
@@ -36,6 +37,12 @@ var FormCollection = React.createClass({
 
   addToSearch: function (val) {
     SearchStore.action('setSearchTerm', val);
+  },
+
+  handleKeyPress: function (event) {
+    if (event.keyCode === 13) {
+      VariableStore.action('requestPreview');
+    }
   },
 
   create: {
@@ -90,7 +97,8 @@ var FormCollection = React.createClass({
               className='form-control'
               placeholder={child.defaultValue}
               value={child.value}
-              onChange={self.props.updateVariable.bind(null, self.props.index, index)} />
+              onChange={self.props.updateVariable.bind(null, self.props.index, index)}
+              onKeyDown={this.handleKeyPress} />
             {colorPicker}
           </div>
         </div>
