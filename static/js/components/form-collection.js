@@ -39,16 +39,8 @@ var FormCollection = React.createClass({
     SearchStore.action('setSearchTerm', val);
   },
 
-  componentWillMount: function () {
-    document.addEventListener('keydown', this._handleKey, false);
-  },
-
-  componentWillUnmount: function () {
-    document.removeEventListener('keydown', this._handleKey, false);
-  },
-
-  _handleKey: function (key) {
-    if (key.keyCode === 13) {
+  handleKeyPress: function (event) {
+    if (event.keyCode === 13) {
       VariableStore.action('requestPreview');
     }
   },
@@ -105,7 +97,8 @@ var FormCollection = React.createClass({
               className='form-control'
               placeholder={child.defaultValue}
               value={child.value}
-              onChange={self.props.updateVariable.bind(null, self.props.index, index)} />
+              onChange={self.props.updateVariable.bind(null, self.props.index, index)}
+              onKeyDown={this.handleKeyPress} />
             {colorPicker}
           </div>
         </div>
