@@ -254,6 +254,11 @@ var App = React.createClass({
   }
 });
 
-document.getElementById('start-app').onclick = function () {
-  React.render(<App />, document.body);
-};
+$(document).ready(function () {
+
+  $('#start-app').click(function () {
+    $(document.body).addClass('no-scroll');
+    React.render(<App />, document.body);
+  });
+
+});
