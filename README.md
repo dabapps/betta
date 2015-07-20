@@ -2,7 +2,7 @@
 
 ### Simple Bootstrap Variable Editor
 
-![Betta](static/img/press.png)
+![Betta](static/img/press-screen.png)
 
 ### Development
 You will need to install and run an http server. Example:
