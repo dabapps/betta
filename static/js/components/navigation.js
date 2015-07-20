@@ -5,6 +5,7 @@ var VariableStore = require('../stores/variable-store');
 var ModalStore = require('../stores/modal-store');
 var ImportModal = require('./modal/import-modal');
 var ExportModal = require('./modal/export-modal');
+var ResetModal = require('./modal/reset-modal');
 
 var Navigation = React.createClass({
   toggleNavbar: function () {
@@ -22,7 +23,7 @@ var Navigation = React.createClass({
   },
 
   reset: function () {
-    VariableStore.action('reset');
+    ModalStore.action('open', ResetModal);
   },
 
   preview: function () {
