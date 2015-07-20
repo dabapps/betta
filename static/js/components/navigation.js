@@ -16,7 +16,13 @@ var Navigation = React.createClass({
   },
 
   reset: function () {
-    VariableStore.action('reset');
+    var r = window.confirm('Are you sure you want to reset your variables?' +
+      'If you click OK, you will lose all your variables.');
+    if (r) {
+      VariableStore.action('reset');
+    } else {
+      console.log('Canceled!');
+    }
   },
 
   preview: function () {
