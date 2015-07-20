@@ -4,6 +4,7 @@ var _ = require('underscore');
 var React = require('react');
 var VariableStore = require('./stores/variable-store');
 var ModalRenderer = require('./components/modal/modal-renderer');
+var Navigation = require('./components/navigation');
 var Iframe = require('./components/iframe');
 var Sidebar = require('./components/sidebar');
 var $ = require('jquery');
@@ -236,6 +237,7 @@ var App = React.createClass({
 
     return (
       <div className='app'>
+        <Navigation />
         <Iframe
           iframeLoaded={self.iframeLoaded}
           loading={self.state.loading}
