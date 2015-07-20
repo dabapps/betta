@@ -7,6 +7,12 @@ var ImportModal = require('./modal/import-modal');
 var ExportModal = require('./modal/export-modal');
 
 var Navigation = React.createClass({
+  toggleNavbar: function () {
+    this.setState({
+      navbarActive: !this.state.navbarActive
+    });
+  },
+
   export: function () {
     ModalStore.action('open', ExportModal);
   },
@@ -31,6 +37,7 @@ var Navigation = React.createClass({
 
   getInitialState: function() {
     return {
+      navbarActive: false,
       dropdownSizesActive: false
     };
   },
@@ -50,7 +57,7 @@ var Navigation = React.createClass({
       <nav className='navbar navbar-inverse navbar-fixed-top'>
         <div className='container-fluid'>
           <div className='navbar-header'>
-            <button type='button' className='navbar-toggle collapsed'>
+            <button type='button' className='navbar-toggle collapsed' onClick={self.toggleNavbar}>
               <span className='sr-only'>Toggle navigation</span>
               <span className='icon-bar'></span>
               <span className='icon-bar'></span>
@@ -60,7 +67,7 @@ var Navigation = React.createClass({
               <img className='img-responsive app-logo' src='static/img/logo-icon.png' />
             </a>
           </div>
-          <div className='navbar-collapse collapse'>
+          <div className={'navbar-collapse collapse' + (self.state.navbarActive ? ' in' : '')}>
             <ul className='nav navbar-nav'>
               <li><a onClick={this.import}>Import</a></li>
               <li><a onClick={this.export}>Export</a></li>
