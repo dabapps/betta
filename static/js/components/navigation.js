@@ -35,7 +35,7 @@ var Navigation = React.createClass({
     });
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       navbarActive: false,
       dropdownSizesActive: false
@@ -67,7 +67,8 @@ var Navigation = React.createClass({
               <img className='img-responsive app-logo' src='static/img/logo-icon.png' />
             </a>
           </div>
-          <div className={'navbar-collapse collapse in' + (self.state.navbarActive ? ' active' : '')}>
+          <div
+            className={'navbar-collapse collapse in' + (self.state.navbarActive ? ' active' : '')}>
             <ul className='nav navbar-nav'>
               <li><a onClick={this.import}>Import</a></li>
               <li><a onClick={this.export}>Export</a></li>
