@@ -4,12 +4,6 @@ var React = require('react');
 var SearchStore = require('../stores/search-store');
 
 var SidebarMenu = React.createClass({
-  toggleDropdownSizes: function () {
-    this.setState({
-      dropdownSizesActive: !this.state.dropdownSizesActive
-    });
-  },
-
   setSearchTerm: function (event) {
     SearchStore.action('setSearchTerm', event.target.value);
   },
@@ -18,45 +12,9 @@ var SidebarMenu = React.createClass({
     SearchStore.action('setSearchTerm', undefined);
   },
 
-  getInitialState: function () {
-    return {
-      dropdownSizesActive: false
-    };
-  },
-
   render: function () {
-    var self = this;
-    var dropdownSizes;
-
-    var frameSizes = this.props.frameSizes.map(function (size) {
-      return (
-        <li key={size.name}>
-          <a onClick={self.props.setFrameSize.bind(null, size)}>{size.name}</a>
-        </li>
-      );
-    });
-
-    if (this.state.dropdownSizesActive) {
-      dropdownSizes = (
-        <ul className='dropdown-menu'>
-          {frameSizes}
-        </ul>
-      );
-    }
-
     return (
       <div className='sidebar-menu'>
-        <div className='form-group'>
-          <div
-            className={'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : '')}
-            onClick={self.toggleDropdownSizes}>
-            <button className='btn btn-small btn-default'>
-              {self.props.currentFrameSize.name} <span className='caret' />
-            </button>
-            {dropdownSizes}
-          </div>
-        </div>
-
         <div className='form-group'>
           <div className='input-wrapper search-wrapper'>
             <input

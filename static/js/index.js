@@ -148,7 +148,6 @@ var App = React.createClass({
   },
 
   setFrameSize: function (size) {
-
     var index = this.state.frameSizes.map(function (size) {
       return size.name;
     }).indexOf(size.name);
@@ -237,7 +236,10 @@ var App = React.createClass({
 
     return (
       <div className='app'>
-        <Navigation />
+        <Navigation
+          currentFrameSize={self.state.currentFrameSize}
+          frameSizes={self.state.frameSizes}
+          setFrameSize={self.setFrameSize} />
         <Iframe
           iframeLoaded={self.iframeLoaded}
           loading={self.state.loading}
@@ -245,10 +247,7 @@ var App = React.createClass({
           frameSizes={self.state.frameSizes} />
         <Sidebar
           variables={self.state.variables}
-          updateVariable={self.updateVariable}
-          setFrameSize={self.setFrameSize}
-          frameSizes={self.state.frameSizes}
-          currentFrameSize={self.state.currentFrameSize} />
+          updateVariable={self.updateVariable} />
         <ModalRenderer />
       </div>
     );

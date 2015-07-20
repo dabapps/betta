@@ -24,6 +24,16 @@ var Navigation = React.createClass({
   },
 
   render: function () {
+    var self = this;
+
+    var frameSizes = this.props.frameSizes.map(function (size) {
+      return (
+        <li key={size.name}>
+          <a onClick={self.props.setFrameSize.bind(null, size)}>{size.name}</a>
+        </li>
+      );
+    });
+
     return (
       <nav className='navbar navbar-inverse navbar-fixed-top'>
         <div className='container-fluid'>
@@ -45,6 +55,14 @@ var Navigation = React.createClass({
             </ul>
             <ul className='nav navbar-nav navbar-right'>
               <li><a onClick={this.reset}>Reset</a></li>
+
+              <li className="dropdown">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screen Sizes ({self.props.currentFrameSize.name}) <span className="caret"></span></a>
+                <ul className='dropdown-menu'>
+                  {frameSizes}
+                </ul>
+              </li>
+
               <li><a onClick={this.preview}>Preview</a></li>
             </ul>
           </div>
