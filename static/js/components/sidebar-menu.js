@@ -1,9 +1,6 @@
 'use strict';
 
 var React = require('react');
-var ModalStore = require('../stores/modal-store');
-var ExportModal = require('./modal/export-modal');
-var ImportModal = require('./modal/import-modal');
 var SearchStore = require('../stores/search-store');
 var VariableStore = require('../stores/variable-store');
 
@@ -12,25 +9,9 @@ var SidebarMenu = React.createClass({
     VariableStore.action('requestPreview');
   },
 
-  export: function () {
-    ModalStore.action('open', ExportModal);
-  },
-
-  import: function () {
-    ModalStore.action('open', ImportModal);
-  },
-
-  toggleDropdownFile: function () {
-    this.setState({
-      dropdownSizesActive: false,
-      dropdownFileActive: !this.state.dropdownFileActive
-    });
-  },
-
   toggleDropdownSizes: function () {
     this.setState({
-      dropdownSizesActive: !this.state.dropdownSizesActive,
-      dropdownFileActive: false
+      dropdownSizesActive: !this.state.dropdownSizesActive
     });
   },
 
@@ -44,14 +25,13 @@ var SidebarMenu = React.createClass({
 
   getInitialState: function () {
     return {
-      dropdownFileActive: false,
       dropdownSizesActive: false
     };
   },
 
   render: function () {
     var self = this;
-    var dropdownFile, dropdownSizes;
+    var dropdownSizes;
 
     var frameSizes = this.props.frameSizes.map(function (size) {
       return (
@@ -69,27 +49,9 @@ var SidebarMenu = React.createClass({
       );
     }
 
-    if (this.state.dropdownFileActive) {
-      dropdownFile = (
-        <ul className='dropdown-menu'>
-          <li><a onClick={self.import}>Import</a></li>
-          <li><a onClick={self.export}>Export</a></li>
-          <li className='divider' />
-          <li><a onClick={self.props.reset}>Reset</a></li>
-        </ul>
-      );
-    }
-
     return (
       <div className='sidebar-menu'>
         <div className='form-group'>
-          <div
-            className={'dropdown pull-left' + (self.state.dropdownFileActive ? ' open' : '')}
-            onClick={self.toggleDropdownFile}>
-            <button className='btn btn-small btn-default'>File <span className='caret' /></button>
-            {dropdownFile}
-          </div>
-
           <div
             className={'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : '')}
             onClick={self.toggleDropdownSizes}>
