@@ -33,6 +33,14 @@ a {
   cursor: pointer;
 }
 
+.btn {
+  .transition2(ease-in-out background 0.1s, ease-in-out background-color 0.1s);
+
+  &.btn-default:hover {
+    background-color: darken(@btn-default-bg, 20%);
+  }
+}
+
 /* @end General */
 
 /* @group Basic Layout */
