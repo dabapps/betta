@@ -57,7 +57,7 @@ var Navigation = React.createClass({
               <li><a onClick={this.reset}>Reset</a></li>
 
               <li className="dropdown">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                <a>
                   Screen Sizes ({self.props.currentFrameSize.name}) <span className="caret"></span>
                 </a>
                 <ul className='dropdown-menu'>
