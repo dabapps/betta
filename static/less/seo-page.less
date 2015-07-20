@@ -20,7 +20,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@ThemeGradientTop', endColorstr='@ThemeGradientBottom', GradientType=1 );
   }
 
-  @jumbotron-height: 240px;
+  @jumbotron-height: 200px;
 
   .jumbotron {
     position: absolute;
@@ -35,24 +35,22 @@
     padding: 0;
 
     h1 {
+      font-size: 80px;
+      font-weight: 300;
       padding: 0;
+      margin: 10px 0;
 
       small {
+        display: block;
         font-size: 16px;
         color: @White;
+        margin: 0;
       }
 
       a {
         display: block;
         width: 80%;
         max-width: 250px;
-        margin: 0 auto;
-      }
-
-      .logo {
-        display: block;
-        width: 100%;
-        height: auto;
         margin: 0 auto;
       }
     }
@@ -68,9 +66,66 @@
     }
   }
 
+  .logo-icon {
+    .sr-only;
+  }
+
+  .logo-text {
+    .sr-only;
+  }
+
+  .logo-full {
+    display: block;
+    width: 80%;
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .logo-icon,
+  .logo-full {
+    img {
+      width: 100%;
+    }
+  }
+
   .footer {
     background-color: @ThemePrimary;
     color: @White;
     padding: 15px 0;
   }
+}
+
+@media all and (min-width: @screen-sm-min) {
+
+  .seo-page {
+
+    @jumbotron-height: 380px;
+
+    .jumbotron {
+      height: @jumbotron-height;
+      margin-top: -@jumbotron-height * 0.5;
+    }
+
+    .logo-icon {
+      position: relative;
+      display: block;
+      width: 80%;
+      max-width: 200px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .logo-text {
+      position: relative;
+      margin: 0 auto;
+      width: auto;
+      height: auto;
+    }
+
+    .logo-full {
+      .sr-only;
+    }
+  }
+
 }
