@@ -29,7 +29,7 @@ var ResetModal = React.createClass({
         }
         footer={
           <div>
-            <button className='btn btn-primary pull-right' onClick={this.reset}>Confirm</button>
+            <button className='btn btn-danger pull-right' onClick={this.reset}>Confirm</button>
             <button className='btn btn-default pull-right' onClick={this.close}>Cancel</button>
           </div>
         } />
