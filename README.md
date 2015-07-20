@@ -2,7 +2,7 @@
 
 ### Simple Bootstrap Variable Editor
 
-![Gitify](static/img/press.png)
+![Betta](static/img/press.png)
 
 ### Development
 You will need to install and run an http server. Example:
