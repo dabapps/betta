@@ -11,13 +11,7 @@
   .jumbotron-container {
     height: 100%;
     background: @ThemeGradientTop;
-    background: -moz-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, @ThemeGradientTop), color-stop(100%, @ThemeGradientBottom));
-    background: -webkit-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
-    background: -o-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
-    background: -ms-linear-gradient(-45deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
-    background: linear-gradient(135deg, @ThemeGradientTop 0%, @ThemeGradientBottom 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@ThemeGradientTop', endColorstr='@ThemeGradientBottom', GradientType=1 );
+    #gradient > .vertical(@ThemeGradientTop, @ThemeGradientBottom);
   }
 
   @jumbotron-height: 200px;
