@@ -44,7 +44,7 @@ var Navigation = React.createClass({
               <span className='icon-bar'></span>
               <span className='icon-bar'></span>
             </button>
-            <a className='navbar-brand' href='/'>
+            <a className='navbar-brand' href='/' title='Home'>
               <img className='img-responsive app-logo' src='static/img/logo-icon.png' />
             </a>
           </div>
