@@ -4,6 +4,7 @@ var _ = require('underscore');
 var React = require('react');
 var VariableStore = require('./stores/variable-store');
 var ModalRenderer = require('./components/modal/modal-renderer');
+var Navigation = require('./components/navigation');
 var Iframe = require('./components/iframe');
 var Sidebar = require('./components/sidebar');
 var $ = require('jquery');
@@ -142,12 +143,7 @@ var App = React.createClass({
     });
   },
 
-  reset: function () {
-    VariableStore.action('reset');
-  },
-
   setFrameSize: function (size) {
-
     var index = this.state.frameSizes.map(function (size) {
       return size.name;
     }).indexOf(size.name);
@@ -236,6 +232,10 @@ var App = React.createClass({
 
     return (
       <div className='app'>
+        <Navigation
+          currentFrameSize={self.state.currentFrameSize}
+          frameSizes={self.state.frameSizes}
+          setFrameSize={self.setFrameSize} />
         <Iframe
           iframeLoaded={self.iframeLoaded}
           loading={self.state.loading}
@@ -243,11 +243,7 @@ var App = React.createClass({
           frameSizes={self.state.frameSizes} />
         <Sidebar
           variables={self.state.variables}
-          updateVariable={self.updateVariable}
-          setFrameSize={self.setFrameSize}
-          frameSizes={self.state.frameSizes}
-          currentFrameSize={self.state.currentFrameSize}
-          reset={self.reset} />
+          updateVariable={self.updateVariable} />
         <ModalRenderer />
       </div>
     );

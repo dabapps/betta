@@ -45,6 +45,7 @@ a {
 
 .iframe-container {
   position: relative;
+  padding-top: @navbar-height;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -57,7 +58,7 @@ a {
   right: 0;
   width: @SidebarWidth;
   height: 100%;
-  padding-top: 87px;
+  padding-top: @navbar-height + @SidebarMenuHeight + 1px;
   box-shadow: 0 0 5px @TransparentBlack;
   background-color: @White;
   background-color: @GreyLight;
@@ -75,6 +76,38 @@ a {
 }
 
 /* @end Basic Layout */
+
+
+/* @group Navigation Bar */
+
+.navbar-fixed-top .navbar-collapse {
+  height: 100%;
+  max-height: 0;
+  overflow-y: auto;
+  border-bottom: none;
+  border-top: 1px solid transparent;
+  .transition2(ease-in-out max-height 0.4s, ease-in-out border-top 0.4s);
+
+  &.active {
+    max-height: 340px;
+    border-top: 1px solid darken(@ThemePrimary, 5%);
+  }
+}
+
+.navbar-brand {
+
+  .app-logo {
+    max-height: 100%;
+  }
+}
+
+.navbar-nav {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* @end Navigation Bar */
+
 
 /* @group Iframe */
 
@@ -111,13 +144,12 @@ a {
 
 .sidebar-menu {
   position: absolute;
-  top: 0;
+  top: @navbar-height + 1px;
   left: 0;
   width: 100%;
-  height: 87px;
+  height: @SidebarMenuHeight;
+  padding: 5px 5px;
   border-bottom: 1px solid @Grey;
-  box-shadow: 0 0 10px @TransparentBlack;
-  padding: 5px;
 
   .size-control {
     width: 64px;
@@ -125,11 +157,7 @@ a {
 
   .form-group {
     height: 36px;
-
-    &:first-child{
-      margin-bottom: 5px;
-      margin-left: 0;
-    }
+    margin: 0;
 
     .pull-right {
       margin-right: 0;

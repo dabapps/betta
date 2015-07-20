@@ -56,10 +56,6 @@ var Sidebar = React.createClass({
     return (
       <div className='sidebar-container'>
         <SidebarMenu
-          setFrameSize={self.props.setFrameSize}
-          frameSizes={self.props.frameSizes}
-          currentFrameSize={self.props.currentFrameSize}
-          reset={self.props.reset}
           searchTerm={self.state.searchTerm} />
         <div className='sidebar'>
           <div>{formControls}</div>
