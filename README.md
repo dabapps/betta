@@ -1,6 +1,8 @@
 # Betta [![Build Status](https://magnum.travis-ci.com/dabapps/betta.svg?token=9QR4ewbqbkEmHps6q5sq&branch=master)](https://magnum.travis-ci.com/dabapps/betta)
-Simple Bootstrap variable editor
 
+### Simple Bootstrap Variable Editor
+
+![Gitify](static/img/press.png)
 
 ### Development
 You will need to install and run an http server. Example:
