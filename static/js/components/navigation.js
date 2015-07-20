@@ -1,8 +1,19 @@
 'use strict';
 
 var React = require('react');
+var ModalStore = require('../stores/modal-store');
+var ImportModal = require('./modal/import-modal');
+var ExportModal = require('./modal/export-modal');
 
 var Navigation = React.createClass({
+  export: function () {
+    ModalStore.action('open', ExportModal);
+  },
+
+  import: function () {
+    ModalStore.action('open', ImportModal);
+  },
+
   render: function () {
     return (
       <nav className='navbar navbar-inverse navbar-fixed-top'>
@@ -20,8 +31,8 @@ var Navigation = React.createClass({
           </div>
           <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
-              <li><a href='/'>Import</a></li>
-              <li><a href='/'>Save</a></li>
+              <li><a onClick={this.import}>Import</a></li>
+              <li><a onClick={this.export}>Export</a></li>
             </ul>
             <ul className='nav navbar-nav navbar-right'>
               <li><a href='/'>Right Side</a></li>
