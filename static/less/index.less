@@ -80,6 +80,19 @@ a {
 
 /* @group Navigation Bar */
 
+.navbar-fixed-top .navbar-collapse {
+  height: 100%;
+  max-height: 0;
+  overflow-y: auto;
+  border-bottom: none;
+  border-top: 1px solid transparent;
+  .transition2(ease-in-out max-height 0.4s, ease-in-out border-top 0.4s);
+
+  &.active {
+    max-height: 340px;
+    border-top: 1px solid darken(@ThemePrimary, 5%);
+  }
+}
 
 .navbar-brand {
 
