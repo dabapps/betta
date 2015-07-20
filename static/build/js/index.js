@@ -40773,7 +40773,7 @@ var ColorPalette = React.createClass({
 
 module.exports = ColorPalette;
 
-},{"../utils/color":273,"react":250}],254:[function(require,module,exports){
+},{"../utils/color":274,"react":250}],254:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -40867,7 +40867,7 @@ var ColorPickerValues = React.createClass({
 
 module.exports = ColorPickerValues;
 
-},{"../stores/variable-store":272,"react":250}],255:[function(require,module,exports){
+},{"../stores/variable-store":273,"react":250}],255:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41123,7 +41123,7 @@ var ColorPicker = React.createClass({
 
 module.exports = ColorPicker;
 
-},{"../utils/color":273,"./color-palette":253,"./color-picker-values":254,"./slider":265,"react":250}],256:[function(require,module,exports){
+},{"../utils/color":274,"./color-palette":253,"./color-picker-values":254,"./slider":266,"react":250}],256:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41289,7 +41289,7 @@ var FormCollection = React.createClass({
 
 module.exports = FormCollection;
 
-},{"../stores/search-store":270,"../stores/variable-store":272,"./color-picker":255,"react":250,"underscore":251}],257:[function(require,module,exports){
+},{"../stores/search-store":271,"../stores/variable-store":273,"./color-picker":255,"react":250,"underscore":251}],257:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -41449,7 +41449,7 @@ var ExportModal = React.createClass({
 
 module.exports = ExportModal;
 
-},{"../../stores/export-settings-store":267,"../../stores/modal-store":269,"../../stores/variable-store":272,"../checkbox":252,"./modal-template":262,"react":250,"underscore":251}],259:[function(require,module,exports){
+},{"../../stores/export-settings-store":268,"../../stores/modal-store":270,"../../stores/variable-store":273,"../checkbox":252,"./modal-template":262,"react":250,"underscore":251}],259:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41637,7 +41637,7 @@ var ImportModal = React.createClass({
 
 module.exports = ImportModal;
 
-},{"../../stores/import-settings-store":268,"../../stores/modal-store":269,"../../stores/variable-store":272,"../checkbox":252,"./modal-template":262,"react":250}],260:[function(require,module,exports){
+},{"../../stores/import-settings-store":269,"../../stores/modal-store":270,"../../stores/variable-store":273,"../checkbox":252,"./modal-template":262,"react":250}],260:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41738,7 +41738,7 @@ var ModalDialog = React.createClass({
 
 module.exports = ModalDialog;
 
-},{"../../stores/modal-store":269,"react":250,"underscore":251}],261:[function(require,module,exports){
+},{"../../stores/modal-store":270,"react":250,"underscore":251}],261:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41840,7 +41840,7 @@ var ModalRenderer = React.createClass({
 
 module.exports = ModalRenderer;
 
-},{"../../stores/modal-store":269,"./modal-dialog":260,"react":250,"underscore":251}],262:[function(require,module,exports){
+},{"../../stores/modal-store":270,"./modal-dialog":260,"react":250,"underscore":251}],262:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41895,17 +41895,18 @@ module.exports = ModalTemplate;
 'use strict';
 
 var React = require('react');
-var ModalStore = require('../stores/modal-store');
-var ExportModal = require('./modal/export-modal');
-var ImportModal = require('./modal/import-modal');
-var SearchStore = require('../stores/search-store');
 var VariableStore = require('../stores/variable-store');
+var ModalStore = require('../stores/modal-store');
+var ImportModal = require('./modal/import-modal');
+var ExportModal = require('./modal/export-modal');
 
-var SidebarMenu = React.createClass({
-  displayName: 'SidebarMenu',
+var Navigation = React.createClass({
+  displayName: 'Navigation',
 
-  preview: function preview() {
-    VariableStore.action('requestPreview');
+  toggleNavbar: function toggleNavbar() {
+    this.setState({
+      navbarActive: !this.state.navbarActive
+    });
   },
 
   'export': function _export() {
@@ -41916,38 +41917,29 @@ var SidebarMenu = React.createClass({
     ModalStore.action('open', ImportModal);
   },
 
-  toggleDropdownFile: function toggleDropdownFile() {
-    this.setState({
-      dropdownSizesActive: false,
-      dropdownFileActive: !this.state.dropdownFileActive
-    });
+  reset: function reset() {
+    VariableStore.action('reset');
+  },
+
+  preview: function preview() {
+    VariableStore.action('requestPreview');
   },
 
   toggleDropdownSizes: function toggleDropdownSizes() {
     this.setState({
-      dropdownSizesActive: !this.state.dropdownSizesActive,
-      dropdownFileActive: false
+      dropdownSizesActive: !this.state.dropdownSizesActive
     });
-  },
-
-  setSearchTerm: function setSearchTerm(event) {
-    SearchStore.action('setSearchTerm', event.target.value);
-  },
-
-  clearSearchTerm: function clearSearchTerm() {
-    SearchStore.action('setSearchTerm', undefined);
   },
 
   getInitialState: function getInitialState() {
     return {
-      dropdownFileActive: false,
+      navbarActive: false,
       dropdownSizesActive: false
     };
   },
 
   render: function render() {
     var self = this;
-    var dropdownFile, dropdownSizes;
 
     var frameSizes = this.props.frameSizes.map(function (size) {
       return React.createElement(
@@ -41961,90 +41953,128 @@ var SidebarMenu = React.createClass({
       );
     });
 
-    if (this.state.dropdownSizesActive) {
-      dropdownSizes = React.createElement(
-        'ul',
-        { className: 'dropdown-menu' },
-        frameSizes
-      );
-    }
-
-    if (this.state.dropdownFileActive) {
-      dropdownFile = React.createElement(
-        'ul',
-        { className: 'dropdown-menu' },
+    return React.createElement(
+      'nav',
+      { className: 'navbar navbar-inverse navbar-fixed-top' },
+      React.createElement(
+        'div',
+        { className: 'container-fluid' },
         React.createElement(
-          'li',
-          null,
+          'div',
+          { className: 'navbar-header' },
+          React.createElement(
+            'button',
+            { type: 'button', className: 'navbar-toggle collapsed', onClick: self.toggleNavbar },
+            React.createElement(
+              'span',
+              { className: 'sr-only' },
+              'Toggle navigation'
+            ),
+            React.createElement('span', { className: 'icon-bar' }),
+            React.createElement('span', { className: 'icon-bar' }),
+            React.createElement('span', { className: 'icon-bar' })
+          ),
           React.createElement(
             'a',
-            { onClick: self['import'] },
-            'Import'
+            { className: 'navbar-brand', href: '/', title: 'Home' },
+            React.createElement('img', { className: 'img-responsive app-logo', src: 'static/img/logo-icon.png' })
           )
         ),
         React.createElement(
-          'li',
-          null,
+          'div',
+          {
+            className: 'navbar-collapse collapse in' + (self.state.navbarActive ? ' active' : '') },
           React.createElement(
-            'a',
-            { onClick: self['export'] },
-            'Export'
-          )
-        ),
-        React.createElement('li', { className: 'divider' }),
-        React.createElement(
-          'li',
-          null,
+            'ul',
+            { className: 'nav navbar-nav' },
+            React.createElement(
+              'li',
+              null,
+              React.createElement(
+                'a',
+                { onClick: this['import'] },
+                'Import'
+              )
+            ),
+            React.createElement(
+              'li',
+              null,
+              React.createElement(
+                'a',
+                { onClick: this['export'] },
+                'Export'
+              )
+            )
+          ),
           React.createElement(
-            'a',
-            { onClick: self.props.reset },
-            'Reset'
+            'ul',
+            { className: 'nav navbar-nav navbar-right' },
+            React.createElement(
+              'li',
+              null,
+              React.createElement(
+                'a',
+                { onClick: this.reset },
+                'Reset'
+              )
+            ),
+            React.createElement(
+              'li',
+              { className: 'dropdown' + (self.state.dropdownSizesActive ? ' open' : ''),
+                onClick: self.toggleDropdownSizes },
+              React.createElement(
+                'a',
+                null,
+                'Screen Sizes (',
+                self.props.currentFrameSize.name,
+                ') ',
+                React.createElement('span', { className: 'caret' })
+              ),
+              React.createElement(
+                'ul',
+                { className: 'dropdown-menu' },
+                frameSizes
+              )
+            ),
+            React.createElement(
+              'li',
+              null,
+              React.createElement(
+                'a',
+                { onClick: this.preview },
+                'Preview'
+              )
+            )
           )
         )
-      );
-    }
+      )
+    );
+  }
+});
 
+module.exports = Navigation;
+
+},{"../stores/modal-store":270,"../stores/variable-store":273,"./modal/export-modal":258,"./modal/import-modal":259,"react":250}],264:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var SearchStore = require('../stores/search-store');
+
+var SidebarMenu = React.createClass({
+  displayName: 'SidebarMenu',
+
+  setSearchTerm: function setSearchTerm(event) {
+    SearchStore.action('setSearchTerm', event.target.value);
+  },
+
+  clearSearchTerm: function clearSearchTerm() {
+    SearchStore.action('setSearchTerm', undefined);
+  },
+
+  render: function render() {
     return React.createElement(
       'div',
       { className: 'sidebar-menu' },
-      React.createElement(
-        'div',
-        { className: 'form-group' },
-        React.createElement(
-          'div',
-          {
-            className: 'dropdown pull-left' + (self.state.dropdownFileActive ? ' open' : ''),
-            onClick: self.toggleDropdownFile },
-          React.createElement(
-            'button',
-            { className: 'btn btn-small btn-default' },
-            'File ',
-            React.createElement('span', { className: 'caret' })
-          ),
-          dropdownFile
-        ),
-        React.createElement(
-          'div',
-          {
-            className: 'dropdown pull-left' + (self.state.dropdownSizesActive ? ' open' : ''),
-            onClick: self.toggleDropdownSizes },
-          React.createElement(
-            'button',
-            { className: 'btn btn-small btn-default' },
-            self.props.currentFrameSize.name,
-            ' ',
-            React.createElement('span', { className: 'caret' })
-          ),
-          dropdownSizes
-        ),
-        React.createElement(
-          'button',
-          {
-            className: 'btn btn-small btn-default pull-right',
-            onClick: self.preview },
-          'Preview'
-        )
-      ),
       React.createElement(
         'div',
         { className: 'form-group' },
@@ -42066,7 +42096,7 @@ var SidebarMenu = React.createClass({
 
 module.exports = SidebarMenu;
 
-},{"../stores/modal-store":269,"../stores/search-store":270,"../stores/variable-store":272,"./modal/export-modal":258,"./modal/import-modal":259,"react":250}],264:[function(require,module,exports){
+},{"../stores/search-store":271,"react":250}],265:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -42126,10 +42156,6 @@ var Sidebar = React.createClass({
       'div',
       { className: 'sidebar-container' },
       React.createElement(SidebarMenu, {
-        setFrameSize: self.props.setFrameSize,
-        frameSizes: self.props.frameSizes,
-        currentFrameSize: self.props.currentFrameSize,
-        reset: self.props.reset,
         searchTerm: self.state.searchTerm }),
       React.createElement(
         'div',
@@ -42146,7 +42172,7 @@ var Sidebar = React.createClass({
 
 module.exports = Sidebar;
 
-},{"../stores/search-store":270,"./form-collection":256,"./sidebar-menu":263,"react":250}],265:[function(require,module,exports){
+},{"../stores/search-store":271,"./form-collection":256,"./sidebar-menu":264,"react":250}],266:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -42217,13 +42243,14 @@ var Slider = React.createClass({
 
 module.exports = Slider;
 
-},{"react":250}],266:[function(require,module,exports){
+},{"react":250}],267:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
 var React = require('react');
 var VariableStore = require('./stores/variable-store');
 var ModalRenderer = require('./components/modal/modal-renderer');
+var Navigation = require('./components/navigation');
 var Iframe = require('./components/iframe');
 var Sidebar = require('./components/sidebar');
 var $ = require('jquery');
@@ -42360,12 +42387,7 @@ var App = React.createClass({
     });
   },
 
-  reset: function reset() {
-    VariableStore.action('reset');
-  },
-
   setFrameSize: function setFrameSize(size) {
-
     var index = this.state.frameSizes.map(function (size) {
       return size.name;
     }).indexOf(size.name);
@@ -42449,6 +42471,10 @@ var App = React.createClass({
     return React.createElement(
       'div',
       { className: 'app' },
+      React.createElement(Navigation, {
+        currentFrameSize: self.state.currentFrameSize,
+        frameSizes: self.state.frameSizes,
+        setFrameSize: self.setFrameSize }),
       React.createElement(Iframe, {
         iframeLoaded: self.iframeLoaded,
         loading: self.state.loading,
@@ -42456,11 +42482,7 @@ var App = React.createClass({
         frameSizes: self.state.frameSizes }),
       React.createElement(Sidebar, {
         variables: self.state.variables,
-        updateVariable: self.updateVariable,
-        setFrameSize: self.setFrameSize,
-        frameSizes: self.state.frameSizes,
-        currentFrameSize: self.state.currentFrameSize,
-        reset: self.reset }),
+        updateVariable: self.updateVariable }),
       React.createElement(ModalRenderer, null)
     );
   }
@@ -42479,7 +42501,7 @@ $(document).ready(function () {
   });
 });
 
-},{"./components/iframe":257,"./components/modal/modal-renderer":261,"./components/sidebar":264,"./stores/variable-store":272,"jquery":2,"less/browser":3,"react":250,"underscore":251}],267:[function(require,module,exports){
+},{"./components/iframe":257,"./components/modal/modal-renderer":261,"./components/navigation":263,"./components/sidebar":265,"./stores/variable-store":273,"jquery":2,"less/browser":3,"react":250,"underscore":251}],268:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42512,7 +42534,7 @@ ExportSettingsStore.getSettings = function () {
 
 module.exports = ExportSettingsStore;
 
-},{"../stores/store":271}],268:[function(require,module,exports){
+},{"../stores/store":272}],269:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42542,7 +42564,7 @@ ImportSettingsStore.getSettings = function () {
 
 module.exports = ImportSettingsStore;
 
-},{"../stores/store":271}],269:[function(require,module,exports){
+},{"../stores/store":272}],270:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42578,7 +42600,7 @@ ModalStore.createAction('close', function () {
 
 module.exports = ModalStore;
 
-},{"../stores/store":271}],270:[function(require,module,exports){
+},{"../stores/store":272}],271:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42599,7 +42621,7 @@ SearchStore.createAction('setSearchTerm', function (newSearchTerm) {
 
 module.exports = SearchStore;
 
-},{"../stores/store":271}],271:[function(require,module,exports){
+},{"../stores/store":272}],272:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -42663,7 +42685,7 @@ var Store = function Store() {
 
 module.exports = Store;
 
-},{"underscore":251}],272:[function(require,module,exports){
+},{"underscore":251}],273:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42888,7 +42910,7 @@ VariableStore.createAction('requestPreview', function () {
 
 module.exports = VariableStore;
 
-},{"../stores/store":271,"jquery":2,"underscore":251}],273:[function(require,module,exports){
+},{"../stores/store":272,"jquery":2,"underscore":251}],274:[function(require,module,exports){
 'use strict';
 
 var color = {
@@ -43006,4 +43028,4 @@ var color = {
 
 module.exports = color;
 
-},{}]},{},[266]);
+},{}]},{},[267]);
