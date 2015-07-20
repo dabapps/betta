@@ -256,8 +256,13 @@ var App = React.createClass({
 
 $(document).ready(function () {
 
+  $('#scroll-down').click(function() {
+    $('html, body').animate({
+      scrollTop: $('#scroll-to').offset().top
+    }, 500);
+  });
+
   $('.start-app').click(function () {
-    $(document.body).addClass('no-scroll');
     React.render(<App />, document.body);
   });
 
