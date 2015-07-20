@@ -143,10 +143,6 @@ var App = React.createClass({
     });
   },
 
-  reset: function () {
-    VariableStore.action('reset');
-  },
-
   setFrameSize: function (size) {
     var index = this.state.frameSizes.map(function (size) {
       return size.name;
