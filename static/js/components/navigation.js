@@ -5,6 +5,7 @@ var VariableStore = require('../stores/variable-store');
 var ModalStore = require('../stores/modal-store');
 var ImportModal = require('./modal/import-modal');
 var ExportModal = require('./modal/export-modal');
+var ResetModal = require('./modal/reset-modal');
 
 var Navigation = React.createClass({
   export: function () {
@@ -16,13 +17,7 @@ var Navigation = React.createClass({
   },
 
   reset: function () {
-    var r = window.confirm('Are you sure you want to reset your variables?' +
-      'If you click OK, you will lose all your variables.');
-    if (r) {
-      VariableStore.action('reset');
-    } else {
-      console.log('Canceled!');
-    }
+    ModalStore.action('open', ResetModal);
   },
 
   preview: function () {
