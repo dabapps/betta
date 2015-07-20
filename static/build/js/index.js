@@ -42081,6 +42081,15 @@ var Navigation = React.createClass({
               null,
               React.createElement(
                 'a',
+                { href: 'https://github.com/dabapps/betta/', target: '_blank', title: 'Betta on GitHub' },
+                'Fork us on GitHub'
+              )
+            ),
+            React.createElement(
+              'li',
+              null,
+              React.createElement(
+                'a',
                 { onClick: this.reset },
                 'Reset'
               )
