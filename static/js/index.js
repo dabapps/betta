@@ -254,4 +254,16 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.body);
+$(document).ready(function () {
+
+  $('#scroll-down').click(function () {
+    $('html, body').animate({
+      scrollTop: $('#scroll-to').offset().top
+    }, 500);
+  });
+
+  $('.start-app').click(function () {
+    React.render(<App />, document.body);
+  });
+
+});
