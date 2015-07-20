@@ -2,13 +2,8 @@
 
 var React = require('react');
 var SearchStore = require('../stores/search-store');
-var VariableStore = require('../stores/variable-store');
 
 var SidebarMenu = React.createClass({
-  preview: function () {
-    VariableStore.action('requestPreview');
-  },
-
   toggleDropdownSizes: function () {
     this.setState({
       dropdownSizesActive: !this.state.dropdownSizesActive
@@ -60,13 +55,8 @@ var SidebarMenu = React.createClass({
             </button>
             {dropdownSizes}
           </div>
-
-          <button
-            className='btn btn-small btn-default pull-right'
-            onClick={self.preview}>
-              Preview
-          </button>
         </div>
+
         <div className='form-group'>
           <div className='input-wrapper search-wrapper'>
             <input

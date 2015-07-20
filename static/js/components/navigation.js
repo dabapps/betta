@@ -19,6 +19,10 @@ var Navigation = React.createClass({
     VariableStore.action('reset');
   },
 
+  preview: function () {
+    VariableStore.action('requestPreview');
+  },
+
   render: function () {
     return (
       <nav className='navbar navbar-inverse navbar-fixed-top'>
@@ -41,6 +45,7 @@ var Navigation = React.createClass({
             </ul>
             <ul className='nav navbar-nav navbar-right'>
               <li><a onClick={this.reset}>Reset</a></li>
+              <li><a onClick={this.preview}>Preview</a></li>
             </ul>
           </div>
         </div>
