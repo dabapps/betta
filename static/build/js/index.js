@@ -40773,7 +40773,7 @@ var ColorPalette = React.createClass({
 
 module.exports = ColorPalette;
 
-},{"../utils/color":274,"react":250}],254:[function(require,module,exports){
+},{"../utils/color":275,"react":250}],254:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -40867,7 +40867,7 @@ var ColorPickerValues = React.createClass({
 
 module.exports = ColorPickerValues;
 
-},{"../stores/variable-store":273,"react":250}],255:[function(require,module,exports){
+},{"../stores/variable-store":274,"react":250}],255:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41123,7 +41123,7 @@ var ColorPicker = React.createClass({
 
 module.exports = ColorPicker;
 
-},{"../utils/color":274,"./color-palette":253,"./color-picker-values":254,"./slider":266,"react":250}],256:[function(require,module,exports){
+},{"../utils/color":275,"./color-palette":253,"./color-picker-values":254,"./slider":267,"react":250}],256:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41289,7 +41289,7 @@ var FormCollection = React.createClass({
 
 module.exports = FormCollection;
 
-},{"../stores/search-store":271,"../stores/variable-store":273,"./color-picker":255,"react":250,"underscore":251}],257:[function(require,module,exports){
+},{"../stores/search-store":272,"../stores/variable-store":274,"./color-picker":255,"react":250,"underscore":251}],257:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -41449,7 +41449,7 @@ var ExportModal = React.createClass({
 
 module.exports = ExportModal;
 
-},{"../../stores/export-settings-store":268,"../../stores/modal-store":270,"../../stores/variable-store":273,"../checkbox":252,"./modal-template":262,"react":250,"underscore":251}],259:[function(require,module,exports){
+},{"../../stores/export-settings-store":269,"../../stores/modal-store":271,"../../stores/variable-store":274,"../checkbox":252,"./modal-template":262,"react":250,"underscore":251}],259:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41637,7 +41637,7 @@ var ImportModal = React.createClass({
 
 module.exports = ImportModal;
 
-},{"../../stores/import-settings-store":269,"../../stores/modal-store":270,"../../stores/variable-store":273,"../checkbox":252,"./modal-template":262,"react":250}],260:[function(require,module,exports){
+},{"../../stores/import-settings-store":270,"../../stores/modal-store":271,"../../stores/variable-store":274,"../checkbox":252,"./modal-template":262,"react":250}],260:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41738,7 +41738,7 @@ var ModalDialog = React.createClass({
 
 module.exports = ModalDialog;
 
-},{"../../stores/modal-store":270,"react":250,"underscore":251}],261:[function(require,module,exports){
+},{"../../stores/modal-store":271,"react":250,"underscore":251}],261:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41840,7 +41840,7 @@ var ModalRenderer = React.createClass({
 
 module.exports = ModalRenderer;
 
-},{"../../stores/modal-store":270,"./modal-dialog":260,"react":250,"underscore":251}],262:[function(require,module,exports){
+},{"../../stores/modal-store":271,"./modal-dialog":260,"react":250,"underscore":251}],262:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -41895,10 +41895,77 @@ module.exports = ModalTemplate;
 'use strict';
 
 var React = require('react');
+var ModalTemplate = require('./modal-template');
+var ModalStore = require('../../stores/modal-store');
+var VariableStore = require('../../stores/variable-store');
+
+var ResetModal = React.createClass({
+  displayName: 'ResetModal',
+
+  close: function close() {
+    ModalStore.action('close');
+  },
+
+  reset: function reset() {
+    VariableStore.action('reset');
+    ModalStore.action('close');
+  },
+
+  render: function render() {
+    return React.createElement(ModalTemplate, {
+      title: 'Reset all variables?',
+      body: React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'div',
+          { className: 'row' },
+          React.createElement(
+            'div',
+            { className: 'col-xs-12' },
+            'Are you sure you want to reset your variables?'
+          ),
+          React.createElement(
+            'div',
+            { className: 'col-xs-12' },
+            'You will lose ',
+            React.createElement(
+              'strong',
+              null,
+              'all'
+            ),
+            ' you changes.'
+          )
+        )
+      ),
+      footer: React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'button',
+          { className: 'btn btn-danger pull-right', onClick: this.reset },
+          'Confirm'
+        ),
+        React.createElement(
+          'button',
+          { className: 'btn btn-default pull-right', onClick: this.close },
+          'Cancel'
+        )
+      ) });
+  }
+});
+
+module.exports = ResetModal;
+
+},{"../../stores/modal-store":271,"../../stores/variable-store":274,"./modal-template":262,"react":250}],264:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
 var VariableStore = require('../stores/variable-store');
 var ModalStore = require('../stores/modal-store');
 var ImportModal = require('./modal/import-modal');
 var ExportModal = require('./modal/export-modal');
+var ResetModal = require('./modal/reset-modal');
 
 var Navigation = React.createClass({
   displayName: 'Navigation',
@@ -41918,7 +41985,7 @@ var Navigation = React.createClass({
   },
 
   reset: function reset() {
-    VariableStore.action('reset');
+    ModalStore.action('open', ResetModal);
   },
 
   preview: function preview() {
@@ -42054,7 +42121,7 @@ var Navigation = React.createClass({
 
 module.exports = Navigation;
 
-},{"../stores/modal-store":270,"../stores/variable-store":273,"./modal/export-modal":258,"./modal/import-modal":259,"react":250}],264:[function(require,module,exports){
+},{"../stores/modal-store":271,"../stores/variable-store":274,"./modal/export-modal":258,"./modal/import-modal":259,"./modal/reset-modal":263,"react":250}],265:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -42096,7 +42163,7 @@ var SidebarMenu = React.createClass({
 
 module.exports = SidebarMenu;
 
-},{"../stores/search-store":271,"react":250}],265:[function(require,module,exports){
+},{"../stores/search-store":272,"react":250}],266:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -42172,7 +42239,7 @@ var Sidebar = React.createClass({
 
 module.exports = Sidebar;
 
-},{"../stores/search-store":271,"./form-collection":256,"./sidebar-menu":264,"react":250}],266:[function(require,module,exports){
+},{"../stores/search-store":272,"./form-collection":256,"./sidebar-menu":265,"react":250}],267:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -42243,7 +42310,7 @@ var Slider = React.createClass({
 
 module.exports = Slider;
 
-},{"react":250}],267:[function(require,module,exports){
+},{"react":250}],268:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -42501,7 +42568,7 @@ $(document).ready(function () {
   });
 });
 
-},{"./components/iframe":257,"./components/modal/modal-renderer":261,"./components/navigation":263,"./components/sidebar":265,"./stores/variable-store":273,"jquery":2,"less/browser":3,"react":250,"underscore":251}],268:[function(require,module,exports){
+},{"./components/iframe":257,"./components/modal/modal-renderer":261,"./components/navigation":264,"./components/sidebar":266,"./stores/variable-store":274,"jquery":2,"less/browser":3,"react":250,"underscore":251}],269:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42534,7 +42601,7 @@ ExportSettingsStore.getSettings = function () {
 
 module.exports = ExportSettingsStore;
 
-},{"../stores/store":272}],269:[function(require,module,exports){
+},{"../stores/store":273}],270:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42564,7 +42631,7 @@ ImportSettingsStore.getSettings = function () {
 
 module.exports = ImportSettingsStore;
 
-},{"../stores/store":272}],270:[function(require,module,exports){
+},{"../stores/store":273}],271:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42600,7 +42667,7 @@ ModalStore.createAction('close', function () {
 
 module.exports = ModalStore;
 
-},{"../stores/store":272}],271:[function(require,module,exports){
+},{"../stores/store":273}],272:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42621,7 +42688,7 @@ SearchStore.createAction('setSearchTerm', function (newSearchTerm) {
 
 module.exports = SearchStore;
 
-},{"../stores/store":272}],272:[function(require,module,exports){
+},{"../stores/store":273}],273:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -42685,7 +42752,7 @@ var Store = function Store() {
 
 module.exports = Store;
 
-},{"underscore":251}],273:[function(require,module,exports){
+},{"underscore":251}],274:[function(require,module,exports){
 'use strict';
 
 var Store = require('../stores/store');
@@ -42910,7 +42977,7 @@ VariableStore.createAction('requestPreview', function () {
 
 module.exports = VariableStore;
 
-},{"../stores/store":272,"jquery":2,"underscore":251}],274:[function(require,module,exports){
+},{"../stores/store":273,"jquery":2,"underscore":251}],275:[function(require,module,exports){
 'use strict';
 
 var color = {
@@ -43028,4 +43095,4 @@ var color = {
 
 module.exports = color;
 
-},{}]},{},[267]);
+},{}]},{},[268]);
