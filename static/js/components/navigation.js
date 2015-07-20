@@ -35,7 +35,7 @@ var Navigation = React.createClass({
     });
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       dropdownSizesActive: false
     };
