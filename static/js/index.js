@@ -256,7 +256,7 @@ var App = React.createClass({
 
 $(document).ready(function () {
 
-  $('#start-app').click(function () {
+  $('.start-app').click(function () {
     $(document.body).addClass('no-scroll');
     React.render(<App />, document.body);
   });
