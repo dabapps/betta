@@ -16,7 +16,7 @@
     "build": "ulimit -n 512 && npm install && npm run copy-libs && npm run build-less && npm run build-js",
     "watch": "npm run build && npm run watch-js & npm run watch-less",
     "dist-static": "cp -r static/build dist/static/ && cp -r static/css/ dist/static/css/ && cp -r static/img/ dist/static/img/",
-    "dist": "npm run build && mkdir -p dist/static/build && npm run dist-static && cp -r index.html dist/ && cp -r CNAME dist/ && cp -r templates/ dist/templates/",
+    "dist": "npm run build && mkdir -p dist/static/build && npm run dist-static && cp -r index.html dist/ && cp CNAME dist/ && cp -r templates/ dist/templates/",
     "lint": "jsxhint 'static/js/' && jscs 'static/js/'",
     "test": "npm run lint"
   },
