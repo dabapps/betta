@@ -75,7 +75,16 @@ var Navigation = React.createClass({
               <li><a onClick={this.export}>Export</a></li>
             </ul>
             <ul className='nav navbar-nav navbar-right'>
-              <li><a onClick={this.reset}>Reset</a></li>
+              <li>
+                <a href='https://github.com/dabapps/betta/' target='_blank' title='Betta on GitHub'>
+                  Fork us on GitHub
+                </a>
+              </li>
+              <li>
+                <a onClick={this.reset}>
+                  Reset
+                </a>
+              </li>
 
               <li className={'dropdown' + (self.state.dropdownSizesActive ? ' open' : '')}
                 onClick={self.toggleDropdownSizes}>
@@ -87,7 +96,11 @@ var Navigation = React.createClass({
                 </ul>
               </li>
 
-              <li><a onClick={this.preview}>Preview</a></li>
+              <li>
+                <a onClick={this.preview}>
+                  Preview
+                </a>
+              </li>
             </ul>
           </div>
         </div>
