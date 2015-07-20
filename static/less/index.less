@@ -35,6 +35,20 @@ a {
 
 /* @end General */
 
+
+/* @group Variables Overides */
+
+@navbar-inverse-bg: @ThemePrimary;
+@navbar-inverse-border: @ThemePrimary;
+
+@navbar-inverse-link-color: @White;
+@navbar-inverse-link-hover-bg: @ThemeSecondary;
+
+@navbar-inverse-brand-hover-bg: @ThemeSecondary;
+
+/* @end Variables Overides */
+
+
 /* @group Basic Layout */
 
 .app {
@@ -54,7 +68,7 @@ a {
 
 .sidebar-container {
   position: absolute;
-  top: 0;
+  top: 50px;
   right: 0;
   width: @SidebarWidth;
   height: 100%;
@@ -76,6 +90,21 @@ a {
 }
 
 /* @end Basic Layout */
+
+
+/* @group Navigation Bar */
+
+
+.navbar-brand {
+  background-color: darken(@ThemePrimary, 10%);
+
+  .app-logo {
+    max-height: 100%;
+  }
+}
+
+/* @end Navigation Bar */
+
 
 /* @group Iframe */
 
