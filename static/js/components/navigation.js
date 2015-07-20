@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var VariableStore = require('../stores/variable-store');
 var ModalStore = require('../stores/modal-store');
 var ImportModal = require('./modal/import-modal');
 var ExportModal = require('./modal/export-modal');
@@ -12,6 +13,10 @@ var Navigation = React.createClass({
 
   import: function () {
     ModalStore.action('open', ImportModal);
+  },
+
+  reset: function () {
+    VariableStore.action('reset');
   },
 
   render: function () {
@@ -35,7 +40,7 @@ var Navigation = React.createClass({
               <li><a onClick={this.export}>Export</a></li>
             </ul>
             <ul className='nav navbar-nav navbar-right'>
-              <li><a href='/'>Right Side</a></li>
+              <li><a onClick={this.reset}>Reset</a></li>
             </ul>
           </div>
         </div>

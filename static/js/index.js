@@ -248,8 +248,7 @@ var App = React.createClass({
           updateVariable={self.updateVariable}
           setFrameSize={self.setFrameSize}
           frameSizes={self.state.frameSizes}
-          currentFrameSize={self.state.currentFrameSize}
-          reset={self.reset} />
+          currentFrameSize={self.state.currentFrameSize} />
         <ModalRenderer />
       </div>
     );
