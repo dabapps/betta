@@ -42466,7 +42466,18 @@ var App = React.createClass({
   }
 });
 
-React.render(React.createElement(App, null), document.body);
+$(document).ready(function () {
+
+  $('#scroll-down').click(function () {
+    $('html, body').animate({
+      scrollTop: $('#scroll-to').offset().top
+    }, 500);
+  });
+
+  $('.start-app').click(function () {
+    React.render(React.createElement(App, null), document.body);
+  });
+});
 
 },{"./components/iframe":257,"./components/modal/modal-renderer":261,"./components/sidebar":264,"./stores/variable-store":272,"jquery":2,"less/browser":3,"react":250,"underscore":251}],267:[function(require,module,exports){
 'use strict';
