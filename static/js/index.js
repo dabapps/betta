@@ -256,7 +256,7 @@ var App = React.createClass({
 
 $(document).ready(function () {
 
-  $('#scroll-down').click(function() {
+  $('#scroll-down').click(function () {
     $('html, body').animate({
       scrollTop: $('#scroll-to').offset().top
     }, 500);
