@@ -56,9 +56,9 @@ var Navigation = React.createClass({
             <ul className='nav navbar-nav navbar-right'>
               <li><a onClick={this.reset}>Reset</a></li>
 
-              <li className="dropdown">
+              <li className='dropdown'>
                 <a>
-                  Screen Sizes ({self.props.currentFrameSize.name}) <span className="caret"></span>
+                  Screen Sizes ({self.props.currentFrameSize.name}) <span className='caret'></span>
                 </a>
                 <ul className='dropdown-menu'>
                   {frameSizes}

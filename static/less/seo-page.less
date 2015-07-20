@@ -4,6 +4,24 @@
   height: 100%;
   font-size: 14px;
 
+  img {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .thumbnail {
+    margin-top: 20px;
+
+    img {
+      max-width: 300px;
+      border-radius: 50%;
+      border: 1px solid @ThemeSecondary;
+      margin: auto;
+      float: none;
+      display: block;
+    }
+  }
+
   .lead {
     font-size: 16px;
   }
@@ -26,6 +44,24 @@
     height: 100%;
     background: @ThemeGradientTop;
     #gradient > .vertical(@ThemeGradientTop, @ThemeGradientBottom);
+    color: @White;
+  }
+
+  .scroll-down-arrow {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    left: 0;
+    bottom: 10px;
+    font-size: 24px;
+
+    & > div {
+      width: 24px;
+      cursor: pointer;
+      margin: auto;
+      padding: 0;
+    }
   }
 
   @jumbotron-height: 180px;
@@ -39,7 +75,6 @@
     margin-top: -@jumbotron-height * 0.5;
     margin-bottom: 0;
     text-align: center;
-    color: @White;
     padding: 0;
 
     h1 {
@@ -107,6 +142,14 @@
   .seo-page {
 
     @jumbotron-height: 380px;
+
+    .scroll-down-arrow {
+      bottom: 20px;
+
+      & > div {
+        padding: 20px;
+      }
+    }
 
     .jumbotron {
       height: @jumbotron-height;
