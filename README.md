@@ -1,4 +1,4 @@
-# Betta [![Build Status](https://magnum.travis-ci.com/dabapps/betta.svg?token=9QR4ewbqbkEmHps6q5sq&branch=master)](https://magnum.travis-ci.com/dabapps/betta)
+# Betta [![Build Status](https://travis-ci.org/dabapps/betta.svg?branch=master)](https://travis-ci.com/dabapps/betta)
 
 ### Simple Bootstrap Variable Editor - [www.betta.style](http://betta.style)
 
