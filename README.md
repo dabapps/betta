@@ -1,4 +1,4 @@
-# Betta [![Build Status](https://travis-ci.org/dabapps/betta.svg?branch=master)](https://travis-ci.com/dabapps/betta)
+# Betta [![Build Status](https://travis-ci.org/dabapps/betta.svg?branch=master)](https://travis-ci.org/dabapps/betta)
 
 ### Simple Bootstrap Variable Editor - [www.betta.style](http://betta.style)
 
