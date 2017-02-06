@@ -8,7 +8,7 @@ var Checkbox = require('../checkbox');
 var ImportSettingsStore = require('../../stores/import-settings-store');
 
 var instructions = 'Please select an existing variables.less file, ' +
-  'or paste it\'s contents into the text area.';
+  'or paste its contents into the text area.';
 
 var ImportModal = React.createClass({
   importVariables: function () {
