@@ -48,6 +48,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "babel-core": "^6.26.3",
     "babelify": "^9.0.0",
     "bootstrap": "=3.3.4",
     "browserify": "^16.2.2",
