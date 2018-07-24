@@ -39,7 +39,7 @@ var FormCollection = React.createClass({
     SearchStore.action('setSearchTerm', val);
   },
 
-  handleKeyPress: function (event) {
+  onKeyDown: function (event) {
     if (event.keyCode === 13) {
       VariableStore.action('requestPreview');
     }
@@ -100,7 +100,7 @@ var FormCollection = React.createClass({
               placeholder={child.defaultValue}
               value={child.value}
               onChange={self.props.updateVariable.bind(null, self.props.index, index)}
-              onKeyDown={this.handleKeyPress}
+              onKeyDown={this.onKeyDown}
             />
             {colorPicker}
           </div>

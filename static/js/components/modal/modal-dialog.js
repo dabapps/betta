@@ -5,11 +5,36 @@ var ModalStore = require('../../stores/modal-store');
 var _ = require('underscore');
 
 var ModalDialog = React.createClass({
-  close: function () {
+  getInitialState: function () {
+    return {
+      timeouts: [],
+      fadeClass: ''
+    };
+  },
+
+  componentDidMount: function () {
+    var self = this;
+
+    this.setTimeout(function () {
+      self.setState({
+        fadeClass: 'in'
+      });
+    }, 10);
+  },
+
+  componentWillUnmount: function () {
+    this.setState({
+      fadeClass: ''
+    });
+
+    this.clearTimeouts();
+  },
+
+  onClickClose: function () {
     ModalStore.action('close');
   },
 
-  stopPropagation: function (event) {
+  onClickStopPropagation: function (event) {
     event.stopPropagation();
   },
 
@@ -36,38 +61,13 @@ var ModalDialog = React.createClass({
     });
   },
 
-  componentDidMount: function () {
-    var self = this;
-
-    this.setTimeout(function () {
-      self.setState({
-        fadeClass: 'in'
-      });
-    }, 10);
-  },
-
-  componentWillUnmount: function () {
-    this.setState({
-      fadeClass: ''
-    });
-
-    this.clearTimeouts();
-  },
-
-  getInitialState: function () {
-    return {
-      timeouts: [],
-      fadeClass: ''
-    };
-  },
-
   render: function () {
     var fadeClass = !this.props.closing && this.state.fadeClass ? this.state.fadeClass : '';
 
     return (
       <div className={'modal fade ' + fadeClass} style={{display: 'block'}}>
-        <div className="modal-overlay" onClick={this.close}>
-          <div className="modal-dialog" onClick={this.stopPropagation}>
+        <div className="modal-overlay" onClick={this.onClickClose}>
+          <div className="modal-dialog" onClick={this.onClickStopPropagation}>
             <div className="modal-content">
               {React.createElement(
                 this.props.view,

@@ -40,7 +40,7 @@ var ColorPickerValues = React.createClass({
         value: value
       }
     });
-    this.props.togglePicker();
+    this.props.onClickTogglePicker();
     VariableStore.action('requestPreview');
   },
 
