@@ -32,7 +32,7 @@ var Store = function () {
     emitEvent: function (type) {
       if (type) {
         if (eventInProgress) {
-          console.error(eventInProgressError);
+          console.error(eventInProgressError); // eslint-disable-line no-console
         } else {
           eventInProgress = true;
           if (listeners[type]) {
