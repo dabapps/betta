@@ -9,8 +9,8 @@
     "dist": "./scripts/dist",
     "build-js": "browserify -t babelify static/js/index.js -o static/build/js/index.js",
     "watch-js": "watchify -t babelify static/js/index.js -o static/build/js/index.js -v",
-    "build-less": "lessc static/less/index.less > static/build/css/index.css && echo 'Less compiled'",
-    "watch-less": "watch 'npm run build-less' static/less/",
+    "build-less": "lessc static/less/index.less static/build/css/index.css --silent --compress && postcss --use autoprefixer -r static/build/css/index.css && echo 'Less compiled!'",
+    "watch-less": "watch-less-do-more -u autoprefixer -i static/less/index.less -o static/build/css/index.css",
     "lint": "eslint static/js/",
     "test": "npm run lint"
   },
@@ -44,12 +44,14 @@
   "dependencies": {
     "@babel/core": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",
+    "autoprefixer": "^9.0.1",
     "babelify": "^9.0.0",
     "bootstrap": "^3.3.4",
     "browserify": "^16.2.2",
     "holderjs": "^2.8.0",
     "jquery": "^3.3.1",
     "less": "^3.8.0",
+    "postcss-cli": "^6.0.0",
     "react": "^0.13.3",
     "underscore": "^1.8.3"
   },
@@ -59,6 +61,7 @@
     "eslint-config-dabapps": "github:dabapps/eslint-config-dabapps",
     "http-server": "^0.11.1",
     "watch": "^0.16.0",
+    "watch-less-do-more": "^0.2.1",
     "watchify": "^3.11.0"
   }
 }

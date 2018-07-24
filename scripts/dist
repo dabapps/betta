@@ -4,6 +4,8 @@ set -e
 
 ./scripts/build
 
+rm -rf dist/
+
 mkdir -p dist/static/build
 
 cp CNAME dist/
