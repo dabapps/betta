@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+./scripts/build
+
+mkdir -p dist/static/build
+
+cp CNAME dist/
+cp -r index.html dist/
+cp -r templates/ dist/templates/
+cp -r static/build dist/static/
+cp -r static/css/ dist/static/css/
+cp -r static/img/ dist/static/img/

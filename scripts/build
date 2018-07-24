@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+rm -rf static/build/
+mkdir -p static/build/js/
+mkdir -p static/build/css/
+mkdir -p static/build/lib/
+
+cp node_modules/jquery/dist/jquery.min.js static/build/lib/
+cp node_modules/holderjs/holder.min.js static/build/lib/
+cp -r node_modules/bootstrap/ static/build/lib/bootstrap
+
+npm run build-js
+npm run build-less

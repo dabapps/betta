@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+./scripts/build
+
+concurrently \
+  --names "server    ,watch-js  ,watch-less" \
+  --prefix-colors "red,cyan,magenta" \
+  "http-server . -c-0" \
+  "npm run watch-js" \
+  "npm run watch-less"
