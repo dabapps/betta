@@ -4,11 +4,11 @@ var React = require('react');
 var SearchStore = require('../stores/search-store');
 
 var SidebarMenu = React.createClass({
-  setSearchTerm: function (event) {
+  onChangeSearchTerm: function (event) {
     SearchStore.action('setSearchTerm', event.target.value);
   },
 
-  clearSearchTerm: function () {
+  onClearSearchTerm: function () {
     SearchStore.action('setSearchTerm', undefined);
   },
 
@@ -21,10 +21,10 @@ var SidebarMenu = React.createClass({
               type="text"
               className="form-control"
               placeholder="Search variables"
-              onChange={this.setSearchTerm}
+              onChange={this.onChangeSearchTerm}
               value={this.props.searchTerm}
             />
-            <span className="glyphicon glyphicon-remove" onClick={this.clearSearchTerm} />
+            <span className="glyphicon glyphicon-remove" onClick={this.onClearSearchTerm} />
           </div>
         </div>
       </div>

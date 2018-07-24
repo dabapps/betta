@@ -6,6 +6,27 @@ var ModalDialog = require('./modal-dialog');
 var _ = require('underscore');
 
 var ModalRenderer = React.createClass({
+  getInitialState: function () {
+    return {
+      timeouts: [],
+      closing: false,
+      open: ModalStore.isOpen(),
+      view: ModalStore.getView(),
+      props: ModalStore.getProps()
+    };
+  },
+
+  componentWillMount: function () {
+    ModalStore.bind('open', this.modalChanged);
+    ModalStore.bind('close', this.modalChanged);
+  },
+
+  componentWillUnmount: function () {
+    ModalStore.unbind('open', this.modalChanged);
+    ModalStore.unbind('close', this.modalChanged);
+    this.clearTimeouts();
+  },
+
   setTimeout: function (fn, time) {
     var timeout = setTimeout(fn, time);
 
@@ -51,27 +72,6 @@ var ModalRenderer = React.createClass({
       view: ModalStore.getView(),
       props: ModalStore.getProps()
     });
-  },
-
-  componentWillUnmount: function () {
-    ModalStore.unbind('open', this.modalChanged);
-    ModalStore.unbind('close', this.modalChanged);
-    this.clearTimeouts();
-  },
-
-  componentWillMount: function () {
-    ModalStore.bind('open', this.modalChanged);
-    ModalStore.bind('close', this.modalChanged);
-  },
-
-  getInitialState: function () {
-    return {
-      timeouts: [],
-      closing: false,
-      open: ModalStore.isOpen(),
-      view: ModalStore.getView(),
-      props: ModalStore.getProps()
-    };
   },
 
   render: function () {

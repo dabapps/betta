@@ -3,14 +3,18 @@
 var React = require('react');
 
 var Slider = React.createClass({
+  componentWillUnmount: function () {
+    this.removeListeners();
+  },
+
   addListeners: function () {
-    window.addEventListener('mousemove', this.mouseMove);
-    window.addEventListener('mouseup', this.mouseUp);
+    window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('mouseup', this.onMouseUp);
   },
 
   removeListeners: function () {
-    window.removeEventListener('mousemove', this.mouseMove);
-    window.removeEventListener('mouseup', this.mouseUp);
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
   },
 
   getValue: function (event) {
@@ -26,7 +30,7 @@ var Slider = React.createClass({
     return Math.min(Math.max((xInPalette / (box.width / 100)) / 100, 0), 100);
   },
 
-  mouseDown: function (event) {
+  onMouseDown: function (event) {
     event.preventDefault();
     var point = this.getValue(event);
 
@@ -35,17 +39,13 @@ var Slider = React.createClass({
     this.addListeners();
   },
 
-  mouseMove: function (event) {
+  onMouseMove: function (event) {
     var point = this.getValue(event);
 
     this.props.onChange(point);
   },
 
-  mouseUp: function () {
-    this.removeListeners();
-  },
-
-  componentWillUnmount: function () {
+  onMouseUp: function () {
     this.removeListeners();
   },
 
@@ -53,7 +53,7 @@ var Slider = React.createClass({
     return (
       <div
         className={this.props.className}
-        onMouseDown={this.mouseDown}
+        onMouseDown={this.onMouseDown}
       >
         <div
           className="handle"

@@ -22,6 +22,56 @@ less = less(window, {
 var availableFrameSizes = ['xs', 'sm', 'md', 'lg'];
 
 var App = React.createClass({
+  getInitialState: function () {
+    return {
+      projects: [],
+      variables: VariableStore.getVariables(),
+      iframeDoc: undefined,
+      iframeLoaded: false,
+      loading: true,
+      currentFrameSize: {
+        name: 'XL',
+        value: '100%'
+      },
+      frameSizes: [
+        {
+          name: 'XS',
+          value: 480
+        },
+        {
+          name: 'SM',
+          value: 768
+        },
+        {
+          name: 'MD',
+          value: 992
+        },
+        {
+          name: 'LG',
+          value: 1200
+        },
+        {
+          name: 'XL',
+          value: '100%'
+        }
+      ]
+    };
+  },
+
+  componentWillMount: function () {
+    VariableStore.bind('loaded', this.getVariables);
+    VariableStore.bind('updateVariable', this.getVariables);
+    VariableStore.bind('reset', this.getVariablesAndPreview);
+    VariableStore.bind('requestPreview', this.preview);
+  },
+
+  componentWillUnmount: function () {
+    VariableStore.unbind('loaded', this.getVariables);
+    VariableStore.unbind('updateVariable', this.getVariables);
+    VariableStore.unbind('reset', this.getVariablesAndPreview);
+    VariableStore.unbind('requestPreview', this.preview);
+  },
+
   concatMediaQueries: function (variables) {
     var prefix = '@screen';
     var suffix = 'min';
@@ -144,8 +194,8 @@ var App = React.createClass({
   },
 
   setFrameSize: function (size) {
-    var index = this.state.frameSizes.map(function (size) {
-      return size.name;
+    var index = this.state.frameSizes.map(function (frameSize) {
+      return frameSize.name;
     }).indexOf(size.name);
 
     this.setState({
@@ -175,56 +225,6 @@ var App = React.createClass({
   getVariablesAndPreview: function () {
     this.getVariables();
     this.preview();
-  },
-
-  componentWillMount: function () {
-    VariableStore.bind('loaded', this.getVariables);
-    VariableStore.bind('updateVariable', this.getVariables);
-    VariableStore.bind('reset', this.getVariablesAndPreview);
-    VariableStore.bind('requestPreview', this.preview);
-  },
-
-  componentWillUnmount: function () {
-    VariableStore.unbind('loaded', this.getVariables);
-    VariableStore.unbind('updateVariable', this.getVariables);
-    VariableStore.unbind('reset', this.getVariablesAndPreview);
-    VariableStore.unbind('requestPreview', this.preview);
-  },
-
-  getInitialState: function () {
-    return {
-      projects: [],
-      variables: VariableStore.getVariables(),
-      iframeDoc: undefined,
-      iframeLoaded: false,
-      loading: true,
-      currentFrameSize: {
-        name: 'XL',
-        value: '100%'
-      },
-      frameSizes: [
-        {
-          name: 'XS',
-          value: 480
-        },
-        {
-          name: 'SM',
-          value: 768
-        },
-        {
-          name: 'MD',
-          value: 992
-        },
-        {
-          name: 'LG',
-          value: 1200
-        },
-        {
-          name: 'XL',
-          value: '100%'
-        }
-      ]
-    };
   },
 
   render: function () {

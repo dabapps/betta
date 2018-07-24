@@ -6,11 +6,11 @@ var ModalStore = require('../../stores/modal-store');
 var VariableStore = require('../../stores/variable-store');
 
 var ResetModal = React.createClass({
-  close: function () {
+  onClickClose: function () {
     ModalStore.action('close');
   },
 
-  reset: function () {
+  onClickReset: function () {
     VariableStore.action('reset');
     ModalStore.action('close');
   },
@@ -29,8 +29,8 @@ var ResetModal = React.createClass({
         }
         footer={
           <div>
-            <button className="btn btn-danger pull-right" onClick={this.reset}>Confirm</button>
-            <button className="btn btn-default pull-right" onClick={this.close}>Cancel</button>
+            <button className="btn btn-danger pull-right" onClick={this.onClickReset}>Confirm</button>
+            <button className="btn btn-default pull-right" onClick={this.onClickClose}>Cancel</button>
           </div>
         }
       />
