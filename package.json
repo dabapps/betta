@@ -17,7 +17,7 @@
     "watch": "npm run build && npm run watch-js & npm run watch-less",
     "dist-static": "cp -r static/build dist/static/ && cp -r static/css/ dist/static/css/ && cp -r static/img/ dist/static/img/",
     "dist": "npm run build && mkdir -p dist/static/build && npm run dist-static && cp -r index.html dist/ && cp CNAME dist/ && cp -r templates/ dist/templates/",
-    "lint": "jsxhint 'static/js/' && jscs 'static/js/'",
+    "lint": "eslint static/js/",
     "test": "npm run lint"
   },
   "keywords": [
@@ -55,52 +55,6 @@
       "console": false
     }
   },
-  "jscsConfig": {
-    "esprima": "esprima-fb",
-    "disallowMultipleVarDecl": "exceptUndefined",
-    "validateQuoteMarks": {
-      "mark": "'",
-      "escape": false
-    },
-    "validateParameterSeparator": ", ",
-    "validateIndentation": 2,
-    "requireSpacesInFunction": {
-      "beforeOpeningRoundBrace": true,
-      "beforeOpeningCurlyBrace": true
-    },
-    "requireSpacesInConditionalExpression": {
-      "afterTest": true,
-      "beforeConsequent": true,
-      "afterConsequent": true,
-      "beforeAlternate": true
-    },
-    "disallowTrailingWhitespace": true,
-    "maximumLineLength": 100,
-    "requireCurlyBraces": [
-      "if",
-      "else",
-      "for",
-      "while",
-      "do",
-      "try",
-      "catch"
-    ],
-    "disallowMixedSpacesAndTabs": true,
-    "requireSpaceBeforeBinaryOperators": true,
-    "safeContextKeyword": [
-      "self"
-    ],
-    "disallowMultipleLineBreaks": true,
-    "disallowMultipleLineStrings": true,
-    "disallowSpaceAfterObjectKeys": true,
-    "disallowNewlineBeforeBlockStatements": true,
-    "disallowTrailingComma": true,
-    "requireCommaBeforeLineBreak": true,
-    "requireSpaceBetweenArguments": true,
-    "requireSpaceBeforeBlockStatements": true,
-    "requireSpaceBeforeObjectValues": true,
-    "requireSpacesInForStatement": true
-  },
   "dependencies": {
     "babelify": "^9.0.0",
     "bootstrap": "=3.3.4",
@@ -112,9 +66,8 @@
     "underscore": "=1.8.3"
   },
   "devDependencies": {
-    "esprima-fb": "=15001.1.0-dev-harmony-fb",
-    "jscs": "=1.13.1",
-    "jsxhint": "=0.15.1",
+    "eslint": "^3.19.0",
+    "eslint-config-dabapps": "github:dabapps/eslint-config-dabapps",
     "watch": "=0.16.0",
     "watchify": "^3.11.0"
   }
