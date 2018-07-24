@@ -47,14 +47,6 @@
     }
   ],
   "license": "MIT",
-  "jshintConfig": {
-    "browserify": true,
-    "unused": true,
-    "undef": true,
-    "globals": {
-      "console": false
-    }
-  },
   "dependencies": {
     "babelify": "^9.0.0",
     "bootstrap": "=3.3.4",
