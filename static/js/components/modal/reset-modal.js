@@ -18,21 +18,22 @@ var ResetModal = React.createClass({
   render: function () {
     return (
       <ModalTemplate
-        title='Reset all variables?'
+        title="Reset all variables?"
         body={
           <div>
-            <div className='row'>
-              <div className='col-xs-12'>Are you sure you want to reset your variables?</div>
-              <div className='col-xs-12'>You will lose <strong>all</strong> you changes.</div>
+            <div className="row">
+              <div className="col-xs-12">Are you sure you want to reset your variables?</div>
+              <div className="col-xs-12">You will lose <strong>all</strong> you changes.</div>
             </div>
           </div>
         }
         footer={
           <div>
-            <button className='btn btn-danger pull-right' onClick={this.reset}>Confirm</button>
-            <button className='btn btn-default pull-right' onClick={this.close}>Cancel</button>
+            <button className="btn btn-danger pull-right" onClick={this.reset}>Confirm</button>
+            <button className="btn btn-default pull-right" onClick={this.close}>Cancel</button>
           </div>
-        } />
+        }
+      />
     );
   }
 });

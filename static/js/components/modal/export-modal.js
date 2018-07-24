@@ -66,28 +66,31 @@ var ExportModal = React.createClass({
           key={setting.name}
           checked={setting.value}
           label={setting.name}
-          onClick={self.updateSetting.bind(self, settingsIndex)} />
+          onClick={self.updateSetting.bind(self, settingsIndex)}
+        />
       );
     });
 
     return (
       <ModalTemplate
-        title='Export'
+        title="Export"
         body={
           <div>
-            <div className='row'>
-              <div className='col-xs-12'>{settings}</div>
+            <div className="row">
+              <div className="col-xs-12">{settings}</div>
             </div>
-            <pre className='file-name'>variables.less</pre>
+            <pre className="file-name">variables.less</pre>
             <textarea
-              className='variable-textarea'
+              className="variable-textarea"
               value={this.state.packedVariables}
-              onChange={_.noop} />
+              onChange={_.noop}
+            />
           </div>
         }
         footer={
-          <button className='btn btn-default pull-right' onClick={this.close}>Close</button>
-        } />
+          <button className="btn btn-default pull-right" onClick={this.close}>Close</button>
+        }
+      />
     );
   }
 });

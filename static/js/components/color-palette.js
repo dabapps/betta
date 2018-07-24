@@ -76,14 +76,15 @@ var ColorPalette = React.createClass({
 
     return (
       <div
-        className='background'
+        className="background"
         onMouseDown={this.mouseDown}
-        style={{backgroundColor: backgroundColor}}>
-          <div className='gradient grey' />
-          <div className='gradient white' />
-          <div className='gradient black' />
+        style={{backgroundColor: backgroundColor}}
+      >
+          <div className="gradient grey" />
+          <div className="gradient white" />
+          <div className="gradient black" />
           <div
-            className='point'
+            className="point"
             style={{
               top: this.props.point.y * 100 + '%',
               left: this.props.point.x * 100 + '%',
@@ -92,7 +93,8 @@ var ColorPalette = React.createClass({
               height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
               marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
               marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
-              boxShadow: dropShadow}} />
+              boxShadow: dropShadow}}
+          />
       </div>
     );
   }

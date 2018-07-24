@@ -14,17 +14,17 @@ var SidebarMenu = React.createClass({
 
   render: function () {
     return (
-      <div className='sidebar-menu'>
-        <div className='form-group'>
-          <div className='input-wrapper search-wrapper'>
+      <div className="sidebar-menu">
+        <div className="form-group">
+          <div className="input-wrapper search-wrapper">
             <input
-              type='text'
-              className='form-control'
-              placeholder='Search variables'
+              type="text"
+              className="form-control"
+              placeholder="Search variables"
               onChange={this.setSearchTerm}
-              value={this.props.searchTerm}>
-            </input>
-            <span className='glyphicon glyphicon-remove' onClick={this.clearSearchTerm} />
+              value={this.props.searchTerm}
+            />
+            <span className="glyphicon glyphicon-remove" onClick={this.clearSearchTerm} />
           </div>
         </div>
       </div>

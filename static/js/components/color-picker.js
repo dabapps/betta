@@ -220,36 +220,40 @@ var ColorPicker = React.createClass({
 
     if (this.state.active) {
       picker = (
-        <div className='picker'>
-          <div className='palette'>
+        <div className="picker">
+          <div className="palette">
             <ColorPalette
               point={this.state.point}
               onChange={this.setPoint}
               hsl={this.state.hsl}
               rgb={this.state.rgb}
-              hex={this.state.hex} />
+              hex={this.state.hex}
+            />
             <Slider
-              className='hue-slider'
+              className="hue-slider"
               value={this.state.hsl.h}
-              orientation='vertical'
-              onChange={this.setHue} />
+              orientation="vertical"
+              onChange={this.setHue}
+            />
           </div>
           <ColorPickerValues
             hsl={this.state.hsl}
             rgb={this.state.rgb}
             hex={this.state.hex}
             setValue={this.props.setValue}
-            togglePicker={this.togglePicker} />
+            togglePicker={this.togglePicker}
+          />
         </div>
       );
     }
 
     return (
-      <div className='color-picker'>
+      <div className="color-picker">
         <div
-          className='swatch'
+          className="swatch"
           style={{backgroundColor: this.props.value || this.props.defaultValue}}
-          onClick={this.togglePicker} />
+          onClick={this.togglePicker}
+        />
         {picker}
       </div>
     );

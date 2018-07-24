@@ -29,20 +29,21 @@ var Iframe = React.createClass({
 
     if (this.props.loading) {
       loadingIcon = (
-        <div className='loading-container'>
-          <div className='loading-icon' />
+        <div className="loading-container">
+          <div className="loading-icon" />
         </div>
       );
     }
 
     return (
-      <div className='iframe-container'>
+      <div className="iframe-container">
         <iframe
-          className='iframe'
-          src='templates/template-1.html'
+          className="iframe"
+          src="templates/template-1.html"
           style={{
             maxWidth: this.getFrameSize()
-          }} />
+          }}
+        />
         {loadingIcon}
       </div>
     );

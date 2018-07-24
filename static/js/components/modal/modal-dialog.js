@@ -66,9 +66,9 @@ var ModalDialog = React.createClass({
 
     return (
       <div className={'modal fade ' + fadeClass} style={{display: 'block'}}>
-        <div className='modal-overlay' onClick={this.close}>
-          <div className='modal-dialog' onClick={this.stopPropagation}>
-            <div className='modal-content'>
+        <div className="modal-overlay" onClick={this.close}>
+          <div className="modal-dialog" onClick={this.stopPropagation}>
+            <div className="modal-content">
               {React.createElement(
                 this.props.view,
                 this.props.props

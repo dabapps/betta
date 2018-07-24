@@ -55,28 +55,29 @@ var Navigation = React.createClass({
     });
 
     return (
-      <nav className='navbar navbar-inverse navbar-fixed-top'>
-        <div className='container-fluid'>
-          <div className='navbar-header'>
-            <button type='button' className='navbar-toggle collapsed' onClick={self.toggleNavbar}>
-              <span className='sr-only'>Toggle navigation</span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
+      <nav className="navbar navbar-inverse navbar-fixed-top">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" onClick={self.toggleNavbar}>
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
             </button>
-            <a className='navbar-brand' href='/' title='Home'>
-              <img className='img-responsive app-logo' src='static/img/logo-icon.png' />
+            <a className="navbar-brand" href="/" title="Home">
+              <img className="img-responsive app-logo" src="static/img/logo-icon.png" />
             </a>
           </div>
           <div
-            className={'navbar-collapse collapse in' + (self.state.navbarActive ? ' active' : '')}>
-            <ul className='nav navbar-nav'>
+            className={'navbar-collapse collapse in' + (self.state.navbarActive ? ' active' : '')}
+          >
+            <ul className="nav navbar-nav">
               <li><a onClick={this.import}>Import</a></li>
               <li><a onClick={this.export}>Export</a></li>
             </ul>
-            <ul className='nav navbar-nav navbar-right'>
+            <ul className="nav navbar-nav navbar-right">
               <li>
-                <a href='https://github.com/dabapps/betta/' target='_blank' title='Betta on GitHub'>
+                <a href="https://github.com/dabapps/betta/" target="_blank" title="Betta on GitHub">
                   Fork us on GitHub
                 </a>
               </li>
@@ -86,12 +87,14 @@ var Navigation = React.createClass({
                 </a>
               </li>
 
-              <li className={'dropdown' + (self.state.dropdownSizesActive ? ' open' : '')}
-                onClick={self.toggleDropdownSizes}>
+              <li
+                className={'dropdown' + (self.state.dropdownSizesActive ? ' open' : '')}
+                onClick={self.toggleDropdownSizes}
+              >
                 <a>
-                  Screen Sizes ({self.props.currentFrameSize.name}) <span className='caret'></span>
+                  Screen Sizes ({self.props.currentFrameSize.name}) <span className="caret" />
                 </a>
-                <ul className='dropdown-menu'>
+                <ul className="dropdown-menu">
                   {frameSizes}
                 </ul>
               </li>

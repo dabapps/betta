@@ -153,14 +153,12 @@ VariableStore.getPackedVariables = function (
           packedVariables = packedVariables.concat(label).concat(
             [child.name, child.value].join(': ').concat(';\n')
           );
-        } else {
-          if (!excludeUnedited) {
-            packedVariables = packedVariables.concat(label).concat(
+        } else if (!excludeUnedited) {
+          packedVariables = packedVariables.concat(label).concat(
               (commentUnedited ? '//' : '').concat(
                 [child.name, child.defaultValue].join(': ').concat(';\n')
               )
             );
-          }
         }
       } else if (child.element === 'subHeader' && collectionHasChildren) {
         packedVariables = packedVariables.concat('//=== ').concat(child.value).concat('\n');
@@ -223,10 +221,8 @@ function (newVariables, clearExisting, overrideExisting, includeCommented) {
       if (groupIndex >= 0) {
         if (overrideExisting) {
           variables[groupIndex].children[variableIndex].value = value;
-        } else {
-          if (!variables[groupIndex].children[variableIndex].value) {
-            variables[groupIndex].children[variableIndex].value = value;
-          }
+        } else if (!variables[groupIndex].children[variableIndex].value) {
+          variables[groupIndex].children[variableIndex].value = value;
         }
       }
     }

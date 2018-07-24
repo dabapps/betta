@@ -80,7 +80,8 @@ var ModalRenderer = React.createClass({
         <ModalDialog
           view={this.state.view}
           props={this.state.props}
-          closing={this.state.closing} />
+          closing={this.state.closing}
+        />
       );
     }
     return false;

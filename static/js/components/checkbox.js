@@ -6,9 +6,9 @@ var _ = require('underscore');
 var CheckBox = React.createClass({
   render: function () {
     return (
-      <div className='checkbox'>
+      <div className="checkbox">
         <label onClick={this.props.onClick}>
-          <input type='checkbox' checked={this.props.checked} onChange={_.noop}></input>
+          <input type="checkbox" checked={this.props.checked} onChange={_.noop} />
           {this.props.label}
         </label>
       </div>

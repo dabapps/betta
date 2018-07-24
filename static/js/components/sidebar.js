@@ -48,16 +48,18 @@ var Sidebar = React.createClass({
             activeIndex={self.state.activeIndex}
             setActiveCollection={self.setActiveCollection}
             updateVariable={self.props.updateVariable}
-            searchTerm={self.state.searchTerm} />
+            searchTerm={self.state.searchTerm}
+          />
         );
       }
     });
 
     return (
-      <div className='sidebar-container'>
+      <div className="sidebar-container">
         <SidebarMenu
-          searchTerm={self.state.searchTerm} />
-        <div className='sidebar'>
+          searchTerm={self.state.searchTerm}
+        />
+        <div className="sidebar">
           <div>{formControls}</div>
         </div>
       </div>

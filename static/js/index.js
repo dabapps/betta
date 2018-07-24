@@ -231,19 +231,22 @@ var App = React.createClass({
     var self = this;
 
     return (
-      <div className='app'>
+      <div className="app">
         <Navigation
           currentFrameSize={self.state.currentFrameSize}
           frameSizes={self.state.frameSizes}
-          setFrameSize={self.setFrameSize} />
+          setFrameSize={self.setFrameSize}
+        />
         <Iframe
           iframeLoaded={self.iframeLoaded}
           loading={self.state.loading}
           currentFrameSize={self.state.currentFrameSize}
-          frameSizes={self.state.frameSizes} />
+          frameSizes={self.state.frameSizes}
+        />
         <Sidebar
           variables={self.state.variables}
-          updateVariable={self.updateVariable} />
+          updateVariable={self.updateVariable}
+        />
         <ModalRenderer />
       </div>
     );
