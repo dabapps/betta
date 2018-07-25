@@ -8,39 +8,39 @@ var ExportModal = require('./modal/export-modal');
 var ResetModal = require('./modal/reset-modal');
 
 var Navigation = React.createClass({
-  toggleNavbar: function () {
-    this.setState({
-      navbarActive: !this.state.navbarActive
-    });
-  },
-
-  export: function () {
-    ModalStore.action('open', ExportModal);
-  },
-
-  import: function () {
-    ModalStore.action('open', ImportModal);
-  },
-
-  reset: function () {
-    ModalStore.action('open', ResetModal);
-  },
-
-  preview: function () {
-    VariableStore.action('requestPreview');
-  },
-
-  toggleDropdownSizes: function () {
-    this.setState({
-      dropdownSizesActive: !this.state.dropdownSizesActive
-    });
-  },
-
   getInitialState: function () {
     return {
       navbarActive: false,
       dropdownSizesActive: false
     };
+  },
+
+  onClickToggleNavbar: function () {
+    this.setState({
+      navbarActive: !this.state.navbarActive
+    });
+  },
+
+  onClickExport: function () {
+    ModalStore.action('open', ExportModal);
+  },
+
+  onClickImport: function () {
+    ModalStore.action('open', ImportModal);
+  },
+
+  onClickReset: function () {
+    ModalStore.action('open', ResetModal);
+  },
+
+  onClickPreview: function () {
+    VariableStore.action('requestPreview');
+  },
+
+  onClickToggleDropdownSizes: function () {
+    this.setState({
+      dropdownSizesActive: !this.state.dropdownSizesActive
+    });
   },
 
   render: function () {
@@ -55,49 +55,52 @@ var Navigation = React.createClass({
     });
 
     return (
-      <nav className='navbar navbar-inverse navbar-fixed-top'>
-        <div className='container-fluid'>
-          <div className='navbar-header'>
-            <button type='button' className='navbar-toggle collapsed' onClick={self.toggleNavbar}>
-              <span className='sr-only'>Toggle navigation</span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
+      <nav className="navbar navbar-inverse navbar-fixed-top">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" onClick={self.onClickToggleNavbar}>
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
             </button>
-            <a className='navbar-brand' href='/' title='Home'>
-              <img className='img-responsive app-logo' src='static/img/logo-icon.png' />
+            <a className="navbar-brand" href="/" title="Home">
+              <img className="img-responsive app-logo" src="static/img/logo-icon.png" />
             </a>
           </div>
           <div
-            className={'navbar-collapse collapse in' + (self.state.navbarActive ? ' active' : '')}>
-            <ul className='nav navbar-nav'>
-              <li><a onClick={this.import}>Import</a></li>
-              <li><a onClick={this.export}>Export</a></li>
+            className={'navbar-collapse collapse in' + (self.state.navbarActive ? ' active' : '')}
+          >
+            <ul className="nav navbar-nav">
+              <li><a onClick={this.onClickImport}>Import</a></li>
+              <li><a onClick={this.onClickExport}>Export</a></li>
             </ul>
-            <ul className='nav navbar-nav navbar-right'>
+            <ul className="nav navbar-nav navbar-right">
               <li>
-                <a href='https://github.com/dabapps/betta/' target='_blank' title='Betta on GitHub'>
+                <a href="https://github.com/dabapps/betta/" target="_blank" title="Betta on GitHub">
                   Fork us on GitHub
                 </a>
               </li>
               <li>
-                <a onClick={this.reset}>
+                <a onClick={this.onClickReset}>
                   Reset
                 </a>
               </li>
 
-              <li className={'dropdown' + (self.state.dropdownSizesActive ? ' open' : '')}
-                onClick={self.toggleDropdownSizes}>
+              <li
+                className={'dropdown' + (self.state.dropdownSizesActive ? ' open' : '')}
+                onClick={self.onClickToggleDropdownSizes}
+              >
                 <a>
-                  Screen Sizes ({self.props.currentFrameSize.name}) <span className='caret'></span>
+                  Screen Sizes ({self.props.currentFrameSize.name}) <span className="caret" />
                 </a>
-                <ul className='dropdown-menu'>
+                <ul className="dropdown-menu">
                   {frameSizes}
                 </ul>
               </li>
 
               <li>
-                <a onClick={this.preview}>
+                <a onClick={this.onClickPreview}>
                   Preview
                 </a>
               </li>

@@ -7,6 +7,49 @@ var ColorPalette = require('./color-palette');
 var Slider = require('./slider');
 
 var ColorPicker = React.createClass({
+  getInitialState: function () {
+    var value = this.props.value || this.props.defaultValue;
+    var colors = this.getColors(value);
+
+    return {
+      active: false,
+      point: {
+        x: colors ? colors.hsl.s : 0,
+        y: colors ? 1 - colors.hsl.l : 0
+      },
+      hsl: {
+        h: colors ? colors.hsl.h : 0,
+        s: colors ? colors.hsl.s : 0,
+        l: colors ? colors.hsl.l : 1
+      },
+      rgb: {
+        r: colors ? colors.rgb.r : 255,
+        g: colors ? colors.rgb.g : 255,
+        b: colors ? colors.rgb.b : 255
+      },
+      hex: colors ? colors.hex : '#ffffff'
+    };
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (this.props.value !== nextProps.value) {
+      var value = nextProps.value || nextProps.defaultValue;
+      var colors = this.getColors(value);
+
+      if (colors) {
+        this.setState({
+          point: {
+            x: colors.hsl.s,
+            y: 1 - colors.hsl.l
+          },
+          hsl: colors.hsl,
+          rgb: colors.rgb,
+          hex: colors.hex
+        });
+      }
+    }
+  },
+
   getHSL: function (h, s, l) {
     var hsl = this.state.hsl;
     if (typeof h !== 'undefined') {
@@ -22,7 +65,7 @@ var ColorPicker = React.createClass({
     return hsl;
   },
 
-  setPoint: function (point) {
+  onChangePalette: function (point) {
     var hsl = this.getHSL(undefined, point.x, point.y);
     var rgb = color.HSLToRGB(hsl.h, hsl.s, hsl.l);
     var hex = color.RGBToHex(rgb.r, rgb.g, rgb.b);
@@ -35,7 +78,7 @@ var ColorPicker = React.createClass({
     });
   },
 
-  setHue: function (h) {
+  onChangeHue: function (h) {
     var hsl = this.getHSL(h);
     var rgb = color.HSLToRGB(hsl.h, hsl.s, hsl.l);
     var hex = color.RGBToHex(rgb.r, rgb.g, rgb.b);
@@ -47,7 +90,7 @@ var ColorPicker = React.createClass({
     });
   },
 
-  togglePicker: function () {
+  onClickTogglePicker: function () {
     this.setState({
       active: !this.state.active
     });
@@ -63,9 +106,9 @@ var ColorPicker = React.createClass({
       return false;
     }
     var hsl = {
-      h: parseInt(hslValues[0]) / 360,
-      s: parseInt(hslValues[1]) / 100,
-      l: parseInt(hslValues[2]) / 100
+      h: parseInt(hslValues[0], 10) / 360,
+      s: parseInt(hslValues[1], 10) / 100,
+      l: parseInt(hslValues[2], 10) / 100
     };
 
     if (isNaN(hsl.h) || isNaN(hsl.s) || isNaN(hsl.l) ||
@@ -91,9 +134,9 @@ var ColorPicker = React.createClass({
       return false;
     }
     var rgb = {
-      r: parseInt(rgbValues[0]),
-      g: parseInt(rgbValues[1]),
-      b: parseInt(rgbValues[2])
+      r: parseInt(rgbValues[0], 10),
+      g: parseInt(rgbValues[1], 10),
+      b: parseInt(rgbValues[2], 10)
     };
 
     if (isNaN(rgb.r) || isNaN(rgb.g) || isNaN(rgb.b) ||
@@ -172,84 +215,45 @@ var ColorPicker = React.createClass({
     return false;
   },
 
-  componentWillReceiveProps: function (nextProps) {
-    if (this.props.value !== nextProps.value) {
-      var value = nextProps.value || nextProps.defaultValue;
-      var colors = this.getColors(value);
-
-      if (colors) {
-        this.setState({
-          point: {
-            x: colors.hsl.s,
-            y: 1 - colors.hsl.l
-          },
-          hsl: colors.hsl,
-          rgb: colors.rgb,
-          hex: colors.hex
-        });
-      }
-    }
-  },
-
-  getInitialState: function () {
-    var value = this.props.value || this.props.defaultValue;
-    var colors = this.getColors(value);
-
-    return {
-      active: false,
-      point: {
-        x: colors ? colors.hsl.s : 0,
-        y: colors ? 1 - colors.hsl.l : 0
-      },
-      hsl: {
-        h: colors ? colors.hsl.h : 0,
-        s: colors ? colors.hsl.s : 0,
-        l: colors ? colors.hsl.l : 1
-      },
-      rgb: {
-        r: colors ? colors.rgb.r : 255,
-        g: colors ? colors.rgb.g : 255,
-        b: colors ? colors.rgb.b : 255
-      },
-      hex: colors ? colors.hex : '#ffffff'
-    };
-  },
-
   render: function () {
     var picker;
 
     if (this.state.active) {
       picker = (
-        <div className='picker'>
-          <div className='palette'>
+        <div className="picker">
+          <div className="palette">
             <ColorPalette
               point={this.state.point}
-              onChange={this.setPoint}
+              onChange={this.onChangePalette}
               hsl={this.state.hsl}
               rgb={this.state.rgb}
-              hex={this.state.hex} />
+              hex={this.state.hex}
+            />
             <Slider
-              className='hue-slider'
+              className="hue-slider"
               value={this.state.hsl.h}
-              orientation='vertical'
-              onChange={this.setHue} />
+              orientation="vertical"
+              onChange={this.onChangeHue}
+            />
           </div>
           <ColorPickerValues
             hsl={this.state.hsl}
             rgb={this.state.rgb}
             hex={this.state.hex}
             setValue={this.props.setValue}
-            togglePicker={this.togglePicker} />
+            onClickTogglePicker={this.onClickTogglePicker}
+          />
         </div>
       );
     }
 
     return (
-      <div className='color-picker'>
+      <div className="color-picker">
         <div
-          className='swatch'
+          className="swatch"
           style={{backgroundColor: this.props.value || this.props.defaultValue}}
-          onClick={this.togglePicker} />
+          onClick={this.onClickTogglePicker}
+        />
         {picker}
       </div>
     );

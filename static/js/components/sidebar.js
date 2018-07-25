@@ -6,12 +6,19 @@ var SidebarMenu = require('./sidebar-menu');
 var SearchStore = require('../stores/search-store');
 
 var Sidebar = React.createClass({
-  componentWillUnmount: function () {
-    SearchStore.unbind('setSearchTerm', this.getSearchTerm);
+  getInitialState: function () {
+    return {
+      activeIndex: undefined,
+      searchTerm: SearchStore.getSearchTerm()
+    };
   },
 
   componentWillMount: function () {
     SearchStore.bind('setSearchTerm', this.getSearchTerm);
+  },
+
+  componentWillUnmount: function () {
+    SearchStore.unbind('setSearchTerm', this.getSearchTerm);
   },
 
   setActiveCollection: function (index) {
@@ -28,13 +35,6 @@ var Sidebar = React.createClass({
     });
   },
 
-  getInitialState: function () {
-    return {
-      activeIndex: undefined,
-      searchTerm: SearchStore.getSearchTerm()
-    };
-  },
-
   render: function () {
     var self = this;
 
@@ -48,16 +48,18 @@ var Sidebar = React.createClass({
             activeIndex={self.state.activeIndex}
             setActiveCollection={self.setActiveCollection}
             updateVariable={self.props.updateVariable}
-            searchTerm={self.state.searchTerm} />
+            searchTerm={self.state.searchTerm}
+          />
         );
       }
     });
 
     return (
-      <div className='sidebar-container'>
+      <div className="sidebar-container">
         <SidebarMenu
-          searchTerm={self.state.searchTerm} />
-        <div className='sidebar'>
+          searchTerm={self.state.searchTerm}
+        />
+        <div className="sidebar">
           <div>{formControls}</div>
         </div>
       </div>

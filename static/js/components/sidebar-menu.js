@@ -4,27 +4,27 @@ var React = require('react');
 var SearchStore = require('../stores/search-store');
 
 var SidebarMenu = React.createClass({
-  setSearchTerm: function (event) {
+  onChangeSearchTerm: function (event) {
     SearchStore.action('setSearchTerm', event.target.value);
   },
 
-  clearSearchTerm: function () {
+  onClearSearchTerm: function () {
     SearchStore.action('setSearchTerm', undefined);
   },
 
   render: function () {
     return (
-      <div className='sidebar-menu'>
-        <div className='form-group'>
-          <div className='input-wrapper search-wrapper'>
+      <div className="sidebar-menu">
+        <div className="form-group">
+          <div className="input-wrapper search-wrapper">
             <input
-              type='text'
-              className='form-control'
-              placeholder='Search variables'
-              onChange={this.setSearchTerm}
-              value={this.props.searchTerm}>
-            </input>
-            <span className='glyphicon glyphicon-remove' onClick={this.clearSearchTerm} />
+              type="text"
+              className="form-control"
+              placeholder="Search variables"
+              onChange={this.onChangeSearchTerm}
+              value={this.props.searchTerm}
+            />
+            <span className="glyphicon glyphicon-remove" onClick={this.onClearSearchTerm} />
           </div>
         </div>
       </div>

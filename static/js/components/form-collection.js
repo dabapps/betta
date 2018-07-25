@@ -39,7 +39,7 @@ var FormCollection = React.createClass({
     SearchStore.action('setSearchTerm', val);
   },
 
-  handleKeyPress: function (event) {
+  onKeyDown: function (event) {
     if (event.keyCode === 13) {
       VariableStore.action('requestPreview');
     }
@@ -68,7 +68,8 @@ var FormCollection = React.createClass({
           <ColorPicker
             setValue={self.props.updateVariable.bind(null, self.props.index, index)}
             value={child.value}
-            defaultValue={child.defaultValue} />
+            defaultValue={child.defaultValue}
+          />
         );
       }
 
@@ -81,24 +82,26 @@ var FormCollection = React.createClass({
       }
 
       return (
-        <div className='form-group' key={child.name}>
+        <div className="form-group" key={child.name}>
           {label}
           <label>
-            <span className='variable-name' title={child.name}>
+            <span className="variable-name" title={child.name}>
               {child.name}
             </span>
             <span
-              className='glyphicon glyphicon glyphicon-search'
-              onClick={this.addToSearch.bind(null, child.name)} />
+              className="glyphicon glyphicon glyphicon-search"
+              onClick={this.addToSearch.bind(null, child.name)}
+            />
           </label>
-          <div className='input-wrapper'>
+          <div className="input-wrapper">
             <input
-              text='text'
-              className='form-control'
+              text="text"
+              className="form-control"
               placeholder={child.defaultValue}
               value={child.value}
               onChange={self.props.updateVariable.bind(null, self.props.index, index)}
-              onKeyDown={this.handleKeyPress} />
+              onKeyDown={this.onKeyDown}
+            />
             {colorPicker}
           </div>
         </div>
@@ -145,7 +148,8 @@ var FormCollection = React.createClass({
         className={
           'form-collection' +
           (isActiveCollection ? ' active' : '') +
-          (hasSearchResults ? ' filtered' : '')}>
+          (hasSearchResults ? ' filtered' : '')}
+      >
             <a onClick={self.props.setActiveCollection.bind(null, this.props.index)}>
               <h4 title={this.props.group.value}>{this.props.group.value}</h4>
             </a>

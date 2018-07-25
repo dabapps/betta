@@ -1,3 +1,5 @@
+/* global FileReader */
+
 'use strict';
 
 var React = require('react');
@@ -11,7 +13,24 @@ var instructions = 'Please select an existing variables.less file, ' +
   'or paste its contents into the text area.';
 
 var ImportModal = React.createClass({
-  importVariables: function () {
+  getInitialState: function () {
+    var settings = ImportSettingsStore.getSettings();
+
+    return {
+      settings: settings,
+      packedVariables: ''
+    };
+  },
+
+  componentWillMount: function () {
+    ImportSettingsStore.bind('updateSetting', this.getSettings);
+  },
+
+  componentWillUnmount: function () {
+    ImportSettingsStore.unbind('updateSetting', this.getSettings);
+  },
+
+  onClickImport: function () {
     var settings = this.state.settings.map(function (setting) {
       return setting.value;
     });
@@ -22,7 +41,7 @@ var ImportModal = React.createClass({
     ModalStore.action('close');
   },
 
-  fileChanged: function (event) {
+  onFileChanged: function (event) {
     var self = this;
     var file = event.target.files[0];
 
@@ -45,7 +64,7 @@ var ImportModal = React.createClass({
     }
   },
 
-  updateVariables: function (event) {
+  onChangeVariables: function (event) {
     this.setState({
       packedVariables: event.target.value
     });
@@ -64,25 +83,8 @@ var ImportModal = React.createClass({
     });
   },
 
-  close: function () {
+  onClickClose: function () {
     ModalStore.action('close');
-  },
-
-  componentWillUnmount: function () {
-    ImportSettingsStore.unbind('updateSetting', this.getSettings);
-  },
-
-  componentWillMount: function () {
-    ImportSettingsStore.bind('updateSetting', this.getSettings);
-  },
-
-  getInitialState: function () {
-    var settings = ImportSettingsStore.getSettings();
-
-    return {
-      settings: settings,
-      packedVariables: ''
-    };
   },
 
   render: function () {
@@ -99,13 +101,14 @@ var ImportModal = React.createClass({
           key={setting.name}
           checked={setting.value}
           label={setting.name}
-          onClick={self.updateSetting.bind(self, settingsIndex)} />
+          onClick={self.updateSetting.bind(self, settingsIndex)}
+        />
       );
     });
 
     if (this.state.uploadError) {
       uploadError = (
-        <div className='alert alert-danger'>
+        <div className="alert alert-danger">
           {this.state.uploadError}
         </div>
       );
@@ -113,7 +116,7 @@ var ImportModal = React.createClass({
 
     if (this.state.uploadSuccess) {
       uploadSuccess = (
-        <div className='alert alert-success'>
+        <div className="alert alert-success">
           {this.state.uploadSuccess}
         </div>
       );
@@ -121,22 +124,23 @@ var ImportModal = React.createClass({
 
     if (window.FileReader) {
       filePicker = (
-        <div className='form-group'>
+        <div className="form-group">
           <input
-            type='file'
-            accept='.less'
-            onChange={this.fileChanged} />
+            type="file"
+            accept=".less"
+            onChange={this.onFileChanged}
+          />
         </div>
       );
     }
 
     return (
       <ModalTemplate
-        title='Import'
+        title="Import"
         body={
           <div>
-            <div className='row'>
-              <div className='col-xs-12'>
+            <div className="row">
+              <div className="col-xs-12">
                 <p>{instructions}</p>
                   {uploadError}
                   {uploadSuccess}
@@ -144,28 +148,32 @@ var ImportModal = React.createClass({
                   {settings}
               </div>
             </div>
-            <pre className='file-name'>variables.less</pre>
+            <pre className="file-name">variables.less</pre>
             <textarea
-              className='variable-textarea'
+              className="variable-textarea"
               value={this.state.packedVariables}
-              onChange={this.updateVariables} />
+              onChange={this.onChangeVariables}
+            />
           </div>
         }
         footer={
-          <div className='pull-right'>
+          <div className="pull-right">
             <button
-              className='btn btn-default'
-              onClick={this.close}>
+              className="btn btn-default"
+              onClick={this.onClickClose}
+            >
                 Close
             </button>
             <button
-              className='btn btn-primary'
-              onClick={this.importVariables}
-              disabled={!this.state.packedVariables}>
+              className="btn btn-primary"
+              onClick={this.onClickImport}
+              disabled={!this.state.packedVariables}
+            >
                 Import
             </button>
           </div>
-        } />
+        }
+      />
     );
   }
 });

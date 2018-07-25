@@ -8,7 +8,7 @@ var ModalTemplate = React.createClass({
 
     if (typeof this.props.title !== 'undefined') {
       title = (
-        <div className='modal-header'>
+        <div className="modal-header">
           <h4>{this.props.title}</h4>
         </div>
       );
@@ -16,13 +16,13 @@ var ModalTemplate = React.createClass({
 
     if (typeof this.props.body !== 'undefined') {
       body = (
-        <div className='modal-body'>{this.props.body}</div>
+        <div className="modal-body">{this.props.body}</div>
       );
     }
 
     if (typeof this.props.footer !== 'undefined') {
       footer = (
-        <div className='modal-footer'>{this.props.footer}</div>
+        <div className="modal-footer">{this.props.footer}</div>
       );
     }
 

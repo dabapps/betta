@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "dabapps/browser",
+    "dabapps/commonjs",
+    "dabapps/react"
+  ],
+  "rules": {
+    "react/prop-types": 0
+  }
+}

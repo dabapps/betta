@@ -7,14 +7,24 @@ var MAX_SIZE = 50;
 var MIN_SIZE = 10;
 
 var ColorPalette = React.createClass({
+  getInitialState: function () {
+    return {
+      dragging: false
+    };
+  },
+
+  componentWillUnmount: function () {
+    this.removeListeners();
+  },
+
   addListeners: function () {
-    window.addEventListener('mousemove', this.mouseMove);
-    window.addEventListener('mouseup', this.mouseUp);
+    window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('mouseup', this.onMouseUp);
   },
 
   removeListeners: function () {
-    window.removeEventListener('mousemove', this.mouseMove);
-    window.removeEventListener('mouseup', this.mouseUp);
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
   },
 
   getPoint: function (event) {
@@ -31,7 +41,7 @@ var ColorPalette = React.createClass({
     return point;
   },
 
-  mouseDown: function (event) {
+  onMouseDown: function (event) {
     event.preventDefault();
     this.setState({
       dragging: true
@@ -43,27 +53,17 @@ var ColorPalette = React.createClass({
     this.addListeners();
   },
 
-  mouseMove: function (event) {
+  onMouseMove: function (event) {
     var point = this.getPoint(event);
 
     this.props.onChange(point);
   },
 
-  mouseUp: function () {
+  onMouseUp: function () {
     this.setState({
       dragging: false
     });
     this.removeListeners();
-  },
-
-  componentWillUnmount: function () {
-    this.removeListeners();
-  },
-
-  getInitialState: function () {
-    return {
-      dragging: false
-    };
   },
 
   render: function () {
@@ -76,14 +76,15 @@ var ColorPalette = React.createClass({
 
     return (
       <div
-        className='background'
-        onMouseDown={this.mouseDown}
-        style={{backgroundColor: backgroundColor}}>
-          <div className='gradient grey' />
-          <div className='gradient white' />
-          <div className='gradient black' />
+        className="background"
+        onMouseDown={this.onMouseDown}
+        style={{backgroundColor: backgroundColor}}
+      >
+          <div className="gradient grey" />
+          <div className="gradient white" />
+          <div className="gradient black" />
           <div
-            className='point'
+            className="point"
             style={{
               top: this.props.point.y * 100 + '%',
               left: this.props.point.x * 100 + '%',
@@ -92,7 +93,8 @@ var ColorPalette = React.createClass({
               height: this.state.dragging ? MAX_SIZE : MIN_SIZE,
               marginTop: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
               marginLeft: this.state.dragging ? -MAX_SIZE / 2 : -MIN_SIZE / 2,
-              boxShadow: dropShadow}} />
+              boxShadow: dropShadow}}
+          />
       </div>
     );
   }

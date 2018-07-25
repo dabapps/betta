@@ -4,6 +4,12 @@ var _ = require('underscore');
 var React = require('react');
 
 var Iframe = React.createClass({
+  componentDidMount: function () {
+    var iframe = this.getDOMNode().getElementsByTagName('iframe')[0];
+
+    iframe.addEventListener('load', this.iframeLoaded);
+  },
+
   iframeLoaded: function (event) {
     this.props.iframeLoaded(event.target);
   },
@@ -18,31 +24,26 @@ var Iframe = React.createClass({
     return foundSize ? foundSize.value : '100%';
   },
 
-  componentDidMount: function () {
-    var iframe = this.getDOMNode().getElementsByTagName('iframe')[0];
-
-    iframe.addEventListener('load', this.iframeLoaded);
-  },
-
   render: function () {
     var loadingIcon;
 
     if (this.props.loading) {
       loadingIcon = (
-        <div className='loading-container'>
-          <div className='loading-icon' />
+        <div className="loading-container">
+          <div className="loading-icon" />
         </div>
       );
     }
 
     return (
-      <div className='iframe-container'>
+      <div className="iframe-container">
         <iframe
-          className='iframe'
-          src='templates/template-1.html'
+          className="iframe"
+          src="templates/template-1.html"
           style={{
             maxWidth: this.getFrameSize()
-          }} />
+          }}
+        />
         {loadingIcon}
       </div>
     );

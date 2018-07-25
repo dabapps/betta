@@ -13,7 +13,7 @@ var ColorPickerValues = React.createClass({
         Math.round(self.props.hsl.s * 100).toString().concat('%'),
         Math.round(self.props.hsl.l * 100).toString().concat('%')
       ]
-      .join(', ')
+        .join(', ')
     ).concat(')');
   },
 
@@ -40,32 +40,35 @@ var ColorPickerValues = React.createClass({
         value: value
       }
     });
-    this.props.togglePicker();
+    this.props.onClickTogglePicker();
     VariableStore.action('requestPreview');
   },
 
   render: function () {
     return (
-      <div className='row values'>
-        <div className='col-xs-12'>
+      <div className="row values">
+        <div className="col-xs-12">
           <code>{this.readableHSL()}</code>
           <button
-            className='btn btn-primary btn-xs pull-right'
-            onClick={this.setValue.bind(this, 'HSL')}>Use</button>
+            className="btn btn-primary btn-xs pull-right"
+            onClick={this.setValue.bind(this, 'HSL')}
+          >Use</button>
         </div>
 
-        <div className='col-xs-12'>
+        <div className="col-xs-12">
           <code>{this.readableRGB()}</code>
           <button
-            className='btn btn-primary btn-xs pull-right'
-            onClick={this.setValue.bind(this, 'RGB')}>Use</button>
+            className="btn btn-primary btn-xs pull-right"
+            onClick={this.setValue.bind(this, 'RGB')}
+          >Use</button>
         </div>
 
-        <div className='col-xs-12'>
+        <div className="col-xs-12">
           <code>{this.readableHex()}</code>
           <button
-            className='btn btn-primary btn-xs pull-right'
-            onClick={this.setValue.bind(this, 'Hex')}>Use</button>
+            className="btn btn-primary btn-xs pull-right"
+            onClick={this.setValue.bind(this, 'Hex')}
+          >Use</button>
         </div>
       </div>
     );

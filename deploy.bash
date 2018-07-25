@@ -8,8 +8,8 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
     echo -e "Starting deployment to Github Pages\n"
 
     if [ "$TRAVIS" == "true" ]; then
-        git config --global user.email "manos@iamemmanouil.com"
-        git config --global user.name "ekonstantinidis"
+        git config --global user.email "jake@dabapps.com"
+        git config --global user.name "Jake 'Sid' Smith"
     fi
 
     # Using token clone gh-pages branch

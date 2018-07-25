@@ -4,20 +4,14 @@
   "description": "Simple Bootstrap variable editor",
   "main": "static/js/index.js",
   "scripts": {
-    "start": "npm run build && http-server . -o -c-1 & npm run watch-js & npm run watch-less",
-    "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js static/build/lib/",
-    "copy-holder": "cp node_modules/holderjs/holder.min.js static/build/lib/",
-    "copy-bootstrap": "cp -r node_modules/bootstrap/ static/build/lib/bootstrap",
-    "copy-libs": "mkdir -p static/build/lib && npm run copy-jquery && npm run copy-holder && npm run copy-bootstrap",
-    "build-js": "mkdir -p static/build/js && browserify -t babelify static/js/index.js -o static/build/js/index.js",
+    "start": "./scripts/start",
+    "build": "./scripts/build",
+    "dist": "./scripts/dist",
+    "build-js": "browserify -t babelify static/js/index.js -o static/build/js/index.js",
     "watch-js": "watchify -t babelify static/js/index.js -o static/build/js/index.js -v",
-    "build-less": "mkdir -p static/build/css && lessc static/less/index.less > static/build/css/index.css && echo 'Less compiled'",
-    "watch-less": "watch 'npm run build-less' static/less/",
-    "build": "ulimit -n 512 && npm install && npm run copy-libs && npm run build-less && npm run build-js",
-    "watch": "npm run build && npm run watch-js & npm run watch-less",
-    "dist-static": "cp -r static/build dist/static/ && cp -r static/css/ dist/static/css/ && cp -r static/img/ dist/static/img/",
-    "dist": "npm run build && mkdir -p dist/static/build && npm run dist-static && cp -r index.html dist/ && cp CNAME dist/ && cp -r templates/ dist/templates/",
-    "lint": "jsxhint 'static/js/' && jscs 'static/js/'",
+    "build-less": "lessc static/less/index.less static/build/css/index.css --silent --compress && postcss --use autoprefixer -r static/build/css/index.css && echo 'Less compiled!'",
+    "watch-less": "watch-less-do-more -u autoprefixer -i static/less/index.less -o static/build/css/index.css",
+    "lint": "eslint static/js/",
     "test": "npm run lint"
   },
   "keywords": [
@@ -47,75 +41,27 @@
     }
   ],
   "license": "MIT",
-  "jshintConfig": {
-    "browserify": true,
-    "unused": true,
-    "undef": true,
-    "globals": {
-      "console": false
-    }
-  },
-  "jscsConfig": {
-    "esprima": "esprima-fb",
-    "disallowMultipleVarDecl": "exceptUndefined",
-    "validateQuoteMarks": {
-      "mark": "'",
-      "escape": false
-    },
-    "validateParameterSeparator": ", ",
-    "validateIndentation": 2,
-    "requireSpacesInFunction": {
-      "beforeOpeningRoundBrace": true,
-      "beforeOpeningCurlyBrace": true
-    },
-    "requireSpacesInConditionalExpression": {
-      "afterTest": true,
-      "beforeConsequent": true,
-      "afterConsequent": true,
-      "beforeAlternate": true
-    },
-    "disallowTrailingWhitespace": true,
-    "maximumLineLength": 100,
-    "requireCurlyBraces": [
-      "if",
-      "else",
-      "for",
-      "while",
-      "do",
-      "try",
-      "catch"
-    ],
-    "disallowMixedSpacesAndTabs": true,
-    "requireSpaceBeforeBinaryOperators": true,
-    "safeContextKeyword": [
-      "self"
-    ],
-    "disallowMultipleLineBreaks": true,
-    "disallowMultipleLineStrings": true,
-    "disallowSpaceAfterObjectKeys": true,
-    "disallowNewlineBeforeBlockStatements": true,
-    "disallowTrailingComma": true,
-    "requireCommaBeforeLineBreak": true,
-    "requireSpaceBetweenArguments": true,
-    "requireSpaceBeforeBlockStatements": true,
-    "requireSpaceBeforeObjectValues": true,
-    "requireSpacesInForStatement": true
-  },
   "dependencies": {
-    "babelify": "=6.1.2",
-    "bootstrap": "=3.3.4",
-    "browserify": "=10.2.4",
-    "holderjs": "=2.8.0",
-    "jquery": "=2.1.4",
-    "less": "=2.5.0",
-    "react": "=0.13.3",
-    "underscore": "=1.8.3"
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/preset-react": "^7.0.0-beta.54",
+    "autoprefixer": "^9.0.1",
+    "babelify": "^9.0.0",
+    "bootstrap": "^3.3.4",
+    "browserify": "^16.2.2",
+    "holderjs": "^2.8.0",
+    "jquery": "^3.3.1",
+    "less": "^3.8.0",
+    "postcss-cli": "^6.0.0",
+    "react": "^0.13.3",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "esprima-fb": "=15001.1.0-dev-harmony-fb",
-    "jscs": "=1.13.1",
-    "jsxhint": "=0.15.1",
-    "watch": "=0.16.0",
-    "watchify": "=3.2.2"
+    "concurrently": "^3.6.1",
+    "eslint": "^3.19.0",
+    "eslint-config-dabapps": "github:dabapps/eslint-config-dabapps",
+    "http-server": "^0.11.1",
+    "watch": "^0.16.0",
+    "watch-less-do-more": "^0.2.1",
+    "watchify": "^3.11.0"
   }
 }
