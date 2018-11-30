@@ -18,3 +18,7 @@ You will need to install and run an http server. Example:
 
 ### License
 Copyright (c) 2015 Jake 'Sid' Smith, [DabApps](http://www.dabapps.com). For more information, see the LICENSE file in this repository.
+
+## Code of conduct
+
+For guidelines regarding the code of conduct when contributing to this repository please review [https://www.dabapps.com/open-source/code-of-conduct/](https://www.dabapps.com/open-source/code-of-conduct/)
